@@ -66,10 +66,10 @@ movies_selected %>%
   summarise(count = sum(is.na(runtime)))
 
 movies_selected %>% 
-  summarise(count = sum(is.na(runtime)))
+  summarise(count = sum(is.na(title)))
 
 movies_selected %>%
-  summarise(count = sum(is.na(runtime)))
+  summarise(count = sum(is.na(budget)))
 ```
 
 #Question 4.
