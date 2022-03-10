@@ -134,3 +134,22 @@ movies %>%
 
 ```
 
+# Extension Question 1.
+
+Using case_when, create a new column called budget_type and label budgets as follows:
+
+Budgets below 12 million as ‘Small budget’
+Budgets between 12 and 40 million as ‘Medium budget’
+Budgets 40 millions and above as ‘Big budget’
+Save this into a new variable called movie_budgets.
+
+```{r}
+
+movies %>% 
+  select(budget) %>% 
+  mutate(movie_budgets = case_when(budget < 12e6 ~ 'Small budget', 
+                                   budget > 12e6 & budget < 40e6 ~ 'Medium budget',
+                                   budget >= 40e6 ~ 'Big budget', TRUE ~ 'other budget'))
+
+```
+
