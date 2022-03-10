@@ -153,3 +153,14 @@ movies %>%
 
 ```
 
+```{r}
+?across
+names(movies)
+typeof(movies)
+
+# character columns
+movies %>% 
+  select(original_title, title, homepage, original_language, overview, tagline)
+summarise(across(if.na))
+```
+
