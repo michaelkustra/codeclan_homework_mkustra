@@ -10,7 +10,9 @@ After you’ve read in the data and assigned it to a variable with a useful name
 ```{r}
 library(tidyverse)
 # read in data
-movies <- read.csv('data/movies.csv')
+movies <- read_csv('data/movies.csv')
+
+nrow(movies) - nrow(drop_na(movies))
 
 # dimensions of data
 dim(movies)
