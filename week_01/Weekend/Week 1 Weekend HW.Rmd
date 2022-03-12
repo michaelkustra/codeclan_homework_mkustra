@@ -1,0 +1,214 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# load relevant libraries
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(ggplot2)
+library(corrr)
+```
+
+# read in data
+
+```{r}
+books_data <- read_csv("data/books.csv")
+```
+
+# Preliminary data exploration
+
+Data has 11123 rows and 13 columns. It is a list of books from goodreads that
+includes; their average rating out of 5, the number of ratings, the author, to
+name a few objects in the data.
+
+There also are no NA values to concern us.
+
+```{r}
+
+glimpse(books_data)
+
+head(books_data, 5)
+
+tail(books_data, 5)
+
+dim(books_data)
+
+sum(is.na(books_data))
+
+```
+
+# clean the data
+
+Use the janitor function to move object names to lowercase and ensure
+snakecase throughout. Also create a new variable, books_data_clean, this 
+will avoid any confusion later on. This will be the data set analysed from here.
+
+```{r}
+books_data %>% 
+  names()
+
+books_data_clean <- books_data %>% 
+  clean_names()
+
+books_data_clean %>% 
+  names()
+
+```
+
+# begin data wrangling
+
+# How many distinct authors appear in this data frame?
+
+6639 distinct authors! However, it appears that it appears some
+illustrators have been included in this data set. Something we should keep
+in mind when analysing by author.
+
+```{r}
+
+books_data_clean %>% 
+  distinct(authors)
+
+```
+
+# Arrange the titles by ISBN as a way of indexing the data
+
+```{r}
+
+books_data_clean %>% 
+  select(title, isbn) %>% 
+  arrange(isbn)
+
+```
+
+
+# How many books have a 5 rating?
+
+It appears that 22 books on our list were given a perfect 5 rating!
+
+```{r}
+
+five_average_rating <- books_data_clean %>%
+  select(title, average_rating, publisher) %>%
+  filter(average_rating == 5)
+
+five_average_rating
+  
+```
+
+# What are the 5 longest books by number of pages?
+
+In case you feel like challenging yourself to reading the longest books!
+
+```{r}
+
+books_data_clean %>%
+  select(title, num_pages) %>% 
+  slice_max(num_pages, n = 5)
+
+books_data_clean %>%
+  select(title, num_pages) %>% 
+  slice_min(num_pages, n = 5)
+  
+```
+
+# Remove the 'zero page' titles
+
+There are 76 titles with zero pages, for the purposes of this data set I feel
+it appropriate to create a new subset without these titles.
+
+I have created a new object; non_zero_books which no longer includes titles
+with zero pages. This could be useful in other analysis if we wish to only
+investigate books that actually contain pages.
+
+```{r}
+
+books_data_clean %>% 
+  select(num_pages) %>% 
+  summarise(sum(num_pages == 0))
+
+non_zero_books <- books_data_clean %>% 
+  select(title, num_pages) %>% 
+  filter(!num_pages == 0)
+
+non_zero_books
+
+```
+
+
+
+# Creating a new column that finds the difference in page length from the mean
+
+This could be useful to determine whether or not you'd like to read the book, 
+given on how many more (or fewer) pages it deviates from the mean number of
+pages.
+
+```{r}
+
+non_zero_books %>%
+  select(title, num_pages) %>% 
+  mutate(diff_from_mean_pages <- num_pages - mean(num_pages))
+
+```
+
+# Lets view the difference by using the median instead of mean
+
+```{r}
+
+non_zero_books %>%
+  select(title, num_pages) %>% 
+  mutate(diff_from_mean_pages <- num_pages - median(num_pages))
+
+```
+
+
+# Lets compare books written with "eng" as a language code to those without
+
+```{r}
+
+books_data_clean %>% 
+  select(language_code) %>% 
+  group_by(language_code)
+
+eng_language <- books_data_clean %>% 
+  select(language_code) %>% 
+  mutate(language_code = if_else(language_code == "eng", "english", "non-english")) 
+
+eng_language
+
+```
+
+
+# Is there a correlation between the average rating and ratings count?
+
+Using ggplot to create a scatter plot we can see there is a weak positive
+correlation between the average rating and the ratings count. This could be
+explianed by the fact that popular books, ie those rated numerously, would
+be continually rated and favoured well.
+
+```{r}
+
+names(books_data_clean)
+ggplot(data = books_data_clean) +
+  geom_point(aes(x = average_rating, y = log(num_pages))) + 
+  theme_bw()
+
+```
+
+# Correlation coefficient between ratings_count, average_rating and num_pages
+
+To further explore the plot above, I decided to calculate the correlation
+coefficient between the three objects. It is clear to see there is close to no
+correlation between any of them. The most significant being a correlation
+coefficient of 0.15 (3sf) between average_rating and num_pages.
+
+```{r}
+
+cor_ratings <- books_data_clean %>% 
+  select(ratings_count, average_rating, num_pages)
+
+correlate(cor_ratings)
+
+```
+
