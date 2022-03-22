@@ -159,7 +159,15 @@ GROUP BY t.id
 HAVING count(e.id) * CAST(t.charge_cost AS int) > 5000
 ORDER BY count(e.id) * CAST(t.charge_cost AS int);
 
+-- Question 5
 
+/*
+ * How many of the employees serve on one or more committees?
+ */
 
+SELECT 
+    COUNT(DISTINCT employee_id)
+FROM employees_committees
+GROUP BY committee_id  ;
 
 
