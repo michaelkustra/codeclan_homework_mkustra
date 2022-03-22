@@ -147,7 +147,7 @@ FROM employees
 -- first_name, last_name and department.
 
 SELECT
-    concat(first_name, ' ', last_name, '-', department) 
+    concat(first_name, ' ', last_name, ' - ', department) AS badge_label 
 FROM employees 
 WHERE first_name IS NOT NULL AND 
 last_name IS NOT NULL AND 
@@ -160,8 +160,8 @@ department IS NOT NULL ;
 -- Further restrict output to only those employees with a stored start_date.
 
 SELECT
-    concat(first_name, ' ', last_name, '-', department, ' ',
-    ('joined', (EXTRACT (YEAR FROM start_date) )))
+    concat(first_name, ' ', last_name, ' - ', department, ' ',
+    ('joined', (EXTRACT (YEAR FROM start_date)))) AS badge_label 
 FROM employees 
 WHERE first_name IS NOT NULL AND 
 last_name IS NOT NULL AND 
