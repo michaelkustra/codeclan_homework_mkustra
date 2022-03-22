@@ -1,5 +1,6 @@
+-- Question 1
+
 /*
- * Question 1.
 *(a). Find the first name, last name and team name of employees who are members 
 * of teams.
 */
@@ -39,10 +40,9 @@ RIGHT JOIN teams AS t
 ON t.id = e.team_id
 WHERE CAST(t.charge_cost AS int)  > 80;
 
--- charge cost by team
+-- Question 2
 
 /*
- * Question 2.
  * (a). Get a table of all employees details, together with their local_account_no 
  * and local_sort_code, if they have them.
  */
