@@ -115,7 +115,7 @@ the females with lower body weight tend to wear lighter backpacks. In contrast
 for the men, we can see the teal points still show some correlation between
 backpack weight and body weight, however, are more spread than the points of
 female backpack wearers. I would guess that the correlation is stronger for
-female wearers than that of men. (eg correltion coefficient for female > men)
+female wearers than that of men. (eg correlation coefficient for female > men)
 
 # Question 6.
 
@@ -123,9 +123,10 @@ female wearers than that of men. (eg correltion coefficient for female > men)
 
 ```{r}
 
-#ggplot(backpack_data) +
-#  aes(x = backpack_weight, fill = back_problems == 1)+
-#  geom_bar()
+backpack_data %>%
+  group_by(back_problems) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
 
 ggplot(backpack_data) +
   aes(x = back_problems)+
@@ -146,6 +147,11 @@ __Interpretation__
 
 ```{r}
 
+backpack_data %>%
+  group_by(back_problems, sex) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+
 ggplot(backpack_data) +
   aes(x = back_problems, fill = sex)+
   geom_bar(colour = "grey30")+
@@ -159,8 +165,8 @@ ggplot(backpack_data) +
 __Interpretation__
 
 In those who reported having backpain, it was females who dominated this
-category. For those who reported no such pain, it was closer to equal, however, 
-males edged this category.
+category with 75%, compared to men at 25%. For those who reported no such pain, 
+it was closer to equal, however, males edged this category 54% to females at 46%.
 
 # Question 8.
 
@@ -177,6 +183,16 @@ backpain <- backpack_data %>%
 
 ggplot(backpain) +
   aes(x = backpack_weight, y = body_weight, colour = sex) +
+  geom_point()+
+  facet_wrap(~sex) +
+  labs(title = "Backpack Weight v Bodyweight v Gender",
+       y = "Body Weight (kgs)",
+       x = "Backpack Weight (kgs)",
+       colour = "Gender")+
+  theme_bw()
+
+ggplot(backpack_data) +
+  aes(x = backpack_weight, y = body_weight, colour = sex, group = back_problems) +
   geom_point()+
   facet_wrap(~sex) +
   labs(title = "Backpack Weight v Bodyweight v Gender",
