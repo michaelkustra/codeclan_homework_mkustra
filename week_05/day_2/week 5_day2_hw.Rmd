@@ -210,3 +210,49 @@ suffered from backpain were largely less than 150kgs and wore backpacks less
 thn 15kgs. In the men who suffered from backpain, their bodyweight were all 
 greater than 160kg, while backpack weight was firly evenly spread from 5kg to
 20kg.
+
+# Extension
+
+# Question 1.
+
+## Does reported backpain differ across the year groups? Ignore year 0 in your data.
+
+```{r}
+backpain <- backpack_data %>% 
+  filter(back_problems == 1)
+
+ggplot(backpain) +
+  aes(x = year)+
+  geom_bar(fill = "purple", colour = "grey20") +
+  labs(title = "Reported Back Pain per Year Group",
+       x = "Year Group",
+       y = "Frequency")+
+  theme_bw()
+
+```
+
+__Interpretation__
+
+Reported backpack does differ across the year groups, with year group 3 the
+clear leader in terms of number of students who reported backpain with 12. The
+next most popular is the year group 4 with 8 cases. Years 1, 2 and 5 are closer
+together.
+
+# Question 2.
+
+## Is there a difference between how heavy the bags those in different years carry?
+
+```{r}
+extra_heavy <- backpain %>% 
+  group_by(year, backpack_weight)
+
+ggplot(extra_heavy) +
+  aes(x = year)+
+  geom_bar() +
+  labs(title = "Reported Back Pain per Year Group",
+       x = "Year Group",
+       y = "Frequency")+
+  theme_bw()
+
+```
+
