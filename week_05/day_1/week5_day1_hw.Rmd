@@ -100,11 +100,12 @@ device_data <- device_data %>%
   mutate(minute_hours = ((hours*60)+mins))
 
 ggplot(device_data) +
-  geom_point(aes(x = minute_hours, y = counts, colour = device), show.legend = F) +
+  geom_line(aes(x = minute_hours, y = counts, colour = device), show.legend = F) +
   facet_grid(device~id) +
   labs(title = "Our Steps v Competitors",
        x = "Minutes",
        y = "Step Count")
   
+# changed from geom_point to geom_line to view trends better
 ```
 
