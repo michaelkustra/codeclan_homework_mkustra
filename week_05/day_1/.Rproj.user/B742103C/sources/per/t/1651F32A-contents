@@ -1,0 +1,260 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Data Vis
+
+Painting a picture with your data
+
+__General guidelines__
+
+You want your data vis to be easy to digest. No headaches looking at it.
+
+- clear axis labels, legends, titles
+- don't shorten your axes (bar plots should start at y = 0)
+- should be representative of the data
+- design should be as simple as possible (with fun and reason)
+- use the appropriate graph
+- provide the necessary context
+
+Data:Ink ratio
+
+(pioneered by Edward Tufte)
+
+aim to maximise amount of information conveyed compared to amount of ink used
+to print.
+
+# Using ggplot2
+
+(a very simplistic recipe)
+
+1. initiate plotting
+2. define aesthetics
+3. add geometry layer
+
+```{r}
+students <- read_csv("data/students.csv")
+```
+
+
+```{r}
+# first plot
+students %>% 
+  ggplot() +             # initiate plotting
+  aes(x = superpower) +  # set aesthetic mapping
+  geom_bar()             # geometry layer
+```
+
+# Inside or Outside the aesthetics
+
+`aes()` - allows you to change how something looks based on the data
+
+```{r}
+students %>% 
+  ggplot() +            
+  aes(x = superpower) +  
+  geom_bar(fill = "steel blue")             
+
+```
+
+`fill` = colour within a geom layer
+`colour` = colour that a geom layer is outlined with
+
+```{r}
+students %>% 
+  ggplot() +            
+  aes(x = superpower) +  
+  geom_bar(fill = "royal blue", colour = "red")  
+```
+
+```{r}
+# can provde colour aesthetic mapping too
+students %>% 
+  ggplot() +            
+  aes(x = superpower, fill = school_year) +  
+  geom_bar(colour = "black")  
+```
+
+# Position Adjustments
+
+__split up each year group into own bar using position = dodge__
+
+```{r}
+
+students %>% 
+  ggplot() +
+  aes(x = superpower, fill = school_year) +
+  geom_bar(colour = "black", position = "dodge")
+
+```
+
+
+__showcase proportions using position = fill__
+
+```{r}
+
+students %>% 
+  ggplot() +
+  aes(x = superpower, fill = school_year) +
+  geom_bar(colour = "black", position = "fill")
+
+```
+
+# Statistical Transformations
+
+same as first ggplot but longer. (useful if you already have a summary)
+must define stat argument in geom_bar to switch from default count.
+
+```{r}
+
+students %>% 
+  group_by(superpower, school_year) %>% 
+  summarise(count = n()) %>% 
+  ggplot() +
+  aes(x = superpower, y = count, fill = school_year) +
+# geom_bar(stat = "identity")
+  geom_col() +
+  labs(x = "\nSuperpower",                  # \n will space it down a line
+       y = "this is the y axis",
+       title = "School year superpowers",
+       fill = "School Year")
+
+# can use geom_col() in line 121 instead of line 120
+```
+
+`geom_col()` - column plot, requires x, y aesthetic mapping
+
+__Task__
+
+```{r}
+olympics <- read_csv("data/olympics_overall_medals.csv")
+```
+
+```{r}
+olympics %>% 
+  tail(5)
+```
+
+```{r}
+top_10 <- olympics %>%
+  filter(season == "Summer", medal == "Gold") %>%
+  arrange(desc(count)) %>%
+  top_n(10)
+```
+
+```{r}
+
+top_10 %>% 
+  ggplot() +
+  aes(x = team, y = count) +
+  geom_col(colour = "black", fill = "gold") +
+  labs(x = "\nCountry",
+       y = "Number of Gold Medals Won",
+       title = "Top 10 Gold Countries")+
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+
+```
+
+This plot shows firstly the top 10 nations in terms of number of gold medals
+won at summer olympics. Beyond that it shows the number of medals that each
+country has won.
+
+# Layers
+
+```{r}
+chick_weight <- ChickWeight %>% 
+  janitor::clean_names()
+```
+
+data relates to weighing chicks, after feeding them different diets. 
+
+```{r}
+ggplot(chick_weight)+
+  geom_line(aes(x = time, y = weight, group = chick, colour = diet), alpha = 0.25) +
+  geom_point(aes(x = time, y = weight, colour = diet), alpha = 0.4) +
+  geom_smooth(aes(x = time, y = weight, colour = diet))
+```
+
+This examines the different diets of the weight of the chicks.
+
+Also illustrates that we can define a "global" aesthetic mapping for a ggplot 
+object.
+
+```{r}
+ggplot(chick_weight) +
+  aes(x = time, y = weight, colour = diet) +         # global aes mapping
+  geom_line(aes(group = chick), alpha = 0.25) +
+  geom_point(alpha = 0.4) +
+  geom_smooth()
+
+
+```
+
+__Task 1__
+
+Go back to using the students dataset:
+
+Use geom_point to make a scatter graph, with the height of students on the x-axis 
+and their reaction time of the y axis.
+
+Make all the points blue. For geom_bar, the colour of the bar is controlled by 
+fill, but for geom_point the colour of the points are controlled by colour.
+
+Make the colour of the points depend on the superpower the student wishes they had.
+Write down what the graph tells you overall.
+
+```{r}
+
+ggplot(students) +
+  aes(x = height_cm, y = reaction_time, colour = superpower) +
+  geom_point()
+
+```
+
+__Task 2__
+Let’s load the dataset pets:
+
+```{r}
+pets <- read_csv("data/pets.csv")
+```
+
+Create a labelled scatter plot, of pet age vs. weight, with the following 5 mapping/aesthetics. For items 3-5 you may want to look at the help file of ?geom_point and read about different aesthetics:
+```{r}
+ggplot(pets) +
+  aes(x = age, y = weight, colour = sex, shape = animal) +
+  geom_point(size = 4) +
+  geom_text(aes(label = name), nudge_x = 0.7) +
+  labs(title = "pet weight by age")
+```
+
+We want age of the x-axis and weight on the y axis
+We want the points the be different colours depending on the gender of the pet
+We want different shapes depending on the type of animal
+We want all the points to be bigger than normal (size 4).
+We also want labels with the pets names next to every point.
+
+__Specify different data for different geoms__
+
+```{r}
+ggplot(pets) +
+  aes(x = age, y = weight, colour = sex, shape = animal) +
+  geom_point(size = 4) +
+  geom_text(aes(label = name), data = pets %>% filter(name == "Fluffy"),
+            nudge_x = 0.7)
+```
+
+# Saving plots
+
+- saves last plot by default
+
+```{r}
+
+ggsave("fluffy.png")
+
+```

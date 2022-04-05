@@ -1,0 +1,77 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Facets
+
+## Converting one plot into multiple related plots
+
+```{r}
+chick_weight <- ChickWeight %>% 
+  janitor::clean_names()
+```
+
+
+```{r}
+
+
+ggplot(chick_weight) +
+  aes(x = time, y = weight, group = chick, colour = diet) +
+  geom_line()
+```
+
+__facet based on diet__
+
+```{r}
+ggplot(chick_weight) +
+  aes(x = time, y = weight, group = chick, colour = diet) +
+  geom_line() +
+  facet_wrap(~diet)      # ~ needed to tell ggplot to facet on diet
+```
+
+__Task__
+
+Let's load in the benefits dataset, which has data on unemployed blue collar 
+workers in America.
+
+```{r}
+benefits <- read_csv("data/benefits.csv")
+```
+
+
+Use geom_histogram to create a histogram showing the number of unemployed by age. Then facet the graph based on biological sex.
+
+```{r}
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex), colour = "black") +
+  facet_wrap(~sex)
+```
+
+Hint: geom_histogram is almost the same as geom_bar, but is better suited to 
+plotting continuous data because of the binning.
+
+## Facet with respect to multiple variables
+
+what is we also wanted to split the plots based on marital status?
+
+```{r}
+
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex), show.legend = FALSE) +
+  facet_wrap(married~sex)
+
+```
+
+```{r}
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex)) +
+  facet_grid(married~sex)
+```
+
+```{r}
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex)) +
+  facet_grid(married~dkids, labeller = "label_both", scales = "free_y")
+# last argument in facet grid allows ggplot to change y scale as it sees fit
+```

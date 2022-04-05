@@ -46,16 +46,10 @@ ggplot(kwikbit) +
 ## Make a line chart showing monthly revenue and costs over the last year. This data is also in qb_monthly_sales.
 
 ```{r}
-
-without_kwikbit <- monthly_sales %>% 
-  filter(Cashflow != "Kwikbit Unit 1 Sales")
-
-ggplot(without_kwikbit)+
+ggplot(monthly_sales)+
   aes(x = Date, y = Amount, colour = Cashflow) +
   geom_line() +
   labs(title = "Revenue v Costs 2018-19")
-
-# fixed to remove kwikbit sales from graph
 ```
 
 # Question 4
@@ -66,7 +60,6 @@ ggplot(without_kwikbit)+
 
 fitness_trackers <- CodeClanData::qb_competitors
 
-options(scipen = 999)                   # turn off scientific notation
 ggplot(fitness_trackers) +
   aes(x = Year, y = Revenue, fill = Company) +
   geom_area() +

@@ -1,0 +1,27 @@
+{
+    "id": "1651F32A",
+    "path": "~/Documents/CodeClan/codeclan_work/week_05/day_1/Lesson_1_ggplot2.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "1015041518",
+    "contents": "",
+    "dirty": false,
+    "created": 1649086241088.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "179,49",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1649088048,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1649088048697,
+    "read_only": false,
+    "read_only_alternatives": []
+}
