@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+scot_export_data <- CodeClanData::scottish_exports
+scot_export_data
+```
+
+```{r}
+
+grouped_data <- scot_export_data %>% 
+  group_by(sector) %>% 
+  mutate(total_exports = sum(exports))
+
+options(scipen = 999)
+ggplot(grouped_data) +
+  aes(x = sector, y = total_exports)+
+  geom_col(fill = "seagreen")+
+  coord_flip()+
+  theme_bw()+
+  labs(title = "Scottish Exports by Sector",
+       x = "Sector Area",
+       y = "Total Exports (millions)")
+
+scot_export_data %>% 
+  distinct(sector)
+```
+
+```{r}
+total_grouped_exports <- scot_export_data %>% 
+  group_by(sector) %>% 
+  summarise(total_grouped_exports = sum(exports))
+# removed from shiny
+
+options(scipen = 999)
+ggplot(total_grouped_exports) +
+  aes(x = sector, y = total_grouped_exports)+
+  geom_col(fill = "seagreen")+
+  coord_flip()+
+  theme_bw()+
+  labs(title = "Scottish Exports by Sector",
+       x = "Sector Area",
+       y = "Total Exports")
+```
+
+```{r}
+ggplot(total_grouped_exports) +
+  aes(x = sector, y = total_grouped_exports)+
+  geom_col(fill = "seagreen")+
+  coord_flip()+
+  theme_bw()+
+  labs(title = "Scottish Exports by Sector",
+       x = "Sector Area",
+       y = "Total Exports")
+```
+
+```{r}
+all_sectors <- scot_export_data %>% 
+  distinct(sector)
+```
+
+```{r}
+ scot_export_data %>%
+      filter(year == input$year_input) %>%
+      filter(sector == input$sector_input) %>%
+      ggplot() +
+      aes(x = sector, y = exports, fill = exports) +
+      geom_col() +
+      scale_fill_manual(values = c("Gold" = "#C7B750", "Silver" = "#A7B6B8", 
+                                   "Bronze" = "#82642B"))
+```
+
+```{r}
+scot_export_data %>% 
+ggplot()+
+  aes(x = year, y = exports, fill = sector) +
+  geom_col()
+```
+
