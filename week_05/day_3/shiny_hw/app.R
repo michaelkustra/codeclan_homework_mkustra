@@ -18,7 +18,7 @@ all_sectors <- scot_export_data$sector
 ui <- fluidPage(
   
   
-  titlePanel(tags$h2("Scottish Exports by Sector: 2002-2017")),
+  titlePanel(tags$h2("Scottish Exports by Sector: 2002-2017 💰🐠🌳⛏💡")),
   
   theme = shinytheme("yeti"),
   
@@ -26,7 +26,7 @@ ui <- fluidPage(
     sidebarPanel(
       selectizeInput(
           "year_input",
-          tags$i("Export Year"),
+          tags$i("Select Year"),
           choices = c("2002", "2003", "2004", "2005", "2006", "2007", "2008",
                     "2009", "2010", "2011", "2012", "2013", "2014", "2016",
                     "2017")
@@ -58,9 +58,18 @@ server <- function(input, output) {
       scot_export_data %>%
         #filter(year == input$year_input) %>%
         filter(sector == input$sector_input) %>%
+        mutate(year_select = if_else(
+          year == input$year_input, "yes", "no")
+        ) %>% 
         ggplot()+
         aes(x = year, y = exports, fill = sector) +
-        geom_col(fill = "steel blue", colour = "black")
+        geom_col(aes(fill = year_select)) +
+        geom_line() +
+        geom_point() +
+        geom_text(aes(label = exports), vjust = -1) +
+        labs(x = "Year",
+             y = "Total Exports")+
+        theme_bw()
 
 
 })
