@@ -44,7 +44,7 @@ ui <- fluidPage(
   
       mainPanel(
         plotOutput("export_Plot"),
-        tags$a("Scot Gov Export Statistics", href = 
+        tags$a("Click here for Scot Gov Export Statistics", href = 
                  "https://www.gov.scot/collections/export-statistics/")
       )
   )
