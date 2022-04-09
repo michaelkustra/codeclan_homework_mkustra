@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+games_data <- CodeClanData::game_sales
+```
+
+```{r}
+ggplot(games_data) +
+  aes(x = critic_score, y = user_score) +
+  geom_point()
+
+games_data %>% 
+  distinct(year_of_release)
+```
+
+```{r}
+a <- games_data %>% 
+group_by(developer, publisher) %>% 
+  distinct()
+```
+
+
