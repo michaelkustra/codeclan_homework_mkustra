@@ -6,6 +6,10 @@ output: html_notebook
 ```{r}
 library(tidyverse)
 games_data <- CodeClanData::game_sales
+
+ggplot(games_data) +
+  aes(x = name, y = user_score) +
+  geom_col()
 ```
 
 ```{r}
@@ -21,6 +25,17 @@ games_data %>%
 a <- games_data %>% 
 group_by(developer, publisher) %>% 
   distinct()
+```
+
+
+```{r}
+ggplot(games_data) +
+  aes(x = year_of_release, y = sales) +
+  geom_line(colour = "tomato") +
+  labs(title = "Time Series of Sales",
+       x = "Year of Release",
+       y = "Sales") +
+  theme_bw()
 ```
 
 
