@@ -1,0 +1,16 @@
+"0","```r
+
+(1/2) * (1/6)
+
+s_die <- rolldie(1)
+
+s_coin <- tosscoin(1)
+
+s_total <- merge(s_coin, s_die)
+
+event <- s_total %>% 
+  filter(toss1 == \"H\" & X1 == 6)
+
+p_event <- nrow(event)/nrow(s_total)
+
+```"

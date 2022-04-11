@@ -1,0 +1,4 @@
+"0","```r
+s_two_dice %>% 
+  summarise(size_of_sample = n())
+```"

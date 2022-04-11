@@ -1,0 +1,23 @@
+"0","```r
+library(gtools)
+permutations(7, 4)
+
+
+# create vector of choices contains ten employees, n = 10. 
+employees <- c(\"Alice\", \"Bob\", \"Carole\", \"David\", \"Elaine\", \"Fred\", \"Gabra\", \"Hua\", \"Inigo\", \"Hugo\")
+
+# Choose three at a time, r = 3
+# Don't replace an employee once chosen: repeats.allowed = FALSE
+seniors <- as_tibble(permutations(n = 10, r = 3, v = employees, repeats.allowed = FALSE))
+
+# rename the variables in seniors to something better
+seniors <- seniors %>%
+  rename(
+    CEO = V1,
+    CTO = V2,
+    COO = V3
+  )
+
+# let's see what the seniors matrix looks like
+seniors
+```"

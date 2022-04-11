@@ -1,0 +1,4 @@
+"0","```r
+s_four_coins <- tosscoin(4) %>% 
+  mutate(row = row_number())
+```"
