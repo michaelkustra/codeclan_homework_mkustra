@@ -126,3 +126,30 @@ __Solution__
 
 120 unique permutations. Only 1 correct order (in terms of decreasing height), 
 thus, probability is 1/120, or 0.008333333.
+
+# Question 5
+
+## 6, 5, 4, 3, 2, 1 in that order
+
+```{r}
+rolldie(6) %>% 
+  nrow()
+  
+
+isin(s_six_dice, c(6, 5, 4, 3, 2, 1), ordered = TRUE) %>% 
+  sum()
+```
+
+__Solution__
+```{r}
+options(scipen = 10)
+(1/6)^6
+```
+0.00002143347, or 0.002%
+
+## what is the probability I see one each of the numbers 6, 5, 4, 3, 2 and 1 on the dice regardless of order?
+
+__Solution__
+
+720 possible desired outcomes, 46656 total possible outcomes.
+720/46656 = 0.0154321 or 1.54%.
