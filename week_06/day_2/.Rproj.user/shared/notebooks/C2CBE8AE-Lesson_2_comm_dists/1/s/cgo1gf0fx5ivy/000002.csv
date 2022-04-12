@@ -1,0 +1,22 @@
+"0","```r
+account_salary_stats <- jobs %>% 
+  filter(position == \"Accounting\") %>% 
+  summarise(
+    num = n(),
+    mean = mean(salary),
+    sd = sd(salary)
+  )
+options(scipen = 10)
+jobs %>% 
+  filter(position == \"Accounting\") %>% 
+  ggplot(aes(x = salary)) +
+  geom_histogram(aes(y = ..density..), col = \"white\", bins = 25) + 
+  stat_function(
+    fun = dnorm,
+    args = list(
+      mean = account_salary_stats$mean,
+      sd = account_salary_stats$sd
+    ),
+    col = \"tomato\"
+  )
+```"

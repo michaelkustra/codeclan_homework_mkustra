@@ -1,0 +1,14 @@
+"0","```r
+dice <- tibble(
+  x = 1:6,
+  f_x = replicate(6, 1/6)
+)
+
+dice %>% 
+  ggplot() +
+  aes(x = x, y = f_x) +
+  geom_col() +
+  labs(x = \"number rolled on die\",
+       y = \"probability\")+
+  scale_x_continuous(breaks = 1:6)
+```"

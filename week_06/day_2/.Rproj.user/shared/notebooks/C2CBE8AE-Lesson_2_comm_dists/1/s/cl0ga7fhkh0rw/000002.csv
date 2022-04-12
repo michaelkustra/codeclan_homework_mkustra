@@ -1,0 +1,7 @@
+"0","```r
+management_scaled <- jobs %>%
+  filter(position == \"Management\") %>% 
+  mutate(z_salary = scale(salary))
+
+management_scaled
+```"

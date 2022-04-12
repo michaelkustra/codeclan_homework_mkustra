@@ -1,0 +1,14 @@
+"0","```r
+three_norm <- tibble(
+  x = seq(0, 20, 0.1),
+  f1_x = dnorm(x = x, mean = 10, sd = 1),
+  f2_x = dnorm(x = x, mean = 10, sd = 2),
+  f3_x = dnorm(x = x, mean = 10, sd = 3)
+)
+
+three_norm %>% 
+  ggplot() +
+  geom_line(aes(x = x, y = f1_x), col = \"black\")+
+  geom_line(aes(x = x, y = f2_x), col = \"tomato\")+
+  geom_line(aes(x = x, y = f3_x), col = \"seagreen\")
+```"

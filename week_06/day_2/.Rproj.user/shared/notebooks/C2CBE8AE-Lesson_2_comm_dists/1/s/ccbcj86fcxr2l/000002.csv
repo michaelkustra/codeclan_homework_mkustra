@@ -1,0 +1,17 @@
+"0","```r
+dice <- tibble(
+  x = 1:6,
+  f_x = replicate(6, 1/6)
+) %>% 
+  mutate(F_X = cumsum(f_x))
+
+dice %>% 
+  ggplot() +
+  aes(x = x, y = F_X) +
+  geom_step() +
+  labs(x = \"number rolled on die\",
+       y = \"probability\") +
+  scale_x_continuous(breaks = 1:6) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1)) +
+  ylim(0, 1)
+```"

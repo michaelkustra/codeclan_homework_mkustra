@@ -1,0 +1,37 @@
+"0","library(prob)
+"
+"2","Loading required package: combinat
+"
+"2","
+Attaching package: ‘combinat’
+
+"
+"2","The following object is masked from ‘package:utils’:
+
+    combn
+
+"
+"2","Loading required package: fAsianOptions
+"
+"2","Loading required package: timeDate
+"
+"2","Loading required package: timeSeries
+"
+"2","Loading required package: fBasics
+"
+"2","Loading required package: fOptions
+"
+"2","
+Attaching package: ‘prob’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    intersect, setdiff, union
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, union
+
+"

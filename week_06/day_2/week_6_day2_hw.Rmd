@@ -1,0 +1,139 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(janitor)
+library(prob)
+```
+
+# Question 1
+
+## Load, clean and explore data
+
+```{r}
+customer_data <- read_csv("data/20190928-items.csv") %>% 
+  clean_names()
+
+customer_data %>% 
+  glimpse()
+
+customer_data %>% 
+  head(5)
+
+dim(customer_data)
+  
+```
+
+# Question 2
+
+## Find the brand with the highest numbers of phones in the dataset.
+
+```{r}
+
+customer_data %>% 
+  group_by(brand) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+
+```
+_Solution_
+
+Samsung is most popular brand of phone with 397 reviews left from one.
+
+# Question 3
+
+## For your top brand, plot the distribution of phone ratings as a probability density, overlaying a fitted normal distribution. Do you think the normal distribution provides a good model of these ratings?
+
+```{r}
+
+samsung_stats <- customer_data %>% 
+  dplyr::filter(brand == "Samsung") %>% 
+  summarise(
+    num = n(),
+    mean = mean(rating),
+    sd = sd(rating)
+  )
+
+customer_data %>% 
+  dplyr::filter(brand == "Samsung") %>% 
+  ggplot(aes(x = rating)) +
+  geom_histogram(aes(y = ..density..), col = "grey40", bins = 30) +
+  stat_function(
+    fun = dnorm, args = list(
+      mean = samsung_stats$mean,
+      sd = samsung_stats$sd),
+    col = "tomato"
+  )
+
+```
+
+_Solution_
+
+The normal distribution provides an approximate model of our data, though it is
+not perfect, it provides a 'loose' fit. Our data generally follows a bell curve, 
+with a few extra peaks.
+
+# Question 4
+
+## We can be more quantitative in comparing the distribution of top brand ratings with a normal distribution. You calculated the mean() and sd() of your distribution in an earlier question. Use these values to calculate the proportions of ratings within one-, two- and three standard deviations of the mean. Compare these proportions with those you expect for a normal distribution.
+
+__within 1 sd ~ 68% expected__
+
+```{r}
+
+samsung_scaled <- customer_data %>%
+  dplyr::filter(brand == "Samsung") %>% 
+  mutate(z_rating = scale(rating))
+
+count <- samsung_scaled %>% 
+  dplyr::filter(between(z_rating, left = -1, right = 1)) %>% 
+  nrow()
+
+(count / nrow(samsung_scaled))*100
+```
+
+_Solution_
+
+79.3% of our data is within 1 sd of the sample mean. This is greater than the 
+68% we would expect if it followed a normal distribution. 
+
+__within 2 sd ~ 95% expected__
+
+```{r}
+count <- samsung_scaled %>% 
+  dplyr::filter(between(z_rating, left = -2, right = 2)) %>% 
+  nrow()
+
+(count / nrow(samsung_scaled))*100
+```
+
+_Solution_
+
+91.9% of our data lies within 2 sd of our sample mean, which falls narrowly
+short of our benchmark of 95% we would expect if it followed a normal 
+distribution.
+
+__within 3 sd ~ 99.7% expected__
+
+```{r}
+count <- samsung_scaled %>% 
+  dplyr::filter(between(z_rating, left = -3, right = 3)) %>% 
+  nrow()
+
+(count / nrow(samsung_scaled))*100
+```
+
+_Solution_
+
+98.0% of our data lies within 3 sd, again, narrowly falling short of the 99.7%
+we would expect to lie within 3 sd if it were to follow a normal distribution.
+
+__Overall comments on the distribution__
+
+After overlaying a fitted normal distribution onto our earlier probability
+density plot, it was apparent that our data 'loosely' followed a normal
+distribution, but not with 100% confidence (much like all statistics). The above
+calculations prove this point empirically, with us only managing to satisy the
+68% portion of the empirical rule and falling slightly short on the 95% & 99.7%.
