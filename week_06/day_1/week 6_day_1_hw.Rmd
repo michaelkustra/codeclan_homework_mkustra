@@ -75,8 +75,8 @@ P(<5) = 4/6 = 2/3
 
 __Solution__
 
-Since each die is independent of one another, total sample space will be 18
-(6 on each die x 3)
+Since each die is independent of one another, total sample space will be 216
+(6^3)
 
 # Question 3
 
