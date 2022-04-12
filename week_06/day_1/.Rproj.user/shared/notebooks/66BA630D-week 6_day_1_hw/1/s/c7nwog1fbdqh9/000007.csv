@@ -1,10 +1,6 @@
-"0","s_four_dice <- rolldie(4) %>% 
-  mutate(total = X1 + X2 + X3 + X4) %>% 
-  filter(total == c(5, 6, 7)) %>% 
-  nrow()
-s_four_dice
+"0","s_four_dice
 "
 "1","[1]"
-"1"," 9"
+"1"," 34"
 "1","
 "

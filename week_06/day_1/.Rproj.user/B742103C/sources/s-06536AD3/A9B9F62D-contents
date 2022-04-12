@@ -87,7 +87,7 @@ Since each die is independent of one another, total sample space will be 216
 ```{r}
 s_four_dice <- rolldie(4) %>% 
   mutate(total = X1 + X2 + X3 + X4) %>% 
-  filter(total == c(5, 6, 7)) %>% 
+  filter(total %in% c(5, 6, 7)) %>% 
   nrow()
 s_four_dice
 ```
