@@ -1,0 +1,8 @@
+"0","```r
+bootstrap_200_plot <- bootstrap_resample_200 %>% 
+  ggplot(aes(x = mean_tenure)) +
+  geom_histogram(colour = \"grey40\", fill = \"sky blue\", alpha = 0.7) +
+  labs(x = \"mean tenure from bootstrap 200 sample\")
+
+bootstrap_200_plot
+```"

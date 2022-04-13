@@ -1,0 +1,10 @@
+"0","```r
+
+pop_sale_price <- mean(house_sales$sale_price)
+
+results <- results %>% 
+  mutate(popn_param_in_ci = ifelse(lower < pop_sale_price, 
+                                    upper > pop_sale_price, TRUE))
+
+
+```"

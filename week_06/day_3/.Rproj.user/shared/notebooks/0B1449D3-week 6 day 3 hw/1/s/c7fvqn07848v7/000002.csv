@@ -1,0 +1,4 @@
+"0","bootstrap_99_ci <- bootstrap_sample_100 %>% "
+"0","  get_confidence_interval(level = 0.99, type = ""percentile"")"
+"0",""
+"0","bootstrap_99_ci"

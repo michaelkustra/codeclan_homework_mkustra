@@ -1,0 +1,9 @@
+"0","```r
+library(infer)
+
+bootstrap_resample_200 <- sample_200 %>% 
+  rep_sample_n(size = 200, replace = TRUE, reps = 5000) %>% 
+  summarise(
+    mean_tenure = mean(tenure)
+  )
+```"

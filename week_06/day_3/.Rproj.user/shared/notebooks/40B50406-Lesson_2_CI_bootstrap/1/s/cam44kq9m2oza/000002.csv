@@ -1,0 +1,10 @@
+"0","```r
+ci_99 <- bootstrap_resample_200 %>% 
+  summarise(
+    mean = mean(mean_tenure),
+    lower_bound = quantile(mean_tenure, 0.005),
+    upper_bound = quantile(mean_tenure, 0.995)
+  )
+
+ci_99
+```"

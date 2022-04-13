@@ -1,0 +1,5 @@
+"0","lot_area_plot <- ames %>% "
+"0","  ggplot(aes(x = lot_area)) +"
+"0","  geom_histogram(colour = ""grey40"", fill = ""seagreen"", bins = 30)"
+"0",""
+"0","lot_area_plot"

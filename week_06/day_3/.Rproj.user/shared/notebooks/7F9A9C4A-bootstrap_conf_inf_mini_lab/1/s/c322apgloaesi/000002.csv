@@ -1,0 +1,7 @@
+"0","```r
+
+results %>% 
+  summarise(
+    ci_95_check = sum(popn_param_in_ci)/n()
+  )
+```"

@@ -1,0 +1,35 @@
+"0","```r
+library(tidyverse)
+library(infer)
+library(janitor)
+
+telco <- read_csv(here::here(\"data/telecomms_churn.csv\")) %>% 
+  clean_names()
+```"
+"1","New names:
+* `` -> ...1
+"
+"1","Rows: 7043 Columns: 22
+── Column specification ───────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr (17): customerID, gender, Partner, Dependents, PhoneService, MultipleLines, Int...
+dbl  (5): ...1, SeniorCitizen, tenure, MonthlyCharges, TotalCharges
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","```r
+# sample 200
+sample_200 <- telco %>% 
+  rep_sample_n(size = 200, reps = 1)
+
+summary_sample_200 <- sample_200 %>% 
+    ungroup() %>% 
+      summarise(
+        mean_monthly_charges = mean(monthly_charges),
+        mean_tenure = mean(tenure),
+        prop_churn = mean(churn == \"Yes\")
+      )
+
+summary_sample_200
+```"

@@ -1,0 +1,6 @@
+"0","```r
+mean_infer <- infer_resample %>% 
+  summarise(mean = mean(stat))
+
+mean_infer
+```"

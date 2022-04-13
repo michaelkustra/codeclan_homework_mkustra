@@ -1,0 +1,10 @@
+"0","```r
+bootstrap_resample <- sample_200 %>% 
+  specify(response = Churn, success = \"Yes\") %>% 
+  generate(reps = 5000, type = \"bootstrap\") %>% 
+  calculate(stat = \"prop\")
+
+head(bootstrap_resample)
+```"
+"1","Response: Churn (factor)
+"

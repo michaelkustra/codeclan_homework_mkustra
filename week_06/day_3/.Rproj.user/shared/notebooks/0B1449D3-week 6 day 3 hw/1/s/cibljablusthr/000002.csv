@@ -1,0 +1,6 @@
+"0",""
+"0","bootstrap_sample_100_visual <- bootstrap_sample_100 %>% "
+"0","  visualise(bins = 30)"
+"0",""
+"0","bootstrap_sample_100_visual"
+"0",""

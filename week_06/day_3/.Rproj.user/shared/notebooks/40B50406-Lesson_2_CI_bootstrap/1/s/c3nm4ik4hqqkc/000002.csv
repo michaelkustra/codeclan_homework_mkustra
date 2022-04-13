@@ -1,0 +1,5 @@
+"0","```r
+infer_resample %>% 
+  visualise(bins = 25) +
+  shade_confidence_interval(endpoints = infer_ci_95)
+```"

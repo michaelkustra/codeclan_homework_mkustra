@@ -1,0 +1,5 @@
+"0","```r
+bootstrap_resample_200 %>% 
+  ggplot(aes(x = mean_tenure)) +
+  geom_histogram(col = \"grey40\", fill = \"seagreen\", alpha = 0.7)
+```"

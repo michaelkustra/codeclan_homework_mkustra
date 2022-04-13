@@ -1,0 +1,9 @@
+"0","```r
+summary_popn <- telco %>%
+  summarise(
+    mean_monthly_charges = mean(monthly_charges), 
+    mean_tenure = mean(tenure),
+    prop_churn = mean(churn == \"Yes\")
+  ) 
+summary_popn
+```"

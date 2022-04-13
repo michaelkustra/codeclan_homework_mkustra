@@ -1,0 +1,5 @@
+"0",""
+"0","point_estimate_lot_area <- bootstrap_sample_100 %>% "
+"0","  summarise(mean = mean(stat))"
+"0",""
+"0","point_estimate_lot_area"

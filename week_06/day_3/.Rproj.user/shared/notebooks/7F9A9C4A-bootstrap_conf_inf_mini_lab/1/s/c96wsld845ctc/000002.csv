@@ -1,0 +1,4 @@
+"0","```r
+house_sales <- read_csv(here::here(\"data/ames.csv\")) %>% 
+  clean_names()
+```"

@@ -1,0 +1,5 @@
+"0","```r
+bootstrap_resample %>% 
+  visualise(bins = 30) +
+  shade_confidence_interval(endpoints = churn_ci_95)
+```"

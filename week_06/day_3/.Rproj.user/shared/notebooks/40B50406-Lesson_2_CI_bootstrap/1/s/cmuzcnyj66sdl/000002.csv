@@ -1,0 +1,8 @@
+"0","```r
+std_error_bootstrap <- bootstrap_resample_200 %>% 
+  summarise(
+    se_mean_tenure = sd(mean_tenure)
+  )
+
+std_error_bootstrap
+```"

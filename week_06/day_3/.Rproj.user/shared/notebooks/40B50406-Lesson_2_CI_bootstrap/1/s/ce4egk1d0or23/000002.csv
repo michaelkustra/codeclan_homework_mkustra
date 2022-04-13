@@ -1,0 +1,13 @@
+"0","```r
+infer_resample <- sample_200 %>% 
+  # which variable we are interested in
+  specify(response = tenure) %>% 
+  # the replicates to sample
+  generate(reps = 5000, type = \"bootstrap\") %>% 
+  # statistic we are interested in for each resample
+  calculate(stat = \"mean\")
+
+infer_resample
+```"
+"1","Response: tenure (numeric)
+"

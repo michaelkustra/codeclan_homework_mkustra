@@ -1,0 +1,9 @@
+"0","```r
+sale_price_hist <- house_sales %>% 
+  ggplot(aes(x = sale_price)) +
+  geom_histogram(colour = \"grey40\", fill = \"tomato\")
+
+sale_price_hist
+```"
+"1","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+"
