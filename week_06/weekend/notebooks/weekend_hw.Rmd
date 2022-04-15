@@ -165,13 +165,7 @@ null_distribution %>%
   visualise(bins = 30) +
   shade_p_value(obs_stat = observed_stat, direction = "right")
 ```
-H0: The mean sleep for omnivores = mean sleep for herbivores
 
-$$H_0: \mu_{omnivore\ sleep} =\ \mu_{herbivore\ sleep}$$
-
-Ha: The mean sleep for omnivores > mean sleep for herbivores
-
-$$H_A: \mu_{omnivore\ sleep} >\ \mu_{herbivore\ sleep}$$
 ### Calculate p-value
 
 ```{r}
