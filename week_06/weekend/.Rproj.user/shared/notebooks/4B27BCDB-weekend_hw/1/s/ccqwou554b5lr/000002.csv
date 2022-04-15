@@ -1,0 +1,3 @@
+"0","prop_null_distribution %>% "
+"0","  visualise(bins = 30) +"
+"0","  shade_p_value(obs_stat = prop_observed_stat, direction = ""both"")"

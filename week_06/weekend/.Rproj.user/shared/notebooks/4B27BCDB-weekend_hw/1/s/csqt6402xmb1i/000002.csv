@@ -1,0 +1,8 @@
+"0","prop_observed_stat <- sleep_tidy_prop %>% "
+"0","  specify(response = domesticated_flag, success = ""domesticated"") %>% "
+"0","  calculate(stat = ""prop"")"
+"0",""
+"0","prop_observed_stat"
+"1","Response: domesticated_flag (factor)"
+"1","
+"

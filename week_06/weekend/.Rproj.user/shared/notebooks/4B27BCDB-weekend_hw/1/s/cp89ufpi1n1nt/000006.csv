@@ -1,0 +1,11 @@
+"0","prop_null_distribution <- sleep_tidy_prop %>%"
+"0","  specify(response = domesticated_flag, success = ""domesticated"") %>% "
+"0","  hypothesize(null = ""point"", p = 0.05) %>%"
+"0","  generate(reps = 10000, type = ""draw"") %>%"
+"0","  calculate(stat = ""prop"")"
+"0",""
+"0","head(prop_null_distribution)"
+"1","Response: domesticated_flag (factor)
+Null Hypothesis: point"
+"1","
+"

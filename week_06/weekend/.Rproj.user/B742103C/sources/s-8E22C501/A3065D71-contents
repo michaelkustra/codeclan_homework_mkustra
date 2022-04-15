@@ -3,8 +3,9 @@ title: "weekend homework"
 subtitle: "hypothesis testing"
 output: html_notebook
 ---
+# 1.1 Hypothesis testing - practical
 
-# Load Packages
+## Load Packages
 
 ```{r}
 library(tidyverse)
@@ -12,16 +13,16 @@ library(janitor)
 library(infer)
 ```
 
-# Read in Sleep Data
+## Read in Sleep Data
 
 ```{r}
 sleep <- ggplot2::msleep %>% 
   clean_names()
 ```
 
-# Question 1.
+## Question 1.
 
-## Explore the dataset and familiarise yourself with it.
+### Explore the dataset and familiarise yourself with it.
 
 ```{r}
 # dimensions of data 
@@ -31,9 +32,9 @@ dim(sleep)
 glimpse(sleep)
 ```
 
-# Question 2.
+## Question 2.
 
-## Jabberwockies sleep for around 7 hours a night, on average. Perform an appropriate statistical test to determine whether the mean sleep_total in the sampled population of animal types differs from the typical value for jabberwockies.
+### Jabberwockies sleep for around 7 hours a night, on average. Perform an appropriate statistical test to determine whether the mean sleep_total in the sampled population of animal types differs from the typical value for jabberwockies.
 
 ### Hypotheses
 
@@ -99,7 +100,7 @@ difference in mean sleep total and mean jabberwockie sleep is zero. It would
 appear that a more suitable assumption is that there is a statistically
 significant difference in the mean sleep totals of animals v jabberwockies.
 
-# Question 3.
+## Question 3.
 
 ## Perform an appropriate statistical test to determine whether omnivores sleep for significantly longer than herbivores, on average.
 
@@ -176,10 +177,184 @@ __Outcome__
 
 Since the p-value of 0.1232 > 0.05, we fail to reject the null hypothesis and
 say that there is no statistically significant difference in mean sleep between
-omnivores and herbivores.
+omnivores and herbivores. We don't have a enough evidence to reject the null 
+and say that assumption holds for now.
 
 
-# Question 4. 
+## Question 4. 
 
 ## Perform an appropriate statistical test to determine whether the proportion of domesticated animal types in the population of animal types is greater than 5%.
+
+### Clean Data
+
+```{r}
+sleep_tidy <- sleep %>%
+  filter(!is.na(conservation))
+
+sleep_tidy_prop <- sleep_tidy %>%
+  mutate(domesticated_flag = if_else(conservation == "domesticated", "domesticated",
+                                     "undomesticated"))
+
+```
+
+
+### Hypotheses
+
+H0: Proportion domesticated animals types = 5%
+
+Ha: Proportion domesticated animal types > 5%
+
+### Observed Stat
+
+```{r}
+prop_observed_stat <- sleep_tidy_prop %>% 
+  specify(response = domesticated_flag, success = "domesticated") %>% 
+  calculate(stat = "prop")
+
+prop_observed_stat
+```
+
+### Create Null Sample Distribution
+
+```{r}
+prop_null_distribution <- sleep_tidy_prop %>%
+  specify(response = domesticated_flag, success = "domesticated") %>% 
+  hypothesize(null = "point", p = 0.05) %>%
+  generate(reps = 10000, type = "draw") %>%
+  calculate(stat = "prop")
+
+head(prop_null_distribution)
+```
+
+### Visualise Null Sampling Distribution and Observed Statistic
+
+```{r}
+prop_null_distribution %>% 
+  visualise(bins = 30) +
+  shade_p_value(obs_stat = prop_observed_stat, direction = "both")
+```
+
+### Calculate p-value
+
+```{r}
+p_value <- prop_null_distribution %>%
+  get_p_value(obs_stat = prop_observed_stat, direction = "right")
+
+options(scipen = 999)
+p_value
+```
+
+__Outcome__
+
+Since the p-value of 0.0003 < 0.05, we reject the null hypothesis and
+say there is statistical significance to say that they proportion of 
+domesticated animal types is greater than 5%. We are not accepting the 
+alternative, rather saying we reject the null and the alternative is a more
+suitable assumption for the time being.
+
+# 1.2 Hypothesis testing - Defining the Hypothesis
+
+## Question 1
+
+### Solutions
+
+__Test Used__
+
+I would carry out a one sample proportion test.
+
+__Hypotheses__
+
+H0: The proportion of residents that have heard of the coffee shop is less
+than 40%.
+
+$$H_0: \pi_{residents} <\ 40\%$$
+
+Ha: The proportion of residents that have heard of the coffee shop is 
+greater than or equal to 40%.
+
+$$H_0: \pi_{residents} > or = 40\%$$
+__Method__
+
+I would use a simulation to carry out this test with null = point and p = 0.4.
+
+## Question 2
+
+### Solutions
+
+__Test Used__
+
+I would use a two sample proportion test.
+
+__Hypotheses__
+
+H0: There is no difference in proportions between group A and group B.
+
+$$H_0: \pi_{group\ A} - \pi_{group\ B} = 0$$
+
+Ha: the proportion of users clicking on the banner in group B is greater than
+the proportions of users clicking on the banner in group A.
+
+$$H_0: \pi_{group\ B} - \pi_{group\ A}> 0$$
+
+__Method__
+
+I would use permutation to switch the users CTR between group A and group B.
+
+## Question 3
+
+### Solutions
+
+_Test Used__
+
+I would use a one sample mean test.
+
+__Hypotheses__
+
+Ho: There is no  difference in mean width from 145mm
+
+$$H_0: \mu_{width} = 145$$
+Ha: There is a significant difference in mean width from 145mm 
+
+$$H_0: \mu_{width} \ne 145$$
+
+__Method__
+
+I would use the bootstrap method to create a null sample distribution.
+
+# 1.3 Hypothesis Testing - Interpreting the results
+
+## Question 1.
+
+### Coffee shop problem. Significance level: 0.05, calculated p-value: 0.07
+
+__Interpretation__
+
+Since the p-value of 0.07 > 0.05, we fail to reject the null hypothesis and say
+that we have insufficient evidence to say that a greater proportion than 40%
+residents have heard of the coffee shop. 
+
+## Question 2.
+
+### Website company problem. Significance level: 0.01, p-value: 0.006
+
+__Interpretation__
+
+Since the p-value of 0.006 < 0 .01, we reject the null hypothesis and say
+there is a statistical significance in CTR between the groups. It appears that 
+there is a greater CTR when the banner is placed at the top of the screen. It 
+should be said that this is only our currently working assumption until something
+else comes along.
+
+## Question 3.
+
+### Manufacturing company problem. Significance level: 0.05, p-value: 0.55
+
+__Interpretation__
+
+Since the p-value of 0.55 > 0.05, we fail to reject the null hypothesis and say
+that there appears to be no statistically significant difference in mean width
+from 145mm. Again, it doesn't mean this is the conclusion, this is just our
+current working assumption based on the evidence.
+
+
 
