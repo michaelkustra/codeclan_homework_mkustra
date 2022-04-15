@@ -1,0 +1,2 @@
+"0","omni_herbi_sleep <- sleep %>% "
+"0","  filter(vore %in% c(""omni"", ""herbi""))"

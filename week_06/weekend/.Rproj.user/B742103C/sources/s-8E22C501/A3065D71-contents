@@ -107,14 +107,14 @@ significant difference in the mean sleep totals of animals v jabberwockies.
 
 ```{r}
 omni_herbi_sleep <- sleep %>% 
-  filter(vore == c("omni", "herbi"))
+  filter(vore %in% c("omni", "herbi"))
 ```
 
 ### Hypotheses
 
 H0: The mean sleep for omnivores <= mean sleep for herbivores
 
-$$H_0: \mu_{omnivore\ sleep} <or=\ \mu_{herbivore\ sleep}$$
+$$H_0: \mu_{omnivore\ sleep} =\ \mu_{herbivore\ sleep}$$
 
 Ha: The mean sleep for omnivores > mean sleep for herbivores
 
@@ -140,7 +140,7 @@ omni_herbi_sleep %>%
 
 observed_stat <- omni_herbi_sleep %>% 
   specify(sleep_total~vore) %>% 
-  calculate(stat = "diff in means", order = c ("herbi", "omni"))
+  calculate(stat = "diff in means", order = c ("omni", "herbi"))
   
 observed_stat
 
@@ -153,7 +153,7 @@ null_distribution <- omni_herbi_sleep %>%
   specify(sleep_total~vore) %>% 
   hypothesise(null = "independence") %>% 
   generate(reps = 10000, type = "permute") %>% 
-  calculate(stat = "diff in means", order = c("herbi", "omni"))
+  calculate(stat = "diff in means", order = c("omni", "herbi"))
   
 null_distribution
 ```
@@ -165,7 +165,13 @@ null_distribution %>%
   visualise(bins = 30) +
   shade_p_value(obs_stat = observed_stat, direction = "right")
 ```
+H0: The mean sleep for omnivores = mean sleep for herbivores
 
+$$H_0: \mu_{omnivore\ sleep} =\ \mu_{herbivore\ sleep}$$
+
+Ha: The mean sleep for omnivores > mean sleep for herbivores
+
+$$H_A: \mu_{omnivore\ sleep} >\ \mu_{herbivore\ sleep}$$
 ### Calculate p-value
 
 ```{r}
@@ -174,6 +180,12 @@ null_distribution %>%
 ```
 __Outcome__
 
-Since the p-value of 0.3181 > 0.05, we fail to reject the null hypothesis and
+Since the p-value of 0.1232 > 0.05, we fail to reject the null hypothesis and
 say that there is no statistically significant difference in mean sleep between
 omnivores and herbivores.
+
+
+# Question 4. 
+
+## Perform an appropriate statistical test to determine whether the proportion of domesticated animal types in the population of animal types is greater than 5%.
+
