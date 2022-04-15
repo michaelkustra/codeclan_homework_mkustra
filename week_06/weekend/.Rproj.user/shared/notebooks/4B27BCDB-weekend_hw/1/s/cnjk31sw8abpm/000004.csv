@@ -1,0 +1,12 @@
+"0","null_distribution <- omni_herbi_sleep %>% "
+"0","  specify(sleep_total~vore) %>% "
+"0","  hypothesise(null = ""independence"") %>% "
+"0","  generate(reps = 10000, type = ""permute"") %>% "
+"0","  calculate(stat = ""diff in means"", order = c(""herbi"", ""omni""))"
+"0","  "
+"0","null_distribution"
+"1","Response: sleep_total (numeric)
+Explanatory: vore (factor)
+Null Hypothesis: independence"
+"1","
+"

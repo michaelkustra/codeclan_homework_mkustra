@@ -3,7 +3,7 @@
     "path": "~/Documents/CodeClan/codeclan_homework_mkustra/week_06/weekend/notebooks/weekend_hw.Rmd",
     "project_path": "notebooks/weekend_hw.Rmd",
     "type": "r_markdown",
-    "hash": "3322643947",
+    "hash": "1485474293",
     "contents": "",
     "dirty": false,
     "created": 1650015954717.0,
@@ -14,15 +14,15 @@
         "chunk_output_type": "inline",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "124,1",
-        "scrollLine": "114"
+        "cursorPosition": "176,27",
+        "scrollLine": "172"
     },
     "folds": "",
-    "lastKnownWriteTime": 1650019066,
+    "lastKnownWriteTime": 1650021631,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1650019066579,
+    "last_content_update": 1650021631112,
     "read_only": false,
     "read_only_alternatives": []
 }

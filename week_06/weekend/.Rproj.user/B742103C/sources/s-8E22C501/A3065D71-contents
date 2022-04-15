@@ -37,14 +37,14 @@ glimpse(sleep)
 
 ### Hypotheses
 
-_Null_: There is no difference in mean sleep total and jabberwockie mean sleep.
+_Null_: There is no difference in mean sleep total and jabberwockies mean sleep.
 
-$$H_0: \mu_{sleep\ total} - \mu_{jabberwockie\ sleep} = 0$$
+$$H_0: \mu_{sleep\ total} = 7$$
 
 _Alternative_: There is a statistically significant difference in mean sleep total
-and mean jabberwockie sleep.
+and mean jabberwockies sleep.
 
-$$H_A: \mu_{sleep\ total} - \mu_{jabberwockie\ sleep} \ne 0$$
+$$H_A: \mu_{sleep\ total} \ne 7$$
 ### Alpha level
 
 For the purposes of this hypothesis test, _alpha = 0.05_
@@ -63,7 +63,7 @@ obs_stat
 ```{r}
 null_dist <- sleep %>% 
   specify(response = sleep_total) %>% 
-  hypothesise(null = "point", mu = 0) %>% 
+  hypothesise(null = "point", mu = 7) %>% 
   generate(reps = 10000, type = "bootstrap") %>% 
   calculate(stat = "mean")
 
@@ -103,6 +103,13 @@ significant difference in the mean sleep totals of animals v jabberwockies.
 
 ## Perform an appropriate statistical test to determine whether omnivores sleep for significantly longer than herbivores, on average.
 
+### Filter Sleep Data for Omnivores and Herbivores 
+
+```{r}
+omni_herbi_sleep <- sleep %>% 
+  filter(vore == c("omni", "herbi"))
+```
+
 ### Hypotheses
 
 H0: The mean sleep for omnivores <= mean sleep for herbivores
@@ -118,16 +125,55 @@ $$H_A: \mu_{omnivore\ sleep} >\ \mu_{herbivore\ sleep}$$
 
 For this hypothesis test alpha = 0.05
 
+### Boxplot
+
+```{r}
+omni_herbi_sleep %>% 
+  ggplot(aes(x = sleep_total, y = vore)) +
+  geom_boxplot()
+```
+
+
 ### Calculate Observed Statistic
 
 ```{r}
 
-o
+observed_stat <- omni_herbi_sleep %>% 
+  specify(sleep_total~vore) %>% 
+  calculate(stat = "diff in means", order = c ("herbi", "omni"))
+  
+observed_stat
 
-
-let_observed_stat <- let_prices %>% 
-  specify(price~location) %>% 
-  calculate(stat = "diff in means", order = c("florence", "corfu"))
 ```
 
+### Create Null Sampling Distribution
 
+```{r}
+null_distribution <- omni_herbi_sleep %>% 
+  specify(sleep_total~vore) %>% 
+  hypothesise(null = "independence") %>% 
+  generate(reps = 10000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("herbi", "omni"))
+  
+null_distribution
+```
+
+### Visualise Null Sampling Distribution and Observed Statistic
+
+```{r}
+null_distribution %>% 
+  visualise(bins = 30) +
+  shade_p_value(obs_stat = observed_stat, direction = "right")
+```
+
+### Calculate p-value
+
+```{r}
+null_distribution %>% 
+  get_p_value(obs_stat = observed_stat, direction = "right")
+```
+__Outcome__
+
+Since the p-value of 0.3181 > 0.05, we fail to reject the null hypothesis and
+say that there is no statistically significant difference in mean sleep between
+omnivores and herbivores.
