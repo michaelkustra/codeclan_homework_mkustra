@@ -1,0 +1,5 @@
+"0","```r
+null_dist %>% 
+  visualise(bins = 30) +
+  shade_p_value((obs_stat = obs_stat$mean_rating), direction = \"both\") 
+```"

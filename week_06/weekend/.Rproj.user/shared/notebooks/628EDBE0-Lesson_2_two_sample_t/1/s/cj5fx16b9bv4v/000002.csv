@@ -1,0 +1,7 @@
+"0","```r
+null_distribution <- apart_prices %>% 
+  specify(price~location) %>% 
+  hypothesise(null = \"independence\") %>%    # testing indepedence between both
+  generate(reps = 1000, type = \"permute\") %>%    # permute swaps locations 
+  calculate(stat = \"diff in means\", order = c(\"algarve\", \"nice\"))  # algarve goes first as the base we work from
+```"

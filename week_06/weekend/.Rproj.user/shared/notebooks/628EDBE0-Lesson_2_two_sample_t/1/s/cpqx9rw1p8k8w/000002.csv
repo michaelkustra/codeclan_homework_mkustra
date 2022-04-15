@@ -1,0 +1,7 @@
+"0","```r
+# same as this
+mean(books$diff_new)
+
+```"
+"1","[1] 3.583235
+"

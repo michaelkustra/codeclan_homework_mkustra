@@ -1,0 +1,4 @@
+"0","obs_stat <- sleep %>% "
+"0","  summarise(mean_sleep_total = mean(sleep_total))"
+"0",""
+"0","obs_stat"

@@ -1,0 +1,5 @@
+"0","```r
+let_null_distribution %>% 
+  visualise() +
+  shade_p_value(obs_stat = let_observed_stat, direction = \"right\")
+```"

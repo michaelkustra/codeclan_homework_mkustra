@@ -1,0 +1,7 @@
+"0","```r
+let_null_distribution <- let_prices %>% 
+  specify(price~location) %>% 
+  hypothesise(null = \"independence\") %>% 
+  generate(reps = 1000, type = \"permute\") %>%
+  calculate(stat = \"diff in means\", order = c(\"florence\", \"corfu\"))
+```"

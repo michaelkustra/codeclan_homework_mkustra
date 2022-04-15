@@ -1,0 +1,5 @@
+"0","```r
+books_tidy %>% 
+  ggplot(aes(x = average_rating)) +
+  geom_histogram(colour = \"grey40\")
+```"

@@ -1,0 +1,7 @@
+"0","```r
+null_dist <- books_tidy %>% 
+  specify(response = average_rating) %>% 
+  hypothesise(null = \"point\", mu = 3.93) %>% 
+  generate(reps = 10000, type = \"bootstrap\") %>% 
+  calculate(stat = \"mean\")
+```"

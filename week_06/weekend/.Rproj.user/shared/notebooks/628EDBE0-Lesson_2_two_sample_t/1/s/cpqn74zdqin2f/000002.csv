@@ -1,0 +1,7 @@
+"0","```r
+let_prices <- bind_rows(corfu, florence, .id = \"location\") %>%
+                mutate(location = ifelse(location == \"1\", \"corfu\", \"florence\")) %>% 
+                select(-2)
+
+let_prices
+```"

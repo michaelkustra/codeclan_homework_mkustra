@@ -1,0 +1,6 @@
+"0","```r
+obs_stat <- books_tidy %>% 
+  summarise(mean_rating = mean(average_rating))
+
+obs_stat
+```"

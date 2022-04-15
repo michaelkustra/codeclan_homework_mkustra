@@ -1,0 +1,4 @@
+"0","```r
+let_null_distribution %>% 
+  get_p_value(obs_stat = let_observed_stat, direction = \"right\")
+```"

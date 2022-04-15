@@ -1,0 +1,6 @@
+"0","```r
+p_value <- null_dist %>% 
+  get_p_value(obs_stat = obs_stat, direction = \"both\")
+
+p_value
+```"

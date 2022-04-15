@@ -1,0 +1,5 @@
+"0","```r
+let_prices %>% 
+  ggplot(aes(x = price, y = location))+
+  geom_boxplot()
+```"

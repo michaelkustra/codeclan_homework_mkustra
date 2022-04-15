@@ -1,0 +1,5 @@
+"0","```r
+observed_stat <- apart_prices %>% 
+  specify(price~location) %>% 
+  calculate(stat = \"diff in means\", order = c(\"algarve\", \"nice\"))
+```"

@@ -1,0 +1,10 @@
+"0","```r
+apart_prices <- bind_rows(nice,algarve, .id = \"location\") %>%
+                mutate(location = ifelse(location == \"1\", \"nice\", \"algarve\")) %>% 
+                select(-2)
+
+# count sample size of each location
+apart_prices %>% 
+  group_by(location) %>% 
+  summarise(count = n())
+```"

@@ -1,0 +1,10 @@
+"0","```r
+books %>% 
+  specify(response = diff_new) %>% 
+  hypothesise(null = \"point\", mu = 0) %>% 
+  generate(reps = 10000, type = \"bootstrap\")
+
+```"
+"1","Response: diff_new (numeric)
+Null Hypothesis: point
+"

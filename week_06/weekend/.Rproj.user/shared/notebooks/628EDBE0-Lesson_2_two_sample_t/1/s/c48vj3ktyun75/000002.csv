@@ -1,0 +1,15 @@
+"0","```r
+nice <- read_csv(here::here(\"data/nice.csv\"))
+
+```"
+"1","New names:
+* `` -> ...1
+"
+"1","Rows: 60 Columns: 2
+── Column specification ──────────────────────────────────────────────────────────────
+Delimiter: \",\"
+dbl (2): ...1, price
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

@@ -1,0 +1,230 @@
+---
+title: "Two sample tests"
+subtitle: "week 6 day 4"
+output: html_notebook
+---
+
+## Indepenedent samples
+
+```{r}
+nice <- read_csv(here::here("data/nice.csv"))
+```
+
+```{r}
+algarve <- read_csv(here::here("data/algarve.csv"))
+```
+
+## Our hypothesis
+
+_H0: mean price in Algarve < mean price in Nice_
+
+_Ha: mean price in Algarve > mean price in Nice_
+
+## Combine data sets
+
+```{r}
+apart_prices <- bind_rows(nice,algarve, .id = "location") %>%
+                mutate(location = ifelse(location == "1", "nice", "algarve")) %>% 
+                select(-2)
+
+# count sample size of each location
+apart_prices %>% 
+  group_by(location) %>% 
+  summarise(count = n())
+```
+
+## boxplot of each location
+
+```{r}
+apart_prices %>% 
+  ggplot(aes(x = price, y = location))+
+  geom_boxplot()
+```
+
+How to test if location affects price?
+
+## make a null distribution
+
+```{r}
+null_distribution <- apart_prices %>% 
+  specify(price~location) %>% 
+  hypothesise(null = "independence") %>%    # testing independence between both price/location
+  generate(reps = 1000, type = "permute") %>%    # permute swaps locations 
+  calculate(stat = "diff in means", order = c("algarve", "nice"))  # algarve goes first as the base we work from, diff of nice from algarve
+```
+
+Two sample test of difference in means
+
+We have a mean value for sample A
+We have a mean value for sample B
+
+Our test is testing the magnitude of the difference between these two means
+
+## Observed statistic (empirical distribution)
+
+Comes from our data, what we observe
+
+```{r}
+observed_stat <- apart_prices %>% 
+  specify(price~location) %>% 
+  calculate(stat = "diff in means", order = c("algarve", "nice"))
+```
+
+## visualise- shade p-value
+
+```{r}
+null_distribution %>% 
+  visualise() +
+  shade_p_value(obs_stat = observed_stat, direction = "right")
+```
+
+## calculate p-value
+
+```{r}
+null_distribution %>% 
+  get_p_value(obs_stat = observed_stat, direction = "right")
+```
+
+If H0 is true, then the data we collected would be somewhat weird.
+
+__Task__
+
+We have two more datasets for similar apartment lets in Corfu and Florence. Frame and perform an independent two-sample test to answer the following question:
+
+'On average, is the price of 2-bedroom, 14-day holiday apartment lets in Florence significantly lower than that of comparable lets in Corfu?'
+
+
+and frame your hypotheses before you see the data
+You will need to format your data in a combined, tidy dataset prior to performing the test
+
+_choose alpha_
+
+alpha = 0.05
+
+_hypotheses_
+
+H0: mean let Florence >= mean let Florence
+Ha: mean let Florence < mean let Corfu
+
+### load data
+```{r}
+florence <- read_csv(here::here("data/florence.csv"))
+corfu <- read_csv(here::here("data/corfu.csv"))
+```
+
+### bind data
+```{r}
+let_prices <- bind_rows(corfu, florence, .id = "location") %>%
+                mutate(location = ifelse(location == "1", "corfu", "florence")) %>% 
+                select(-2)
+
+let_prices
+```
+
+### boxplot
+```{r}
+let_prices %>% 
+  ggplot(aes(x = price, y = location))+
+  geom_boxplot()
+```
+
+### randomly assign location
+```{r}
+let_null_distribution <- let_prices %>% 
+  specify(price~location) %>% 
+  hypothesise(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("florence", "corfu"))
+```
+
+
+### calculate observed stat
+```{r}
+let_observed_stat <- let_prices %>% 
+  specify(price~location) %>% 
+  calculate(stat = "diff in means", order = c("florence", "corfu"))
+
+let_observed_stat
+```
+
+```{r}
+let_null_distribution %>% 
+  visualise() +
+  shade_p_value(obs_stat = let_observed_stat, direction = "right")
+```
+
+
+### p-value
+```{r}
+let_null_distribution %>% 
+  get_p_value(obs_stat = let_observed_stat, direction = "right")
+```
+
+_outcome_
+
+reject the null hypothesis since our p-value of 0 < 0.05.
+
+## Paired sample - dependent samples
+
+```{r}
+books <- read_csv(here::here("data/ucla_textbooks_f18.csv"))
+
+books <- books %>% 
+  mutate(diff_new = bookstore_new - amazon_new) %>% 
+  filter(!is.na(diff_new))
+```
+
+### Hypotheses
+
+H0: µ bookstore price - µ amazon price = 0
+Ha: µ bookstore price - µ amazon price != 0
+
+Two tailed paired test
+
+### Null distribution
+
+```{r}
+
+book_null_distribution <- books %>% 
+  specify(response = diff_new) %>% 
+  hypothesise(null = "point", mu = 0) %>% 
+  generate(reps = 10000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+
+```
+
+### Observed statistic
+
+```{r}
+book_observed_stat <- books %>% 
+  specify(response = diff_new) %>% 
+  calculate(stat = "mean")
+
+# same as this
+mean(books$diff_new)
+```
+
+### Visualise
+
+```{r}
+book_null_distribution %>%
+  visualise() +
+  shade_p_value(obs_stat = book_observed_stat, direction = "both")
+```
+
+_interpretation_
+
+observed stat (red line) shows where it lands on our bootstrapped normal dist,
+appears it could be stat significant.
+
+
+### p-value
+
+```{r}
+book_null_distribution %>% 
+  get_p_value(obs_stat = book_observed_stat, direction = "both")
+```
+
+_outcome_
+
+since 0.0408 < 0.05, we reject our null hypothesis. 

@@ -1,0 +1,138 @@
+---
+title: "week 6 day 4"
+subtitle: "null hypotheses & t-tests"
+output: html_notebook
+---
+
+# Hypothesis tests
+
+__Null hypothesis: H0__
+
+hypothesis of no change/no difference/no effect. 
+
+__Alternative hypothesis: Ha__
+
+hypothesis we wish to measure if there is an effect (can we reject the null
+and accept this?). Would like to quantify the difference & uncertainty.
+
+_The hypotheses must be exhaustive and mutually exclusive_
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(infer)
+```
+
+```{r}
+books <- read_csv(here::here("data/books.csv")) %>% 
+  clean_names()
+```
+
+## Clean data
+
+```{r}
+books_tidy <- books %>%
+  filter(!is.na(average_rating)) %>%
+  rename(num_pages = number_num_pages)
+```
+
+## Visualise the data
+
+```{r}
+books_tidy %>% 
+  ggplot(aes(x = average_rating)) +
+  geom_histogram(colour = "grey40")
+```
+
+__Our hypothesis__
+
+Average 2016 rating was 3.93.
+
+Is the average rating for 2020 significantly different from 2016?
+
+_H0: There is no difference between the 2016 rating and 2020 rating_
+
+_Ha: There is a difference between 2016 and 2020 average rating_
+
+Hypotheses written mathematically:
+
+$$H_0: \mu_{average\ rating} = 3.93$$
+$$H_a: \mu_{average\ rating} \neq 3.93$$
+
+
+```{r}
+obs_stat <- books_tidy %>% 
+  summarise(mean_rating = mean(average_rating))
+
+obs_stat
+```
+
+## Hypothesis steps
+
+_Step 1_
+Set a significance level for the test, alpha, usually 0.05 or 0.01  
+This is type I error rate: false positive rate
+
+_Step 2_
+Calculate the statistic we are interested in. (here is is mean(average_rating))
+
+_Step 3_
+Treat H0 as being true. Generate sampling distribution.
+
+_Step 4_
+Where does our statistic fall in our sampling distribution? Find the p-value.
+ie how much of the null distribution lies beyond the observed statistic. 
+
+_Step 5_
+p-value <= alpha, then reject the null hypothesis 
+p-value > alpha, fail to reject null hypothesis
+
+# Infer worfflow
+
+1. Calculate the _observed_ statistic
+    i. Create _“flag”_ column if necessary
+    ii. Specify the _response_ variable
+    iii. Calculate the required _stat_
+e.g. prop / mean
+
+2. Generate the _null distribution_
+    i. Specify the _response_
+    ii. Indicate the _hypothesis_
+What type of hypothesis (e.g. point)
+Specify the proportion p (the observed stat)
+    iii. Generate the _null distribution_
+    iv. Calculate the _stat_ of interest
+    
+3. _Visualize_ the resut
+Shade p-value region
+
+4. Extract the _p-value_
+
+## Create null distribution
+
+```{r}
+null_dist <- books_tidy %>% 
+  specify(response = average_rating) %>% 
+  hypothesise(null = "point", mu = 3.93) %>% 
+  generate(reps = 10000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+```
+
+## two sided test: direction = "both"
+
+```{r}
+null_dist %>% 
+  visualise(bins = 30) +
+  shade_p_value((obs_stat = obs_stat$mean_rating), direction = "both") 
+```
+
+## Calculate p-value
+
+```{r}
+p_value <- null_dist %>% 
+  get_p_value(obs_stat = obs_stat, direction = "both")
+
+p_value
+```
+
+Since, 0.0198 < 0.05, we reject the null hypothesis. 

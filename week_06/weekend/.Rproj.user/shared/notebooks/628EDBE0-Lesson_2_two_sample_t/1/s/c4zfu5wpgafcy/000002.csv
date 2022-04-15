@@ -1,0 +1,18 @@
+"0","```r
+books <- read_csv(here::here(\"data/ucla_textbooks_f18.csv\"))
+```"
+"1","Rows: 201 Columns: 20
+── Column specification ──────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr (6): term, subject, subject_abbr, course, course_num, notes
+dbl (7): year, course_numeric, textbook_isbn, bookstore_new, bookstore_used, amazo...
+lgl (7): seminar, ind_study, apprenticeship, internship, honors_contracts, laborat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","```r
+books <- books %>% 
+  mutate(diff_new = bookstore_new - amazon_new) %>% 
+  filter(!is.na(diff_new))
+```"

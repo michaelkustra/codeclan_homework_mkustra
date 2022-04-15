@@ -1,0 +1,5 @@
+"0","```r
+books_tidy <- books %>%
+  filter(!is.na(average_rating)) %>%
+  rename(num_pages = number_num_pages)
+```"
