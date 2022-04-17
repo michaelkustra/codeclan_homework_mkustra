@@ -1,27 +1,27 @@
 {
-    "id": "921BE444",
-    "path": "~/Documents/CodeClan/codeclan_work/week_06/day_4/notebooks/Lesson_2_two_sample_t.Rmd",
+    "id": "C5FA23B4",
+    "path": "~/Documents/CodeClan/codeclan_work/week_06/day_4/notebooks/Lesson_1_hyp_test_two_tail.Rmd",
     "project_path": null,
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "1296110429",
     "contents": "",
     "dirty": false,
-    "created": 1650016925397.0,
+    "created": 1650016952288.0,
     "source_on_save": false,
-    "relative_order": 3,
+    "relative_order": 4,
     "properties": {
         "chunk_output_type": "inline",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "135,31",
-        "scrollLine": "146"
+        "cursorPosition": "33,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1649947442,
+    "lastKnownWriteTime": 1649938756,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1649947442,
+    "last_content_update": 1649938756,
     "read_only": false,
     "read_only_alternatives": []
 }
