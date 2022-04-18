@@ -1,0 +1,53 @@
+"0",""
+"0","library(dplyr)      # for selecting, mutating, etc"
+"0","library(tidyr)      # for pivoting"
+"0","library(lubridate)  # for manipulating dates"
+"2","
+Attaching package: ‘lubridate’
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+"
+"0","library(stringr)    # for regex"
+"0",""
+"0","species <- readr::read_csv('raptor_survey.csv')"
+"1","[1mRows: [22m[34m731[39m [1mColumns: [22m[34m10[39m
+"
+"1","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (2): spec, Alpha
+[32mdbl[39m  (7): Beta, Delta, Epsilon, Eta, Gamma, Theta, Zeta
+[34mdate[39m (1): date
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","sites   <- readr::read_csv('raptor_sites.csv')"
+"1","[1mRows: [22m[34m8[39m [1mColumns: [22m[34m4[39m
+"
+"1","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (2): sitename, region
+[32mdbl[39m (2): lat, lon
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","temps   <- readr::read_csv('raptor_temps.csv')"
+"1","[1mRows: [22m[34m1480[39m [1mColumns: [22m[34m3[39m
+"
+"1","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (1): site
+[32mdbl[39m  (1): temp
+[34mdate[39m (1): date
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

@@ -1,0 +1,134 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Load relevant libraries
+```{r}
+library(tidyverse)
+library(testthat)
+```
+
+
+# Check clean data is in current working directory
+```{r}
+glimpse(meteor_data_clean)
+dim(meteor_data_clean)
+```
+
+# Find the names and years found for the 10 largest meteorites in the data.
+```{r}
+meteor_data_clean %>% 
+  select(name, mass_g, year) %>% 
+  slice_max(mass_g, n = 10)
+
+# there is an NA for the year of Campo del Cielo. I will keep it due to its mass.
+
+```
+
+# Find the average mass of meteorites that were recorded falling, vs. those which were just found.
+```{r}
+fell_avg_mass <- meteor_data_clean %>% 
+  select(fall, mass_g) %>% 
+  filter(fall == "Fell") %>% 
+  summarise(fell_avg_mass = mean(mass_g))
+
+# average mass of meteors that fell is 69509.95
+
+found_avg_mass <- meteor_data_clean %>% 
+  select(fall, mass_g) %>% 
+  filter(fall == "Found") %>% 
+  summarise(found_avg_mass = mean(mass_g))
+
+# average mass of meteors found is 134387.7
+```
+
+# Find the number of meteorites in each year, for every year since 2000.
+```{r}
+
+n_meteors_year <- meteor_data_clean %>% 
+  filter(year > 2000) %>% 
+  group_by(year) %>%
+  summarise(n_meteors = n())
+
+```
+
+# Write a function called get_meteorite_count() that takes in two arguments: a dataframe and a year, and returns the phrase “In (input_year), there were (number of meteorites that year) meteorites.” IF there are 1 or more meteorites that year. If there are no meteorites in the year, return the phrase “As far as we know, there were no meteorites that year”.
+```{r}
+
+get_meteorite_count <- function(df, meteor_year){
+
+  meteor_count <- meteor_data_clean %>% 
+    select(year, name) %>% 
+    filter(year == meteor_year) %>% 
+    summarise(meteor_count = n())
+  
+  if (meteor_count >= 1) {
+    return(print(str_c("In", meteor_year, "there were", meteor_count, "meteorites", sep = " ")))
+    
+    } else {
+      return(print(("as far as we know, there were no meteorites that year")))
+    }
+    
+  }
+
+meteor_data_clean %>% 
+  get_meteorite_count(2001)
+```
+
+# Write down ideas for how the function you’ve written could be improved and how you could test that the function works as it should. Please keep these ‘test plans’ in the final .Rmd, especially if you are completing the PDA.
+
+- I could improve this function by adding in some unit testing to ensure it
+gives an error when expected, or in general produces an expected result. This
+could be done in the testthat package with the following two functions:
+  - using expect_equal() to check results we expect to happen
+  - using expect_error() to check when we expect to produce an error
+
+- To ensure my function is both reproducible and replicable, it
+would be a good idea to see if the function performs identically with the 
+same data on another machine to check it is reproducible. It could be
+improved to ensure it would work with similar data sets and work as expected.
+
+# Write a unit test for your function to check whether non-numeric inputs (character and logical) for the year argument return an error.
+
+```{r}
+
+test_that("non-numeric input returns an error", {
+  expect_error(get_meteorite_count("year"))
+  expect_error(get_meteorite_count(TRUE))
+  
+})
+
+```
+
+# Improve your function based on the result of your test. Instead of going back and changing the function, please create a new function that is the improved version called refactor_get_meteorite_count(). Test your function to make sure it now gives an error when you input a logical or character value as the year. Hint: You can use the stop function to create your own error message.
+
+```{r}
+
+refactor_get_meteorite_count <- function(df, y){
+  # give function names that tell you what they do
+  # give arguments explicit names
+  if (!is.numeric(y)) {
+    stop("error, non-numeric input")
+  }
+
+  meteor_count <- meteor_data_clean %>% 
+    select(year, name) %>% 
+    filter(year == y) %>% 
+    summarise(y = n())
+  
+  if (meteor_count >= 1) {
+    return(print(str_c("In", y, "there were", meteor_count, "meteorites", sep = " ")))
+    
+    } else {
+      return(print(("as far as we know, there were no meteorites that year")))
+    }
+    
+  }
+
+refactor_get_meteorite_count(meteor_data_clean, 1999)
+
+expect_error(get_meteorite_count(meteor_data_clean, "1999"))
+
+```
+

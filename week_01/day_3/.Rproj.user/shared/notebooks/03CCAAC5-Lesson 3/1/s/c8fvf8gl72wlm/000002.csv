@@ -1,0 +1,7 @@
+"0","```r
+# is.na returns true/false for each value
+is.na(c(1,3,5,NA,4,NaN))
+
+# na.rm = TRUE will ignore NA and NaN in sum calculation
+sum(c(1,2,3,NA,6,NaN), na.rm = TRUE)
+```"

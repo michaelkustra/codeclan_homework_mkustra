@@ -1,0 +1,7 @@
+"0","meteor_data_clean %>% 
+  get_meteorite_count(2001)
+"
+"1","[1]"
+"1"," ""In 2001 there were 185 meteorites"""
+"1","
+"

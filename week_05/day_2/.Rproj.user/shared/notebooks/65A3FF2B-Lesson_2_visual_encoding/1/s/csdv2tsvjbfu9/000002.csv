@@ -1,0 +1,8 @@
+"0","```r
+ggplot(sales) +
+  aes(x = branch, y = sales, fill = branch == \"Leeds\") +
+  geom_col() +
+  scale_fill_manual(values = c('grey40', 'red'), guide = \"none\") +  
+  # values = c(false colour, true colour) in relation to fill=branch==leeds.
+  coord_flip()
+```"

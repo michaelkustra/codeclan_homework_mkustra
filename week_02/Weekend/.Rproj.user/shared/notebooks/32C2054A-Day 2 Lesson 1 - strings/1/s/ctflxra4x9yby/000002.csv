@@ -1,0 +1,6 @@
+"0","```r
+
+spotify_data %>%
+  mutate(playlist_name = str_to_upper(playlist_name))
+
+```"

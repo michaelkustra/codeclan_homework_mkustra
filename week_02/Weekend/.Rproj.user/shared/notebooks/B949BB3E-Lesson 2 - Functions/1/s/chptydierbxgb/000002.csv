@@ -1,0 +1,7 @@
+"0","```r
+
+animals <- c(\"cat\", \"dog\", \"monkey\", \"elephant\", \"frog\")
+hats <- c(\"bowler\", \"sun hat\", \"baseball cap\", \"fez\")
+trees <- c(\"ash\", \"elm\", \"oak\", \"willow\")
+
+```"

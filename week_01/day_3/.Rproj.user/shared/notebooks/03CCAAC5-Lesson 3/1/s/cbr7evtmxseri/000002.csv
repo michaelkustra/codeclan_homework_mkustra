@@ -1,0 +1,154 @@
+"0","```r
+install.packages(\"devtools\")
+
+```"
+"1","also installing the dependencies ‘credentials’, ‘zip’, ‘gitcreds’, ‘ini’, ‘gert’, ‘gh’, ‘whisker’, ‘xopen’, ‘brew’, ‘usethis’, ‘memoise’, ‘pkgbuild’, ‘rcmdcheck’, ‘remotes’, ‘roxygen2’, ‘rversions’, ‘sessioninfo’
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/credentials_1.3.2.tgz'
+Content type 'application/x-gzip' length 171184 bytes (167 KB)
+==================================================
+downloaded 167 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/zip_2.2.0.tgz'
+Content type 'application/x-gzip' length 212821 bytes (207 KB)
+==================================================
+downloaded 207 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/gitcreds_0.1.1.tgz'
+Content type 'application/x-gzip' length 91981 bytes (89 KB)
+==================================================
+downloaded 89 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/ini_0.3.1.tgz'
+Content type 'application/x-gzip' length 13224 bytes (12 KB)
+==================================================
+downloaded 12 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/gert_1.5.0.tgz'
+Content type 'application/x-gzip' length 2085354 bytes (2.0 MB)
+==================================================
+downloaded 2.0 MB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/gh_1.3.0.tgz'
+Content type 'application/x-gzip' length 137863 bytes (134 KB)
+==================================================
+downloaded 134 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/whisker_0.4.tgz'
+Content type 'application/x-gzip' length 65505 bytes (63 KB)
+==================================================
+downloaded 63 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/xopen_1.0.0.tgz'
+Content type 'application/x-gzip' length 22444 bytes (21 KB)
+==================================================
+downloaded 21 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/brew_1.0-7.tgz'
+Content type 'application/x-gzip' length 74361 bytes (72 KB)
+==================================================
+downloaded 72 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/usethis_2.1.5.tgz'
+Content type 'application/x-gzip' length 771607 bytes (753 KB)
+==================================================
+downloaded 753 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/memoise_2.0.1.tgz'
+Content type 'application/x-gzip' length 48111 bytes (46 KB)
+==================================================
+downloaded 46 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/pkgbuild_1.3.1.tgz'
+Content type 'application/x-gzip' length 145707 bytes (142 KB)
+==================================================
+downloaded 142 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/rcmdcheck_1.4.0.tgz'
+Content type 'application/x-gzip' length 168344 bytes (164 KB)
+==================================================
+downloaded 164 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/remotes_2.4.2.tgz'
+Content type 'application/x-gzip' length 395393 bytes (386 KB)
+==================================================
+downloaded 386 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/roxygen2_7.1.2.tgz'
+Content type 'application/x-gzip' length 859689 bytes (839 KB)
+==================================================
+downloaded 839 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/rversions_2.1.1.tgz'
+Content type 'application/x-gzip' length 64526 bytes (63 KB)
+==================================================
+downloaded 63 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/sessioninfo_1.2.2.tgz'
+Content type 'application/x-gzip' length 183920 bytes (179 KB)
+==================================================
+downloaded 179 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/devtools_2.4.3.tgz'
+Content type 'application/x-gzip' length 420183 bytes (410 KB)
+==================================================
+downloaded 410 KB
+"
+"1","
+The downloaded binary packages are in
+	/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T//RtmpcIi0Pf/downloaded_packages
+"
+"0","```r
+install.packages(\"devtools\")
+```"
+"1","trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/devtools_2.4.3.tgz'
+Content type 'application/x-gzip' length 420183 bytes (410 KB)
+==================================================
+downloaded 410 KB
+"
+"1","
+The downloaded binary packages are in
+	/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T//RtmpcIi0Pf/downloaded_packages
+"
+"0","```r
+devtools::install_github(\"codeclan/CodeClanData\")
+```"
+"1","Downloading GitHub repo codeclan/CodeClanData@HEAD
+"
+"1","  
+   checking for file ‘/private/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T/RtmpcIi0Pf/remotes30ed2f008177/codeclan-CodeClanData-dc53fdd/DESCRIPTION’ ...
+  
+✓  checking for file ‘/private/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T/RtmpcIi0Pf/remotes30ed2f008177/codeclan-CodeClanData-dc53fdd/DESCRIPTION’
+
+  
+─  preparing ‘CodeClanData’: (966ms)
+
+  
+✓  checking DESCRIPTION meta-information
+
+  
+─  checking for LF line-endings in source and make files and shell scripts
+
+  
+─  checking for empty or unneeded directories
+
+  
+─  building ‘CodeClanData_0.1.0.tar.gz’
+
+  
+   
+"
+"1","* installing *source* package ‘CodeClanData’ ...
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (CodeClanData)
+"

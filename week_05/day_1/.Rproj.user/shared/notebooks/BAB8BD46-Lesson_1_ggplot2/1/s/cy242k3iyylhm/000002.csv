@@ -1,0 +1,7 @@
+"0","```r
+# first plot
+students %>% 
+  ggplot() +             # initiate plotting
+  aes(x = superpower) +  # set aesthetic mapping
+  geom_bar()             # geometry layer
+```"

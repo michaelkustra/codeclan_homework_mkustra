@@ -1,0 +1,10 @@
+"0","```r
+customers
+orders
+
+inner_join(
+  customers,
+  orders, 
+  by = \"customer_ID\"
+)
+```"

@@ -1,0 +1,20 @@
+"0","```r
+
+product_matrix <- matrix(nrow = 5, ncol = 5)
+product_matrix
+
+row_length <- nrow(product_matrix)
+col_length <- ncol(product_matrix)
+
+#define rows programatically
+row_length <- nrow(product_matrix)
+col_length <- ncol(product_matrix)
+#start for loop
+for (row_index in 1:row_length) { #for every row in the length of the matrix
+  for (col_index in 1:col_length) { #for each column in that row
+    product_matrix[row_index, col_index] <- row_index * col_index #index the cell value, and replace it with a new value
+  }
+}
+product_matrix
+
+```"

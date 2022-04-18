@@ -1,0 +1,24 @@
+"0","glimpse(species)"
+"1","Rows: 731"
+"1",""
+"1","
+"
+"1","Columns: 10"
+"1",""
+"1","
+"
+"1","$ date    [3m[38;5;246m<date>[39m[23m 2003-03-03, 2003-03-03, 2003-03-03, 2003-03-04, 2003-03-04, 2003-03-04, 2003-03-04, 2003-03-05,…
+$ spec    [3m[38;5;246m<chr>[39m[23m ""Buteo jamaicensis"", ""Buteo lineatus"", ""Falco peregrinus"", ""Accipiter cooperi"", ""Accipiter genti…
+$ Alpha   [3m[38;5;246m<chr>[39m[23m NA, NA, NA, NA, NA, ""35"", NA, NA, NA, NA, NA, NA, NA, NA, ""6"", NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ Beta    [3m[38;5;246m<dbl>[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 15, …
+$ Delta   [3m[38;5;246m<dbl>[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 18, NA, 4, NA, NA, NA, 20, NA, N…
+$ Epsilon [3m[38;5;246m<dbl>[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, 5, NA, NA, NA, 7, NA, NA, NA, NA, NA, NA, NA, NA, 6, NA, 2, …
+$ Eta     [3m[38;5;246m<dbl>[39m[23m 8, 22, NA, NA, NA, NA, NA, NA, 13, NA, NA, NA, 28, NA, NA, 2, NA, NA, NA, NA, NA, 5, NA, NA, NA,…
+$ Gamma   [3m[38;5;246m<dbl>[39m[23m NA, NA, 1, NA, NA, NA, NA, 6, NA, NA, NA, NA, NA, NA, NA, 2, NA, 13, NA, 3, NA, NA, NA, 9, NA, N…
+$ Theta   [3m[38;5;246m<dbl>[39m[23m NA, NA, NA, NA, NA, NA, 8, NA, NA, NA, 15, 8, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, NA, NA, NA,…
+$ Zeta    [3m[38;5;246m<dbl>[39m[23m NA, NA, NA, 41, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, NA…"
+"1",""
+"1","
+"
+"0","# find out why Alpha is type chr"
+"0","distinct(species, Alpha)  # makes it difficult to find"

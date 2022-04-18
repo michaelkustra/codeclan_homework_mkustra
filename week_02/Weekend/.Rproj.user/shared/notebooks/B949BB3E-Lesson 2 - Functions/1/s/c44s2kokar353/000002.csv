@@ -1,0 +1,4 @@
+"0","```r
+
+nchar(keepNA =  NA, type =  \"chars\", x = \"hello\", allowNA =  T)
+```"

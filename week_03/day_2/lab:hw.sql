@@ -10,7 +10,7 @@ SELECT
     e.last_name,
     t.name 
 FROM employees AS e 
-RIGHT JOIN teams AS t 
+RIGHT JOIN teams AS t
 ON t.id = e.team_id;
 
 /*(b). Find the first name, last name and team name of employees who are 
@@ -124,7 +124,7 @@ SELECT
 FROM employees AS e 
 LEFT JOIN teams AS t 
 ON e.team_id = t.id 
-GROUP BY t.name, t.id;
+GROUP BY t.id;
 
 /*
  * b). The total_day_charge of a team is defined as the charge_cost of the 
@@ -167,7 +167,6 @@ ORDER BY count(e.id) * CAST(t.charge_cost AS int);
 
 SELECT 
     COUNT(DISTINCT employee_id)
-FROM employees_committees
-GROUP BY committee_id  ;
+FROM employees_committees;
 
 

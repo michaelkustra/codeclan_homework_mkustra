@@ -1,0 +1,12 @@
+"0","```r
+
+multiply_by_3_add_2 <- function(x) {
+  
+  # global operator <<- to use this outside the function (if you need)
+  times_3 <- x*3
+  add_2 <<- times_3 + 2
+  
+  return(add_2)
+}
+
+```"

@@ -1,0 +1,4 @@
+"0","```r
+comms_data <- read_csv('data/telecom_data.csv')
+comms_data
+```"

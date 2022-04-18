@@ -1,0 +1,16 @@
+"0","```r
+
+my_vector <-  c(1, 4, 6, 2, 4)
+# create temporary vector to hold addition
+temp_vector <- numeric(length(my_vector))
+
+for (index in 1:length(my_vector)){
+  temp_vector[index] <- my_vector[index] + 1
+}
+
+# once all additions finished without problems, reassign temp_vector to my_vector
+my_vector <- temp_vector
+
+my_vector
+
+```"

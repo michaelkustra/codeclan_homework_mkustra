@@ -1,0 +1,15 @@
+"0","```r
+
+print(1)
+print(2)
+print(3)
+print(4)
+print(5)
+
+my_nums <- c(1:5)
+
+for (num in my_nums) {
+  print(num)
+}
+
+```"

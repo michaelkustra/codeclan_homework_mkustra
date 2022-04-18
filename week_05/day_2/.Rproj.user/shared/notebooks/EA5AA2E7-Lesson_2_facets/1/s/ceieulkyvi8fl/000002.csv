@@ -1,0 +1,7 @@
+"0","```r
+
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex), show.legend = FALSE) +
+  facet_wrap(married~sex)
+
+```"

@@ -1,0 +1,6 @@
+"0","```r
+ggplot(chick_weight) +
+  aes(x = time, y = weight, group = chick, colour = diet) +
+  geom_line() +
+  facet_wrap(~diet)      # ~ needed to tell ggplot to facet on diet
+```"

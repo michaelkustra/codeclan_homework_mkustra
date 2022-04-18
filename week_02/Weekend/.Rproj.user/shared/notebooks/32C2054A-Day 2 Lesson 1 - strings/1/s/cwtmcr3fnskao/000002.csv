@@ -1,0 +1,5 @@
+"0","```r
+
+employees %>% 
+  mutate(full_name = str_c(first_name, last_name, sep = \" \"))
+```"

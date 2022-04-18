@@ -1,0 +1,6 @@
+"0","```r
+dim(comms_data)
+
+comms_data %>% 
+  drop_na()
+```"

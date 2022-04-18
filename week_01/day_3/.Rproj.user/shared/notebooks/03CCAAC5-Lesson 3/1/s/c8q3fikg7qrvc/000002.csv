@@ -1,0 +1,7 @@
+"0","```r
+#payments_replaced <- charges_numeracu %>% 
+ # mutate(payment_method = na_if(payment_method, '--'))
+
+#payments_replaced %>% 
+ # mutate(payment_method = coalesce(payment_method, 'unavailable'))
+```"

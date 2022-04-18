@@ -1,0 +1,8 @@
+"0","```r
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex)) +
+  facet_grid(married~sex)
+
+```"
+"1","Error in ggplot(benefits) : object 'benefits' not found
+"

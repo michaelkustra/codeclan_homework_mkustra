@@ -1,0 +1,42 @@
+"0","```r
+install.packages(\"janitor\")
+
+```"
+"1","also installing the dependency ‘snakecase’
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/snakecase_0.11.0.tgz'
+Content type 'application/x-gzip' length 158920 bytes (155 KB)
+==================================================
+downloaded 155 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/janitor_2.1.0.tgz'
+Content type 'application/x-gzip' length 245286 bytes (239 KB)
+==================================================
+downloaded 239 KB
+"
+"1","
+The downloaded binary packages are in
+	/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T//RtmpcIi0Pf/downloaded_packages
+"
+"0","```r
+install.packages(\"janitor\")
+```"
+"1","trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/janitor_2.1.0.tgz'
+Content type 'application/x-gzip' length 245286 bytes (239 KB)
+==================================================
+downloaded 239 KB
+"
+"1","
+The downloaded binary packages are in
+	/var/folders/cm/flfm2kxj25nd5yhbcqrg2ng00000gn/T//RtmpcIi0Pf/downloaded_packages
+"
+"0","```r
+library(janitor)
+```"
+"1","
+Attaching package: ‘janitor’
+
+The following objects are masked from ‘package:stats’:
+
+    chisq.test, fisher.test
+"

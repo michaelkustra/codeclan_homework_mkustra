@@ -1,0 +1,6 @@
+"0","```r
+comms_data %>% 
+  select(1:2) %>% 
+  mutate(monthly_charges2 = coalesce(monthly_charges, median(monthly_charges, 
+                                                             na.rm = TRUE)))
+```"

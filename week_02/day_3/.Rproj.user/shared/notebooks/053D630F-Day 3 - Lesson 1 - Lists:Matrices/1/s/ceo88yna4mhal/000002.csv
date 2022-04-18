@@ -1,0 +1,7 @@
+"0","```r
+my_named_list[[2]] %>% 
+  class()
+
+```"
+"1","[1] \"character\"
+"

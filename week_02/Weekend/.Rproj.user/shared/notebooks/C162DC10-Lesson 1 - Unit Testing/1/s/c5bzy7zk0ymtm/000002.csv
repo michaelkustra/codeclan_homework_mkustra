@@ -1,0 +1,8 @@
+"0","```r
+
+test_that(\"Character input returns an error\", {
+  expect_error(is_leap_year(\"year\"))
+})
+```"
+"1","Test passed 🎊
+"

@@ -1,0 +1,13 @@
+"0","```r
+weekdays_1 <- c(\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\")
+length_weekday <- length(weekdays_1)
+
+
+# the i chooses the index in the above string, i = 1, 2, 3, 4, 5. stop.
+# i can be replaced with any letter/word. Must be consistent in line 509+510
+
+for (i in 1:length_weekday) {
+  phrase <- paste(\"The day is\", weekdays_1[i])
+  print(phrase)
+}
+```"

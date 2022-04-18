@@ -1,0 +1,8 @@
+"0","```r
+
+comms_data_imputed_median <- comms_data %>%
+  mutate(monthly_charges2 = coalesce(monthly_charges, median(monthly_charges, 
+                                                             na.rm = TRUE)))
+
+  ggplot(comms_data_imputed_median, aes(customerID, monthly_charges)) + geom_point()
+```"

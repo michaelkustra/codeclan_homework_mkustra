@@ -1,0 +1,5 @@
+"0","```r
+# install.packages('CodeClanData') read this in later
+# install.packages('devtools')
+# devtools::install_github('codeclan/CodeClanData')
+```"

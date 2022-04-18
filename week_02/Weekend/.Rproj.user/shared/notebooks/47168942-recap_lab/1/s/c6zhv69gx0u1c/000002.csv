@@ -1,0 +1,8 @@
+"0","```r
+diet_comp_clean <- diet_data %>% 
+  pivot_longer(cols = -c(Entity, Code, Year),
+               names_to = \"kcal_source\",
+               values_to = \"avg_daily_kcals\")
+
+diet_comp_clean
+```"

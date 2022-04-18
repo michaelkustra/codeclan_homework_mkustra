@@ -1,0 +1,6 @@
+"0","```r
+
+employees %>% 
+  mutate(name_place = paste(first_name, postcode, sep = \"_\"))
+
+```"

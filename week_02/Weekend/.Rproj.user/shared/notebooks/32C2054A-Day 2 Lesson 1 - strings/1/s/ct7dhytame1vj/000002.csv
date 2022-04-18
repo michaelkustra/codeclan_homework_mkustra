@@ -1,0 +1,7 @@
+"0","```r
+
+spotify_data %>% 
+  mutate(track_artist_lowcase = str_to_lower(track_artist))
+
+
+```"

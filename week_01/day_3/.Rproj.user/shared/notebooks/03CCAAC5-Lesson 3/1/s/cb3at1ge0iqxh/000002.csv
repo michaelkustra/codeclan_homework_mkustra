@@ -1,0 +1,7 @@
+"0","```r
+comms_data %>% 
+  select(total_charges) %>% 
+  filter(total_charges %in% c('N/A', 'na', NA))
+
+
+```"

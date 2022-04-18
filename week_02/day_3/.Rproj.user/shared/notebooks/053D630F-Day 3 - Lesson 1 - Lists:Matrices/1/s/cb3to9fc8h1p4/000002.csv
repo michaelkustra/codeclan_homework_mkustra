@@ -1,0 +1,6 @@
+"0","```r
+
+my_named_list$b %>% 
+  class()
+
+```"

@@ -1,0 +1,22 @@
+"0","```r
+total_sales_anno <- CodeClanData::total_sales %>%
+   mutate(label_text = ifelse(branch == \"Leeds\", \"The Leeds branch has 715k sales\", NA))
+
+ggplot(total_sales_anno) +
+  aes(x = branch, y = sales, fill = branch == \"Leeds\") +
+  geom_col() +
+  scale_fill_manual(values = c('grey40', 'red'), guide = \"none\") +
+  coord_flip() +
+    geom_text(aes(label = label_text),                  
+           color = \"red\", size = 4, hjust = 0) 
+
+# change label so each bar has the sales total added
+
+ggplot(total_sales_anno) +
+  aes(x = branch, y = sales, fill = branch == \"Leeds\") +
+  geom_col() +
+  scale_fill_manual(values = c('grey40', 'red'), guide = \"none\") +
+  coord_flip() +
+    geom_text(aes(label = sales),                  
+           color = \"red\", size = 4, hjust = 0) 
+```"

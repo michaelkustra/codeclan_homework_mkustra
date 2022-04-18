@@ -1,0 +1,8 @@
+"0","```r
+filter(all_deaths, allegiances == \"Lannister\")
+
+filter(all_deaths, allegiances %in% c(\"Lannister\", \"House Lannister\"))
+
+filter(all_deaths, year_of_death > 299)
+
+```"

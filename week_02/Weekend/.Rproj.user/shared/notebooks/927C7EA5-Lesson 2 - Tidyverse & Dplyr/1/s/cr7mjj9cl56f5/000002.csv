@@ -1,0 +1,14 @@
+"0","```r
+names(all_deaths)
+head(all_deaths)
+select(all_deaths, book_of_death, death_chapter, year_of_death)
+select(all_deaths, book_of_death, book_intro_chapter, book1_GoT, book2_CoK, book3_SoS, book4_FfC, book5_DwD)
+select(all_deaths, -name, -allegiances, -year_of_death, -death_chapter, -gender, - nobility)
+deaths_no_names <- select(all_deaths, -name) 
+deaths_no_names
+
+select(all_deaths, -(2:4))
+names(all_deaths)[2:4]
+
+select(all_deaths, contains('book'))
+```"

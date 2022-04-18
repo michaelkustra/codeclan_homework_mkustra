@@ -1,0 +1,6 @@
+"0","species_sites %>%
+  group_by(month, spec) %>%
+  summarise(abundance = sum(abundance, na.rm=TRUE), n_days_observed = n())
+"
+"2","Error in group_by(., month, spec) : object 'species_sites' not found
+"

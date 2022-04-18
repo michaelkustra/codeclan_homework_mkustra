@@ -1,0 +1,7 @@
+"0","```r
+total_charges_replaced <- comms_data_imputed_median %>% 
+  mutate(total_charges = na_if(total_charges, 'na')) %>%  
+  mutate(total_charges = na_if(total_charges, 'N/A'))
+
+total_charges_replaced
+```"

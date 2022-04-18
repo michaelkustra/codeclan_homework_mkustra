@@ -1,0 +1,13 @@
+"0","```r
+
+current_value <- 1
+end_point <- 10
+
+# need to reassign current value so that it does not go on infinitely.
+
+while (current_value < end_point) {
+  current_value <- current_value + 1
+  print(current_value)
+}
+
+```"

@@ -1,0 +1,6 @@
+"0","```r
+
+spotify_data %>% 
+  mutate(playlist_start = str_sub(playlist_id, end = 5), .before = 1)
+
+```"

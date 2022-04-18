@@ -1,0 +1,7 @@
+"0","```r
+
+employees %>% 
+  mutate(first_name = str_to_title(first_name),
+         last_name = str_to_title(last_name))
+
+```"

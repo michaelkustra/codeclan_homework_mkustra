@@ -1,0 +1,13 @@
+"0","```r
+benefits <- read_csv(\"data/benefits.csv\")
+
+```"
+"1","Rows: 4877 Columns: 19
+── Column specification ───────────────────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr (11): joblost, nwhite, school12, sex, bluecol, smsa, married, dkids, dykids, head, ui
+dbl  (8): X1, stateur, statemb, state, age, tenure, yrdispl, rr
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

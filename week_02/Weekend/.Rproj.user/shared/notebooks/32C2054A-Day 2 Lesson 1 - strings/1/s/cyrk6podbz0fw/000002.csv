@@ -1,0 +1,7 @@
+"0","```r
+pangram %>% 
+  str_to_title()
+
+```"
+"1","[1] \"The Quick Brown Fox Jumps Over The Lazy Dog\"
+"

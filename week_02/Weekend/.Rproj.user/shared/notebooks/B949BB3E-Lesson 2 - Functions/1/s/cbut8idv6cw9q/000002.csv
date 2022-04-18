@@ -1,0 +1,9 @@
+"0","```r
+
+# sets default of argument 3 at 5.
+function_name <- function(arg_1, arg_2, arg_3 = 5){
+  do something
+  return(output)
+}
+
+```"

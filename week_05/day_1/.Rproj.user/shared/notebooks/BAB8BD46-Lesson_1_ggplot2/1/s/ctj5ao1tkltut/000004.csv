@@ -1,0 +1,7 @@
+"0","top_10 <- olympics %>%
+  filter(season == ""Summer"", medal == ""Gold"") %>%
+  arrange(desc(count)) %>%
+  top_n(10)
+"
+"1","[38;5;251mSelecting by count[39m
+"

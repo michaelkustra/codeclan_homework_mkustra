@@ -1,0 +1,18 @@
+"0","```r
+sales <- CodeClanData::monthly_sales
+
+# branches ordered in descending order
+
+ggplot(sales) +
+  aes(x = reorder(branch, sales), y = sales) +
+  geom_col() +
+  coord_flip()
+
+# reverse order of branches in ascending, minus in front of sales
+
+ggplot(sales) +
+  aes(x = reorder(branch, -sales), y = sales) +
+  geom_col() +
+  coord_flip()
+
+```"

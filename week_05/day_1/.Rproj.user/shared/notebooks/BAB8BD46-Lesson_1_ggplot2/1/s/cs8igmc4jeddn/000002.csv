@@ -1,0 +1,16 @@
+"0","```r
+students %>% 
+  group_by(superpower, school_year) %>% 
+  summarise(count = n()) %>% 
+  ggplot() +
+  aes(x = superpower, y = count, fill = school_year) +
+# geom_bar(stat = \"identity\")
+  geom_col() +
+  labs(x = \"\nSuperpower\",                  # \n will space it down a line
+       y = \"this is the y axis\",
+       title = \"School year superpowers\",
+       fill = \"School Year\")
+
+```"
+"1","`summarise()` has grouped output by 'superpower'. You can override using the `.groups` argument.
+"

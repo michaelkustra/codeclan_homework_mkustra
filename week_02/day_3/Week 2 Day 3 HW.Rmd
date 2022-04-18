@@ -152,3 +152,39 @@ checker_function <- function(x, y) {
 
 ```
 
+```{r}
+
+# solution from Colin using identical()
+
+vector_compare <- function(vec1, vec2) {
+  
+  
+  if(identical(vec1, vec2)) {
+    return(print("Exactly the same"))
+    
+  } else {
+    
+    vec1_sort <- sort(vec1)
+    vec2_sort <- sort(vec2)
+    
+    if(identical(vec1_sort, vec2_sort)) {
+      
+      return(print("The same"))
+      
+    }
+    
+  }
+    print("Different")
+}
+
+```
+
+```{r}
+
+vec1 <- c(2, 1, 3, 4, 5)
+vec2 <- c(1, 2, 3, 4, 5)
+
+vector_compare(vec1, vec2)
+
+```
+

@@ -1,0 +1,10 @@
+"0","```r
+
+
+make_ordered <- function(my_vec) {
+  animals_sorted <- sort(my_vec)
+  animals_joined <- str_c(animals_sorted, collapse = ',')
+  str_c(\"ordered list:\", animals_joined)
+}
+
+```"

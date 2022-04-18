@@ -1,0 +1,9 @@
+"0","```r
+
+employees %>% 
+  mutate(name_place = str_c(first_name, location, sep = \"_\"))
+
+employees %>% 
+  mutate(name_place = str_c(first_name, postcode, sep = \"_\"))
+
+```"

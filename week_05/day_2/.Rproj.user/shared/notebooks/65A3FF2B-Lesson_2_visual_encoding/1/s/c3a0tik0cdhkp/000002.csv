@@ -1,0 +1,11 @@
+"0","```r
+pets <- CodeClanData::pets
+
+ggplot(pets, mapping = aes(x = age, y = weight, colour = sex)) +
+  geom_point() +
+  #scale_x_continuous(breaks = 1:13)         # put breaks from 1 to 13 on x axis
+  scale_x_continuous(breaks = seq(2, 12, 2)) # x axis goes from 2 to 12 in twos
+  #scale_x_continuous(breaks = seq(2, 12, 2), 
+  #labels = c(\"a\", \"b\", \"c\", \"d\", \"e\", \"f\"))  # add letters to x axis 
+  scale_y_continuous(breaks = c(5, 7, 9, 11)) # change scale on y axis
+```"

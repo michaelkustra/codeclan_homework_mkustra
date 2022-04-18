@@ -1,0 +1,7 @@
+"0","ggplot(chick_weight)+
+  geom_line(aes(x = time, y = weight, group = chick, colour = diet), alpha = 0.25) +
+  geom_point(aes(x = time, y = weight, colour = diet), alpha = 0.4) +
+  geom_smooth(aes(x = time, y = weight, colour = diet))
+"
+"2","`geom_smooth()` using method = 'loess' and formula 'y ~ x'
+"

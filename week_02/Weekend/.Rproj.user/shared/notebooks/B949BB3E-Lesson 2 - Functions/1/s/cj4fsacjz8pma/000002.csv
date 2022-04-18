@@ -1,0 +1,9 @@
+"0","```r
+
+tri_num_function <- function(n){
+  return((n*(n+1))/2)
+}
+
+tri_num_function(24)
+
+```"

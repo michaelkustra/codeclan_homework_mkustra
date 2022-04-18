@@ -1,0 +1,35 @@
+"0","```r
+monthly_sales_april <- monthly_sales %>% 
+  filter(month == \"April\")
+
+# highlight highest achieving branch, London.
+
+ggplot(monthly_sales_april) +
+  aes(x = branch, y = sales, fill = branch == \"London\") +
+  geom_col(position = \"dodge\") +
+  scale_fill_manual(values = c('grey60', 'green'), guide = \"none\") +
+  geom_text(aes(label = sales), colour = \"black\", size = 4, hjust = 0.5)+
+  coord_flip() +
+  labs(title = \"Highest Achieving Branch\")
+
+# highlight branches with sales > £150k
+
+ggplot(monthly_sales_april) +
+  aes(x = branch, y = sales, fill = sales > 150000) +
+  geom_col(position = \"dodge\") +
+  scale_fill_manual(values = c('grey60', 'green'), guide = \"none\") +
+  geom_text(aes(label = sales), colour = \"black\", size = 4, hjust = 0.5)+
+  coord_flip()+
+  labs(title = \"Branches with Sales > £150k\")
+
+# highlight branches with positive difference from January
+
+options(scipen = 999)
+ggplot(monthly_sales_april) +
+  aes(x = branch, y = sales, fill = difference_from_jan > 0) +
+  geom_col(position = \"dodge\") +
+  scale_fill_manual(values = c('grey60', 'green'), guide = \"none\") +
+  geom_text(aes(label = sales), colour = \"black\", size = 4, hjust = 0.5)+
+  coord_flip()+
+  labs(title = \"Branches with Positive Diff from January\")
+```"

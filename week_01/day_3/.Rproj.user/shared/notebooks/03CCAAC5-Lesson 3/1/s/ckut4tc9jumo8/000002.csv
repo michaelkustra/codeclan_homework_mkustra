@@ -1,0 +1,4 @@
+"0","```r
+video_games <- read_csv(\"data/steam-200k-sample.csv\", skip = 4)
+video_games
+```"

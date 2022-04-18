@@ -1,0 +1,9 @@
+"0","```r
+add_pound_sign <- function(x){
+  return(paste0(\"£\", x))
+}
+
+add_pound_sign(65)
+```"
+"1","[1] \"£65\"
+"

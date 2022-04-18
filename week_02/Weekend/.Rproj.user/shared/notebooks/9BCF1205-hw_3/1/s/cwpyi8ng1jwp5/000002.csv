@@ -1,0 +1,13 @@
+"0","```r
+```r
+
+movies_imputed <- movies %>%
+  mutate(runtime = coalesce(runtime, median(runtime, 
+                                                             na.rm = TRUE)))
+
+# check runtime column
+movies %>%
+  select(runtime)
+
+```
+```"

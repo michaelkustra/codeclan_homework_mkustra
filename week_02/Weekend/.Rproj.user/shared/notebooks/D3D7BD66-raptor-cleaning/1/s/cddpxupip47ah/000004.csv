@@ -1,0 +1,5 @@
+"0",""
+"0","species <- species %>% "
+"0","  mutate(Alpha = as.double(str_remove(Alpha, 'o')))"
+"0",""
+"0","species[559, ]"

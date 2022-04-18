@@ -1,0 +1,9 @@
+"0","```r
+# this is true, so nothing happens after we run the code
+a <- 10
+expect_equal(a, 10)
+
+# throws us an error that the values of a mismatch
+expect_equal(a, 11)
+
+```"

@@ -1,0 +1,7 @@
+"0","```r
+
+semi_join(customers,
+          orders,
+          by = \"customer_ID\")
+
+```"

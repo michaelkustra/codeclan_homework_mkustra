@@ -1,0 +1,9 @@
+"0","```r
+
+number %>%
+  format(big.mark = \",\")
+
+number %>% 
+  format(decimal.mark = \",\")
+
+```"

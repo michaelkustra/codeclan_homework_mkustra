@@ -1,0 +1,7 @@
+"0","```r
+
+employees %>% 
+  mutate(postcode_outer = str_sub(postcode, end = -4),
+         postcode_inner = str_sub(postcode, start = -3))
+
+```"

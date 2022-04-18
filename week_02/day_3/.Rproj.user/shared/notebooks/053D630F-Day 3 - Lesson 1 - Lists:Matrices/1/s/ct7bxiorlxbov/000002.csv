@@ -1,0 +1,10 @@
+"0","```r
+
+for (item in complicated_list) {
+  if (item$has_address == TRUE) {
+    address <- item$details$address
+    addresses <- c(addresses, address)
+  }
+}
+
+```"

@@ -1,0 +1,6 @@
+"0","```r
+ggplot(benefits) +
+  geom_histogram(aes(x = age, fill = sex)) +
+  facet_grid(married~dkids, labeller = \"label_both\", scales = \"free_y\")
+# last argument in facet grid allows ggplot to change y scale as it sees fit
+```"

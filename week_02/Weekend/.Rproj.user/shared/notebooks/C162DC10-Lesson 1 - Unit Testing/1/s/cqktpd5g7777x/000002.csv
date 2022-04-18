@@ -1,0 +1,24 @@
+"0","```r
+# we need to amend the code so that it will pass above test, error for logical
+
+is_leap_year <- function(year) {
+  
+  if (!is.numeric(year)) {
+    stop(\"Non-numeric input 👹\")
+  }
+  
+  if (year %% 100 == 0) {
+    if (year %% 400 == 0) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  }
+  if (year %% 4 == 0) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+```"

@@ -1,0 +1,9 @@
+"0","weather_forecast <- list(
+                ""Thursday"" = list(temp = 12L, precip = 20L, wind = 21L),
+                ""Friday"" = list(temp = 13L, precip = 10L, wind = 10L)
+                ""Saturday"" = list(temp = 14L, precip = 10L, wind = 8L)
+"
+"2","Error: unexpected string constant in:
+""                ""Friday"" = list(temp = 13L, precip = 10L, wind = 10L)
+                ""Saturday""""
+"

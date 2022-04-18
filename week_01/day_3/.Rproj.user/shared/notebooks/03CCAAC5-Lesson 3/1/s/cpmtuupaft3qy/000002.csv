@@ -1,0 +1,7 @@
+"0","```r
+# video_games %>% 
+ # rename('game_title' = 'game name', 'activity' = 'what', 'playing _hours' = 'value')
+
+# video_games %>% 
+#  select('customer_id' = 'customer id')
+```"

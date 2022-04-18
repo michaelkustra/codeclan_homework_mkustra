@@ -1,0 +1,6 @@
+"0","```r
+m2 <- matrix(3:5, nrow = 2, ncol = 2)
+m3 <- matrix(1:3, nrow = 2, ncol = 2)
+
+m2 * m3
+```"

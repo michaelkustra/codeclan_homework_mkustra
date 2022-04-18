@@ -1,0 +1,6 @@
+"0","```r
+
+spotify_data <- read_csv(\"Data/spotify_sample.csv\")
+glimpse(spotify_data)
+
+```"

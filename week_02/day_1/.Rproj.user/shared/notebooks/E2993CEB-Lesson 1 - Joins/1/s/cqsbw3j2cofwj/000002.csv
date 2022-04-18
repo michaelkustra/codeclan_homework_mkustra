@@ -1,0 +1,15 @@
+"0","```r
+
+left_join(
+  customers,
+  orders,
+  by = \"customer_ID\"
+)
+
+right_join(
+  customers,
+  orders,
+  by = \"customer_ID\"
+)
+
+```"

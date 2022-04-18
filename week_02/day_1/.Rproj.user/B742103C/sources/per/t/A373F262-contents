@@ -1,0 +1,107 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+# Question 1
+
+Read in all 4 credit card transaction datasets and clean column names.
+
+```{r}
+
+card_base_clean <- card_base <- read_csv("Data/CardBase.csv") %>% 
+  clean_names()
+
+customer_base_clean <- customer_base <- read_csv(("Data/CustomerBase.csv")) %>% 
+  clean_names()
+
+fraud_base_clean <- fraud_base <- read_csv("Data/FraudBase.csv") %>% 
+  clean_names()
+
+transaction_base_clean <- transaction_base <- read_csv(
+  "Data/TransactionBase.csv") %>% 
+  clean_names()
+
+```
+
+# Question 2
+
+Join the data containing card details and customer details by customer id, so that all records of card details and any matching records in customer details are kept. Before you run the code, think about how many rows you expect to see after joining.
+
+```{r}
+
+inner_join(card_base_clean,
+           customer_base_clean,
+           by = "cust_id")
+
+
+```
+
+# Question 3
+
+Join the data containing fraud details with transaction details so all rows of both tables are kept. What does the resulting row number tell you?
+
+Resulting row tells me that the fraud base is a subset of transaction base,
+Since only one column is added but same rows.
+
+```{r}
+
+fraud_base_clean
+transaction_base_clean
+
+full_join(fraud_base_clean,
+          transaction_base_clean,
+          by = "transaction_id")
+
+```
+
+# Question 4
+
+Join the data containing card details with transaction details so rows from the first which have matching ones in the second are returned, but only return rows in the first table once.
+
+```{r}
+
+semi_join(card_base_clean,
+          transaction_base_clean,
+          by = c("card_number" = "credit_card_id"))
+
+```
+
+# Question 5
+
+Read in hat_observations and separate observation into two columns, hat_colour and hat_type.
+
+```{r}
+
+hat_obvs <- read_csv("Data/hat_observations.csv") %>% 
+  separate(observation, into = c("hat_colour", "hat_type"), sep = ",")
+
+```
+
+# Question 6
+
+Unite day, month, and year columns into a column called date using a suitable separator. Then find the date where the most berets were observed.
+
+```{r}
+
+hat_obv_unite <- hat_obvs %>% 
+  unite("date", day, month, year, sep = "/") %>% 
+  filter(hat_type == "beret") %>% 
+  group_by(date) %>% 
+  summarise(total_count = sum(observation_count)) %>% 
+  slice_max(total_count, n = 1)
+
+
+
+
+
+ # select(hat_type, observation_count) %>% 
+ # (filter(hat_type == "beret"))
+
+```
+

@@ -1,0 +1,31 @@
+"0","```r
+diet_data <- read_csv(here(\"data/dietary-composition-by-country.csv\"))
+```"
+"1","Rows: 8981 Columns: 28
+── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr  (2): Entity, Code
+dbl (26): Year, Alcoholic Beverages (FAO (2017)), Animal fats (FAO (2017)), Barley (FAO (2017)), Bovine Meat (FAO (...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","```r
+dim(diet_data)
+```"
+"1","[1] 8981   28
+"
+"0","```r
+names(diet_data)
+```"
+"1"," [1] \"Entity\"                           \"Code\"                             \"Year\"                            
+ [4] \"Alcoholic Beverages (FAO (2017))\" \"Animal fats (FAO (2017))\"         \"Barley (FAO (2017))\"             
+ [7] \"Bovine Meat (FAO (2017))\"         \"Cereals, Other (FAO (2017))\"      \"Eggs (FAO (2017))\"               
+[10] \"Fish & seafood (FAO (2017))\"      \"Fruit (FAO (2017))\"               \"Maize (FAO (2017))\"              
+[13] \"Meat, Other (FAO (2017))\"         \"Milk (FAO (2017))\"                \"Miscellaneous (FAO (2017))\"      
+[16] \"Mutton & Goat Meat (FAO (2017))\"  \"Oilcrops (FAO (2017))\"            \"Pigmeat (FAO (2017))\"            
+[19] \"Poultry Meat (FAO (2017))\"        \"Pulses (FAO (2017))\"              \"Rice (FAO (2017))\"               
+[22] \"Starchy Roots (FAO (2017))\"       \"Sugar & Sweeteners (FAO (2017))\"  \"Sugar Crops (FAO (2017))\"        
+[25] \"Nuts & Seeds (FAO (2017))\"        \"Vegetable Oils (FAO (2017))\"      \"Vegetables (FAO (2017))\"         
+[28] \"Wheat (FAO (2017))\"              
+"

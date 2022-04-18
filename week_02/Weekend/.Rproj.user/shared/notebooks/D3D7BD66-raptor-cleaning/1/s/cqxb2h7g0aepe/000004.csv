@@ -1,0 +1,3 @@
+"0",""
+"0",""
+"0","filter(species, str_detect(Alpha, '[^0-9]'))"

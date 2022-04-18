@@ -1,0 +1,4 @@
+"0","```r
+chick_weight <- ChickWeight %>% 
+  janitor::clean_names()
+```"

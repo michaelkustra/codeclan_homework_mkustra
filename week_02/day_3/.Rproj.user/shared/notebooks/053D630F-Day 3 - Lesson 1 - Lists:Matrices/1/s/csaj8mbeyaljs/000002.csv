@@ -1,0 +1,10 @@
+"0","```r
+
+x <- 37
+if (x %% 2 == 0) {
+  print(\"Yes, that divides by 2\")
+} else {
+  print(\"No, it does not divide by 2\")
+}
+
+```"

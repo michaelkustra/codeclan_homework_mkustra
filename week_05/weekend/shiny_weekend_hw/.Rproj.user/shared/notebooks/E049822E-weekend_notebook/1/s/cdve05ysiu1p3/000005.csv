@@ -1,0 +1,7 @@
+"0","ggplot(games_data) +"
+"0","  aes(x = year_of_release, y = sales) +"
+"0","  geom_line(colour = ""tomato"") +"
+"0","  labs(title = ""Time Series of Sales"","
+"0","       x = ""Year of Release"","
+"0","       y = ""Sales"") +"
+"0","  theme_bw()"

@@ -1,0 +1,8 @@
+"0","```r
+
+bind_rows(
+  customers,
+  past_customers
+)
+
+```"

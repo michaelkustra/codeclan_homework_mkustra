@@ -315,13 +315,23 @@ hat_obvs &lt;- read_csv(&quot;Data/hat_observations.csv&quot;) %&gt;%
 <p>Unite day, month, and year columns into a column called date using a suitable separator. Then find the date where the most berets were observed.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Miwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIxIMOXIDIiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFRd1c3Q01BeDFRd05xRVdpSWYrRFdRcGswY2VTQTlnRUlKRzRvbExKVnl4TFVwb0lqWDE1d2lpdEJmRWllWC96c1BLOVh1ODl3RndKQUIzeVBRWWNqQkw3ZGZFY0xBSjloNG9FUGdiMnZXRFJHWU1tUGw0Y2dXVXkvcHZOWmdnb1kyb2ZsQkNqZU9uQWwvck9TMUl4SS95aE1Scmh2dEJGeW4rcEtHVWNiRlBvU3QvcUIxZC93dUdPNFExSXB5dEw1WW9oRFJId3FVSTlaN1VoNitteHlyVkRFckQvdWlMM0NJVWFWc2o4NVJ1bHZwZjZpWkdhTmgwM0JNd2FFdlJmTW5rUFpuWnB4YXRiTjFFK3UyZzF3S1E2WnBHU0luaHZMOGJuSWNTUGtCZGt5YmpiVk1xbVdMZE80Zy9vQi9ORTdFdGdCQUFBPSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["date"],"name":[1],"type":["chr"],"align":["left"]},{"label":["total_count"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"18/6/2018","2":"11"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5oYXRfb2J2X3VuaXRlIDwtIGhhdF9vYnZzICU+JSBcbiAgdW5pdGUoXCJkYXRlXCIsIGRheSwgbW9udGgsIHllYXIsIHNlcCA9IFwiL1wiKSAlPiUgXG4gIGZpbHRlcihoYXRfdHlwZSA9PSBcImJlcmV0XCIpICU+JSBcbiAgZ3JvdXBfYnkoZGF0ZSkgJT4lIFxuICBzdW1tYXJpc2UodG90YWxfY291bnQgPSBzdW0ob2JzZXJ2YXRpb25fY291bnQpKSAlPiUgXG4gIHNsaWNlX21heCh0b3RhbF9jb3VudCwgbiA9IDEpXG5cblxuXG5cblxuICMgc2VsZWN0KGhhdF90eXBlLCBvYnNlcnZhdGlvbl9jb3VudCkgJT4lIFxuICMgKGZpbHRlcihoYXRfdHlwZSA9PSBcImJlcmV0XCIpKVxuXG5gYGAifQ== -->
+<pre class="r"><code>
+hat_obv_unite &lt;- hat_obvs %&gt;% 
+  unite(&quot;date&quot;, day, month, year, sep = &quot;/&quot;) %&gt;% 
+  filter(hat_type == &quot;beret&quot;) %&gt;% 
+  group_by(date) %&gt;% 
+  summarise(total_count = sum(observation_count)) %&gt;% 
+  slice_max(total_count, n = 1)
+
+
+
+
+
+ # select(hat_type, observation_count) %&gt;% 
+ # (filter(hat_type == &quot;beret&quot;))
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->

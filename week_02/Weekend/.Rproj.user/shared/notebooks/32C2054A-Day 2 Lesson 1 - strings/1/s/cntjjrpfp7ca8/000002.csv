@@ -1,0 +1,5 @@
+"0","```r
+employees %>% 
+  separate(postcode, c(\"postcode_outer\", \"postocde_inner\"), sep = \" \")
+
+```"

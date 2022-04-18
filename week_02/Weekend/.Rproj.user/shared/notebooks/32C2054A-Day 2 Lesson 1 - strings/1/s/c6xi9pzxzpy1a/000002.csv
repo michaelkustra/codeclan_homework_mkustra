@@ -1,0 +1,13 @@
+"0","```r
+
+new_string <- str_c(\"Manipulating\", \"strings\", \"is\", \"fun!\", sep = \" \")
+
+upper_string <- new_string %>% 
+  str_to_upper()
+
+format_upper <- upper_string %>% 
+  str_split(\"\")
+
+format_upper
+
+```"

@@ -1,0 +1,13 @@
+"0","```r
+monthly_sales <- CodeClanData::monthly_sales
+
+monthly_sales <- monthly_sales %>%
+  mutate(month = factor(month, levels = c(\"Jan\", \"Feb\", \"March\", \"April\"))) 
+
+ggplot(monthly_sales) +
+  aes(x = branch, y = sales, fill = month) +
+  geom_col(position = \"dodge\") +
+  ylab(\"Sales (1000 units)\") +
+  scale_y_continuous(labels = scales::comma) +    # adds comma to y scale
+  coord_flip()
+```"

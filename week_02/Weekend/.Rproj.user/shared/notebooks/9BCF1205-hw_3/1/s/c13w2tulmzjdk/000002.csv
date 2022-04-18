@@ -1,0 +1,9 @@
+"0","```r
+```r
+
+#create new variable movies_selected
+movies_selected <- movies %>% 
+  select('title', 'runtime','budget')
+movies_selected
+```
+```"

@@ -1,0 +1,5 @@
+"0","```r
+students_big %>% 
+  mutate(handed = if_else(handed == 'R', 'Right', 'Left')) %>% 
+  mutate(favourite_physical_activity = if_else(favourite_physical_activity == 'Football/Soccer', 'Football', as.character(favourite_physical_activity)))
+```"

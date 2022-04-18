@@ -1,0 +1,8 @@
+"0","```r
+
+employees %>% 
+  mutate(postcode_new = str_split(postcode, \" \")) %>% 
+  unnest(postcode_new)
+
+
+```"

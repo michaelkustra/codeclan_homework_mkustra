@@ -1,0 +1,5 @@
+"0","```r
+students_big %>% 
+  select(ageyears) %>% 
+  mutate(older_than_12 = if_else(ageyears > 12, 'Older than 12', '12 or under'))
+```"

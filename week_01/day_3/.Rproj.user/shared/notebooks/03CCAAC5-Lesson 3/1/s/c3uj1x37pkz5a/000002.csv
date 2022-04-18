@@ -1,0 +1,7 @@
+"0","```r
+CodeClanData::students_big
+
+students_big %>% 
+  select(ageyears) %>% 
+  mutate(older_than_12 = ageyears > 12)
+```"

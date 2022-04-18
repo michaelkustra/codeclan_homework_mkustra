@@ -1,0 +1,6 @@
+"0","```r
+ggplot(pets) +
+  aes(x = animal, fill = sex) +
+  geom_bar() +
+  coord_flip()              #flips x and y axes
+```"

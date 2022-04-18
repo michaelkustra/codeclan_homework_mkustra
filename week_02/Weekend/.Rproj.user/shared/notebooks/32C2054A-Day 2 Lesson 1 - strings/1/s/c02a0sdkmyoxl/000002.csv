@@ -1,0 +1,12 @@
+"0","```r
+
+employees <- tibble(
+  first_name = c(\"Sally\", \"steven\", \"Mary\", \"John\"),
+  last_name = c(\"Smith\", \"hasTings\", \"Milne\", \"Davidson\"),
+  postcode = c(\"EH10 6GH\", \"EH3 7HL\", \"G1 7FR\", NA), 
+  location = c(\" \", \"Edinburgh\", \"\", \"Stirling\")
+)
+
+employees
+
+```"

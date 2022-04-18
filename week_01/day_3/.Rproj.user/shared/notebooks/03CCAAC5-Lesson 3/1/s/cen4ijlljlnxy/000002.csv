@@ -1,0 +1,4 @@
+"0","```r
+video_games <- video_games %>% 
+  janitor::clean_names()
+```"

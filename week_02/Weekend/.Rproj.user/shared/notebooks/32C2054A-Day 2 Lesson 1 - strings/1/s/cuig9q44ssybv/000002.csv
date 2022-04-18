@@ -1,0 +1,4 @@
+"0","```r
+full_string %>% 
+  str_sub(start = 1, end = 5)
+```"

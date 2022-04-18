@@ -1,0 +1,11 @@
+"0","```r
+pets <- add_case(pets, name = 'CamFraz', sex = 'M', weight = 95, age = 24) %>% 
+  add_case(weight = 5, age = c(2, 4, 20, 40))
+
+ggplot(pets) +
+  aes(age, weight, colour = sex) +
+  geom_point() +
+  scale_y_log10(name = \"log(weight)\") +
+  scale_x_log10(name = \"log(weight)\")
+
+```"

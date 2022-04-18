@@ -1,0 +1,11 @@
+"0","```r
+
+#first row, second column
+m[1, 2]
+
+#first row, all values
+m[1,]
+
+#first column, all values
+m[, 1]
+```"

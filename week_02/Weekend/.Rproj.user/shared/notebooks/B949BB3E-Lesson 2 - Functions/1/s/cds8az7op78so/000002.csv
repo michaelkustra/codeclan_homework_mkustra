@@ -1,0 +1,7 @@
+"0","```r
+
+mult_by_5 <- function(x, y = 100){
+  return(x*y)
+  
+}
+```"

@@ -1,0 +1,6 @@
+"0","```r
+nchar(\"hello\", \"chars\", TRUE, keepNA = FALSE)
+
+```"
+"1","[1] 5
+"

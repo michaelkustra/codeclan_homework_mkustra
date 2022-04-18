@@ -1,0 +1,21 @@
+"0","```r
+
+pivot_longer(
+  data,                   # our dataset
+  cols,                   # which columns to pivot on
+  names_to = \"name\",
+  values_to = \"value\",
+)
+
+iris
+
+iris2 <- iris %>% 
+  pivot_longer(cols = -Species,
+               names_to = \"the_names\",
+               values_to = \"the_vals\")
+
+iris2 %>% 
+  pivot_wider(names_from = \"the_names\",
+              values_from = \"the_vals\") %>% 
+  unnest()
+```"

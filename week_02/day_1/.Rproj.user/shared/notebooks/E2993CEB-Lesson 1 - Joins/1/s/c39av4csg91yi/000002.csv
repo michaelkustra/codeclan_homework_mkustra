@@ -1,0 +1,7 @@
+"0","```r
+
+band_members
+band_instruments
+band_members %>% 
+  inner_join(band_instruments)
+```"

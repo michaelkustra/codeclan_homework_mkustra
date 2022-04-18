@@ -1,0 +1,6 @@
+"0","```r
+monthly_sales <- CodeClanData::monthly_sales %>%
+  mutate(month = factor(month, levels = c(\"Jan\", \"Feb\", \"March\", \"April\"))) 
+
+head(monthly_sales)
+```"

@@ -1,0 +1,9 @@
+"0","```r
+
+test_that(\"Correctly identifies non leap years\", {
+  expect_equal(is_leap_year(2017), FALSE)
+  expect_equal(is_leap_year(1900), FALSE)
+})
+```"
+"1","Test passed 😸
+"

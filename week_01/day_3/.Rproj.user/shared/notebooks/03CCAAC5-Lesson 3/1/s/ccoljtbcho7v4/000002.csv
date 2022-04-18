@@ -1,0 +1,4 @@
+"0","```r
+comms_data %>% 
+  summarise(count = sum(is.na(monthly_charges)))
+```"

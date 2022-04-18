@@ -1,0 +1,4 @@
+"0","```r
+comms_data %>% 
+  filter(is.na(monthly_charges))
+```"

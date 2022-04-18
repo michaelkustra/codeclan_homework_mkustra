@@ -1,0 +1,1 @@
+{"frames":[],"message":"Error: unexpected string constant in:\n\"                \"Friday\" = list(temp = 13L, precip = 10L, wind = 10L)\n                \"Saturday\"\"\n"}

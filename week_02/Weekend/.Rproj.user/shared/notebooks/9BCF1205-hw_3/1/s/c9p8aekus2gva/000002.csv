@@ -1,0 +1,6 @@
+"0","```r
+nrow(movies) - nrow(drop_na(movies))
+
+```"
+"1","[1] 3310
+"

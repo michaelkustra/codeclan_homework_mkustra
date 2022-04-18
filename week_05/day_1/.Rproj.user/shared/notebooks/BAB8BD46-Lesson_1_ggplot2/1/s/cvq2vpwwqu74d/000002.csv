@@ -1,0 +1,8 @@
+"0","```r
+
+students %>% 
+  ggplot() +
+  aes(x = superpower, fill = school_year) +
+  geom_bar(colour = \"black\", position = \"fill\")
+
+```"

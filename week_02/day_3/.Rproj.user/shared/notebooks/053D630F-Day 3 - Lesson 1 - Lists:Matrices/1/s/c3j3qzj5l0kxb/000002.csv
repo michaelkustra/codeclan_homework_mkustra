@@ -1,0 +1,11 @@
+"0","```r
+weekdays_1 <- c(\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\")
+
+# in the example below, day can be called anything, it is a temp object.
+
+for (day in weekdays_1) {
+  phrase <- paste(\"The day is\", day)
+  print(phrase)
+}
+
+```"

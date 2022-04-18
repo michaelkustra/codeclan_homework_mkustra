@@ -1,0 +1,9 @@
+"0","```r
+
+# sum all rows
+rowSums(m)
+
+# sum all columns
+colSums(m)
+
+```"

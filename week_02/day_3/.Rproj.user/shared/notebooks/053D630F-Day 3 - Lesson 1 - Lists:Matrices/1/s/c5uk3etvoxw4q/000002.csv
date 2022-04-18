@@ -1,0 +1,14 @@
+"0","```r
+#using dollar
+student_info$Bobby$height
+
+#using indexing
+student_info[[1]][[2]]
+# gets you in sub list, first obs second element
+
+student_info[[2]][[1]]
+# gets you in second level and extracts first element in there
+
+student_info[2]
+# pulls everything from second level of list
+```"

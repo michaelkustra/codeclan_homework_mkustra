@@ -1,0 +1,19 @@
+"0","```r
+# create your weekdays vector
+weekdays <- c(\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\")
+
+# print \"Last Weekday!\" for Friday only
+for (day in weekdays) {
+    if (day == \"Friday\") {
+      print(\"Last Weekday!\")
+    } else{
+      print(day)
+    }
+  }
+```"
+"1","[1] \"Monday\"
+[1] \"Tuesday\"
+[1] \"Wednesday\"
+[1] \"Thursday\"
+[1] \"Last Weekday!\"
+"

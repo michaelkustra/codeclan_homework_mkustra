@@ -1,0 +1,12 @@
+"0","```r
+
+customers2 <- customers %>% 
+  mutate(payment_type = c(\"card\", \"cash\", \"cash\", \"card\", \"card\", \"card\"))
+
+orders2 <- orders %>%
+  mutate(payment_type = c(\"card\", \"cash\", \"cash\", \"card\", \"card\", \"cash\"))
+
+inner_join(customers2, orders2,
+           by = c(\"customer_ID\", \"payment_type\"))
+
+```"

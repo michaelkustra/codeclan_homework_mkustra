@@ -1,0 +1,4 @@
+"0","species_long <- species_long %>% "
+"0","  separate(spec,"
+"0","           into = c('genus', 'spec_name'),"
+"0","           remove = FALSE)"

@@ -1,0 +1,6 @@
+"0","```r
+min_max <-max(abs(monthly_sales_april$difference_from_jan))
+
+```"
+"1","Error: object 'monthly_sales_april' not found
+"

@@ -1,0 +1,8 @@
+"0","```r
+
+# mean value of each column
+colMeans(m)
+
+# mean value of each row
+rowMeans(m)
+```"

@@ -1,0 +1,8 @@
+"0","```r
+
+anti_join(customers,
+          orders,
+          by = \"customer_ID\")
+
+
+```"

@@ -1,0 +1,7 @@
+"0","```r
+
+pangram %>% 
+  str_to_lower()
+
+
+```"
