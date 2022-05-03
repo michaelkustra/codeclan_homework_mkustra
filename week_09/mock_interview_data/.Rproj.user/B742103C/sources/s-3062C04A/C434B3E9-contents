@@ -1,0 +1,549 @@
+---
+title: "Citi NYC Bikes"
+output:
+  html_document:
+    code_folding: hide
+---
+![citi logo](./citi_bike_logo.png)
+
+<style type="text/css">
+  body{
+  font-size: 14pt;
+}
+</style>
+
+# Documentation
+
+## Domain Knowledge (1.1)
+
+CitiBikes NYC is the largest bike sharing program in the United States, with
+over 1500 stations in place to serve the greater NYC area. As CitiBikes have 
+put it, "Designed with convenience in mind for quick trips, Citi Bike is a fun 
+and affordable way to get around town"
+
+I have actually used a NYC Citi bike once before while visiting the city. Using
+that experience, and experience of hiring bikes in San Francisco & Minneapolis, 
+I have tried to approach this from the mind of a consumer first, then that from
+the business perspective.
+
+I took some time researching the NYC Citi bikes website, to familiarise myself
+with how the system works, pricing, subscription etc. The bike industry is one
+of the industries that has benefited from increased awareness of our carbon
+footprint. That outlook has seen the market for bike hiring steadily grow over
+the last few years. The global bike sharing market is estimate to grow to over
+13 billion dollars by 2026, as published by the Statista Research Department:
+
+[Bike](https://www.statista.com/statistics/868126/global-bikesharing-market-size/)
+
+## Business Requirements (1.2)
+
+The steps I plan to take to complete this report are as follows:
+
+1. Establish questions to answer
+2. Answer questions using visualisations
+3. Make business inferences based on visualisations
+
+## Business Processes and Data Flow (1.3)
+
+The following data flow visual demonstrates how the data was collected during
+the process of pre bike journey at the start station, through to the journey 
+finishing at the end station.
+
+![citi flow](./citi_flow.png)
+
+## Data Visualisation as a Tool for Decision-Making (1.4)
+
+The aim of this report is to use data to highlight areas of strength and areas
+for development within the current business model, by use of visualisations.
+
+This will allow Citi bikes to capitalise on times or demographics where it is
+already succeeding, while also realising the opportunities for further growth
+in areas of development.
+
+## Data Types (1.5)
+
+Types of variables found in the nyc_bikes_df include:
+
+* Factor
+* Date Time
+* Double
+* Date (after data wrangling)
+* Ordinal (after data wrangling)
+* Period (after data wrangling)
+
+## Data Quality and Data Bias (1.6)
+
+I always have concern regarding the quality of any data set that involves data
+collected from user entry. For non-subscribers (customers) in our data it is 
+feasible that they may purposely not submit accurate information to limit
+how much personal information they give away.
+
+I have concerns regarding bias also, specifically about the potential 
+demographic that bike schemes such as this one could cater for. Subscriptions
+for such schemes can be expensive, so we may already be biased in our sample of
+people using the bikes. We have no data on the condition of the bikes, it could
+be that bikes in certain areas or stations are better (or not) maintained which
+would affect the hire rate in some areas. 
+
+However, even given these two concerns, we accept the data for what it is, and
+hope that all information gathered was given honestly and accurately. We also
+assume that all bikes are in a similar condition in all areas across NYC.
+
+# 2. Data Cleaning
+
+## Preparing Data for Visualisation (1.7)
+
+```{r message = FALSE}
+# load relevant libraries
+library(lubridate)
+library(tidyverse)
+library(tsibble)
+library(tsibbledata)
+library(leaflet)
+library(plotly)
+```
+
+
+```{r class.source = 'fold-show'}
+# add cols for date, day, month, year, age, hire_duration
+nyc_bikes_df <- nyc_bikes
+nyc_bikes_df <- nyc_bikes_df %>% 
+  mutate(
+    date = as_date(start_time),
+    day = wday(start_time, label = TRUE, abbr = TRUE),
+    month = month(start_time, label = TRUE, abbr = TRUE),
+    year = year(start_time),
+    age = year(as.period((year - birth_year), "years")),
+    hire_duration = ceiling((as.numeric(as.period(stop_time - start_time), "minutes"))
+  ))
+```
+
+## Trend of Bike Hires Over Time
+
+### Aggregate Hires by Month
+
+```{r}
+month_count <- nyc_bikes_df %>% 
+  index_by(month) %>% 
+  count(month) %>% 
+  arrange(desc(n))
+
+month_count
+
+```
+
+### Aggregate Hires by Quarter
+
+```{r}
+quarter_count <- nyc_bikes_df %>% 
+  mutate(qtr = quarter(date, with_year = F)) %>% 
+  index_by(qtr) %>% 
+  count(qtr) %>% 
+  arrange(desc(n))
+
+quarter_count
+```
+
+### Aggregate Hires by Day
+
+```{r}
+day_count <- nyc_bikes_df %>%
+  group_by(type) %>% 
+  index_by(day) %>% 
+  count(day)
+
+day_count
+```
+
+## Bike Hire Trends Between Bike Rider Demographics
+
+### Bike Hire by Gender
+
+```{r}
+monthly_gender_hire <- nyc_bikes_df %>%
+  group_by(gender) %>%
+  index_by(month) %>%
+  summarise(monthly_users = n())
+
+monthly_gender_hire
+
+```
+
+### Bike Hire by Age
+
+```{r}
+nyc_bikes_df %>% 
+  count(age)
+```
+
+# 3. Data visualisation
+
+## Process and Design (2.1, 2.7, 2.8, 2.9)
+
+My data visualisation process had three stages:
+
+1 Investigate variables of interest in the data towards boosting the KPI of the 
+business.
+
+2 Create initial plots that explored these variables of interest
+
+3 Expand upon initial plots that best conveyed the key messages I wished to 
+deliver to the business.
+
+## Visualisations (2.2, 2.3, 2.4, 2.5, 2.6)
+
+### Plot of Hire Count by Month
+```{r}
+# plot hire output by month
+month_plot <- month_count %>% 
+  ggplot() +
+  aes(x = month, y = n) +
+  geom_line(group = 1, colour = "red") +
+  geom_point(alpha = 0.5) +
+  labs(title = "Total Hires by Month",
+       x = "Month",
+       y = "Hire Count") +
+  theme_bw()
+
+ggplotly(month_plot)
+```
+
+<details>
+
+__Rationale__
+
+I created this plot to visualise a possible pattern in bike hire count across 
+months of the year, it may lead to an actionable insight towards boosting the 
+KPI. To create this plot I created an aggregate of the monthly bike hire count
+and then plotted this with month on the independent axis with hire count
+on the dependent axis.
+
+__Interpretation__
+
+From this plot we can see a pattern with hire count increasing as the summer 
+months approach, reaching a peak in August. This is a pattern we see replicated
+in the subsequent plot by quarter also, with q3 proving the most popular 
+quarter in terms of the count of bike hires. 
+
+__Insights__
+
+I would recommend that CitiBikes invest in their inventory and servicing
+during the second and third quarters of the year. It is clear that their hire
+count is greatest during these months, something they should capitalise on and
+ensure that the supply of their bikes meets the demand of the NYC inhabitants.
+Increasing the number of bikes or stations could lead to further growth during
+these months. 
+
+</details>
+
+### Plot of Hire Count by Quarter
+```{r}
+quarter_count %>% 
+  ggplot(aes(x = qtr, y = n)) +
+  geom_col(fill = "orange")+
+  labs(title = "Hire Count per Quarter",
+       x = "Quarter",
+       y = "Hire Count") +
+  theme_bw()
+```
+
+<details>
+
+__Rationale__
+
+This plot was created to be used in conjunction with the plot by month above. It
+was created by sorting the months of the year into one of the four quarters:
+
+  * Q1 = Jan/Feb/Mar
+  * Q2 = Apr/May/Jun
+  * Q3 = Jul/Aug/Sep
+  * Q4 = Oct/Nov/Dec
+  
+This would help provide an overview of demand across the year as a whole.
+
+__Interpretation__
+
+Much like the plot by month, the plot by quarter highlights the pattern of 
+increased bike hire use in the second and third quarter, with Q3 being the 
+most popular by demand.
+
+__Insights__
+
+My first insight is to capitalise on the demand during the summer months. Ensure
+there is sufficient supply to meet this demand (possibly looking at the most
+popular start stations to increase no of bikes available). However, I would also
+encourage CitiBikes to look at their pricing/subscription structure during
+their poorer performing quarters, one and four. While the current hire count
+is low in these quarters, it is something that could prove to be demand that is
+yet to be fulfilled. Day and single ride prices could be amended for these
+months to entice more customers during these times. It could be akin to creating
+an 'off-peak' sort of pass.
+
+</details>
+
+### Plot of Hire Count by Weekday & Trip Type
+```{r}
+day_plot <- day_count %>% 
+  ggplot(aes(x = day, y = n, group = type, colour = type)) +
+  geom_line(alpha = 0.5) +
+  geom_point() +
+  labs(title = "Daily Hire Count by Trip Type",
+       x = "Day",
+       y = "Hire Count",
+       colour = "Trip Type") +
+  theme_bw()
+
+ggplotly(day_plot)
+```
+
+<details>
+
+__Rationale__
+
+This plot was created to delve deeper into time frames that customers used 
+CitiBikes, beyond the previous year and month outlook. Perhaps by looking at
+the days of the week most customers/subscribers used the bikes could lead to
+an actionable insight that would raise bike hires.
+
+__Interpretation__
+
+There is a clear difference between the hire count of subscribers versus
+customers and pattern between each of those and the most popular days also
+emerges from this plot. 
+
+For subscribers a clear pattern emerges whereby the hire 
+count increases to a steady number during the weekdays. This could be explained 
+by local commuters who subscribe in order to use the bikes during their journey 
+to and from work. Hire count for these subscribers drops by approx 200 rides 
+per day on Saturday and Sunday, 
+
+For customers, the opposite pattern emerges, with higher bike hires occurring
+on Saturday and Sunday (approx 2-3 time as many on weekends).
+
+__Insights__
+
+For subscribers specifically, CitiBikes could look to remedy with alternative 
+pricing for these days. Perhaps for subscribers they could offer free upgrades 
+to an e-bike on weekend days with an annual subscription. This could entice
+more customers to join on a subscription, or more consumers not yet joined
+to get on board and use the bikes as their mode of transport around NYC.
+
+For non-subscribing customers, CitiBikes could lower the price of a single ride 
+or increase the length of time $3.99 receives (45-60 mins instead)
+during weekdays only. This would have the aim of boosting customer bike hire
+journeys on the weekdays and ultimately improving their KPI.
+
+</details>
+
+### Plot of Hire Count by Gender
+```{r}
+gender_plot <- monthly_gender_hire %>% 
+  ggplot(aes(x = month, y = monthly_users, colour = gender, group = gender)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Monthly Use by Gender",
+       x = "Month",
+       y = "Hire Count",
+       colour = "Gender") +
+  theme_bw()
+
+ggplotly(gender_plot)
+```
+
+<details>
+
+__Rationale__
+
+Here the aim is to delve into the demographic of our consumers and discover 
+if there is a pattern in the gender of bike users with CitiBikes. 
+
+__Interpretation__
+
+Initially, we can see that each line for male, female and unknown generally
+follows the patter seen above. That is the bike count steadily increasing
+into the summer months and third quarter then decreasing into winter. However,
+we can also see that the dominant gender in our consumer base in males, then
+females and lastly unknown gender. More males use the CitiBikes across all
+months, something we could use to further help the KPI.
+
+__Insight__
+
+CitiBikes could take advantage of having such a large base of males who already
+like to use their bikes by expanding upon their already successful bike hire
+scheme. One study (linked below) found that men showed increased satisfaction
+from cycling for both recreation and for transport. Using this and the above
+data, Citibikes could add another range of bicycles kept at high perfoming 
+starting stations, something that interests the keen male cyclist beyond the
+classic and e-bike already on offer.
+
+Where CitiBikes could make the most ground is with their female consumers, whom
+are currently lagging behind their male counterparts in terms of hire count. 
+It must be said that without sampling the actual population of female CitiBikes
+users, or NYC female residents, I cannot speak to their constraints or barriers 
+to using the bikes, but I can mention ways we could boost female users. In the
+study below, one of the main concerns was regarding cycling in traffic. I can
+envision how this would be especially perilous in NYC. CitiBikes could offer 
+weekly mentoring sessions where expert female riders can teach aspiring
+consumers how to navigate the streets as a cyclist with confidence. Perhaps by
+simply reaching out and offering to help female customers may be enough to
+increase female users of CitiBikes.
+
+[Study](https://ijbnpa.biomedcentral.com/articles/10.1186/1479-5868-9-106)
+
+</details>
+
+### Plot of Hire Count by Age
+```{r}
+age_plot <- nyc_bikes_df %>% 
+  count(age) %>% 
+  ggplot(aes(x = age, y = n))+
+  geom_line(colour = "steel blue") +
+  scale_x_continuous(n.breaks = 40) +
+  scale_y_continuous(n.breaks = 20) +
+  labs(title = "Plot of Hire Count by Age",
+       x = "Age",
+       y = "Hire Count") +
+  theme_bw()
+
+ggplotly(age_plot)
+```
+
+<details>
+
+__Rationale__
+
+This plot aims to look at the bike rider demographic of age and determining if
+there are any visible patterns. Perhaps by finding a pattern with the age of
+our riders we can boost hires even further.
+
+__Interpretation__
+
+Our line plot has three distinct peaks at ages 30, 32 and 49. These three ages
+being our ages with the greatest number of bike hires. In general the number
+of users climbs until 32 yo and the decreases soon after, with 49yo being the 
+exception.
+
+__Insights__
+
+Since most of the demographic falls between 20 - 50 yo, it would be prudent to
+market the advantages of the bikes to these generations. In today's climate
+financial security and being eco-friendly have become more important to younger
+generations. Advertising could be bought in 7 around NYC that demonstrates the
+benefits not only to your own physical and mental health & well being, but also
+that of the planet and your wallet too. For example a MTA underground unlimited
+30 day pass for the subway costs \$127, compared to the \$15 a month for 
+CitiBikes. Marketing around the benefits to the planet could prove prudent as
+well, given that bikes produce no emissions while in use and reduce overall
+congestion and air-pollution. 
+
+</details>
+
+### Plot of Hire Count by Trip Type
+```{r}
+type_plot <- nyc_bikes_df %>%
+  group_by(month) %>% 
+  count(type) %>% 
+  ggplot(aes(x = month, y = n, colour = type, group = type)) +
+  geom_line()+
+  geom_point(alpha = 0.5) +
+  labs(title = "Plot of Hire Count by Type of Travel",
+       x = "Month",
+       y = "Hire Count",
+       colour = "Trip Type") +
+  theme_bw()
+
+ggplotly(type_plot)
+```
+
+<details>
+
+__Rationale__
+
+Similar to the plot of weekday use grouped by trip type, this plot aims to take
+an overview into all trips across the year, grouped by trip type: subscribers
+and customers. 
+
+__Interpretation__
+
+It is clear to see that subscribers make up the majority of CitiBikes riders
+here. Again, both lines show an increase in the summer months (as mentioned
+earlier). However, it shows that customer numbers are paltry in comparison to
+subscribers hire count.
+
+__Insights__
+
+The aim for CitiBikes here should be to either turn customers into subscribers,
+or, make the scheme more attractive to potential future customers. NYC is a huge
+tourist destination, tourists who most likely have no immediate means of
+transport when in the city. CitiBikes could offer an out-of-state/tourist
+1-5 day pass that can be purchased on a yearly basis. This could be priced at
+an average of $10/day on weekends and \$8 per day on weekdays (due to these
+rides being lower in general). This may entice more tourists and out-of-state
+visitors to use the bikes as their transport, without the need for a 
+subscription.
+
+Another possible actionable insight could be to offer a free trial as part of
+new subscriptions, much like Netflix. If some user prefer the freedom of using 
+the bikes whenever, without a commitment, then perhaps offering their first 
+month free with a new monthly subscription could tempt more customers to turn
+into subscribers. 
+
+</details>
+
+### Geospatial Visualisation of Bike Hire Start Point
+```{r}
+nyc_bikes_df %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = ~start_long,
+             lat = ~start_lat,
+             clusterOptions = markerClusterOptions(),
+             label = nyc_bikes_df$start_station,
+    labelOptions = labelOptions(noHide = F, textsize = "14px"))
+```
+
+<Details>
+
+__Rationale__
+
+This plot was created to answer the question, "What is the geographical spread 
+of the start points of bike hires?" An important question that relates to the
+KPI of CitiBikes. If we know where most users are starting their journeys
+then we could attempt to boost the numbers of hires further.
+
+__Interpretation__
+
+Start points range as far North as Hoboken, as far South as West Bergen & 
+Liberty Park. The area covered by all stations is approx 2554.507 Acres, 
+demonstrating just how wide the spread of start points is. 
+
+__Insights__
+
+Firstly, this geospatial plot allows us to see where the greatest numbers of
+start points originates from, being Jersey City with 3875 bike hires starting
+withing this vicinity. This would indicate that this area is key for
+users beginning their journey and that CitiBikes should ensure their is 
+sufficient well serviced supply in these start stations.
+
+</Details>
+
+## Main Insights
+
+I hope this report has proved informative and give you several actionable 
+insights that will help your company towards boosting your KPI. Before we 
+finish I'd like to emphasise three key insights from this report:
+
+* There is an opportunity to turn more customers into subscribers based on the
+data available. Altering fare pricing on certain days may boost this.
+
+* Gap in the female market currently, with female rider numbers behind males. 
+Thinking about offering tutorials to get more females in the saddle on the 
+streets of NYC.
+
+* A large proportion of the current customer base is aged between 20-50. Aiming
+our marketing towards the benefits of CitiBikes as a cheaper, cleaner, healthier
+way to travel around NYC will speak to them.
+
+Thank you for listening.
+
+

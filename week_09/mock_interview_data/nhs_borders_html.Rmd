@@ -1,0 +1,73 @@
+---
+title: "NHS Borders"
+output:
+  html_document:
+    code_folding: hide
+---
+
+![NHSBorders](nhs_borders_logo.png)
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+# Technical Question
+
+In order to help inform the planning for provision of cancer treatment services 
+in NHS Borders, we would like to gain better understanding of the incidence of 
+cancer in NHS Borders.
+
+# Read in 5 year incidence summary data set
+
+```{r}
+cancer_5yr_data <- read_csv(here::here("5yr_incidence_health_board.csv")) %>% 
+  clean_names()
+
+total_incidences_data <- read_csv(here::here("Total_incidences_health_board.csv")) %>% 
+  clean_names()
+```
+
+# Filter for NHS Borders data only
+
+```{r}
+borders_cancer_5yr <- cancer_5yr_data %>% 
+  filter(hb == "S08000016")
+
+total_incidences_borders <- total_incidences_data %>% 
+  filter(hb == "S08000016")
+```
+
+# Plot of Total Cancer Incidences
+
+```{r}
+total_cancer_incidences_all <- total_incidences_borders %>% 
+  filter(cancer_site == "All cancer types") %>% 
+  filter(sex == "All") %>% 
+  ggplot(aes(x = year, y = incidences_all_ages)) +
+  geom_col(fill = "steel blue", alpha = 0.7) +
+  labs(title = "Incidences of all Cancer Types: 1996 - 2020",
+       x = "Year",
+       y = "Number of Incidences (All ages)") +
+  scale_x_continuous(n.breaks = 24) +
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5))
+```
+
+# Top 5 most prevelant cancers in NHS Borders
+
+```{r}
+top_five_prevalent_cancers <- borders_cancer_5yr %>%
+  select(cancer_site, sex, incidences_all_ages) %>% 
+  filter(sex == "All" & cancer_site != "All cancer types") %>% 
+  slice_max(incidences_all_ages, n = 5) %>% 
+  mutate(cancer_type = fct_reorder(cancer_site, incidences_all_ages)) %>% 
+  ggplot(aes(x = cancer_type , y = incidences_all_ages)) +
+  geom_col(fill = "red", alpha = 0.7) +
+  coord_flip() +
+  labs(title = "5 Most Prevalent Cancers in NHS Borders Last 5 Years",
+       x = "Cancer Site",
+       y = "Total Incidences (All ages)") +
+  theme_bw()
+```
+
