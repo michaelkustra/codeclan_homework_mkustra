@@ -68,4 +68,22 @@ top_five_prevalent_cancers <- borders_cancer_5yr %>%
   theme_bw()
 ```
 
+```{r}
+borders_cancer_5yr %>%
+  select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>% 
+  filter(cancer_site %in% c("Non-melanoma skin cancer", "Basal cell carcinoma of the skin",
+                            "Trachea, bronchus and lung", "Colorectal cancer",
+                            "Breast") & sex == "All") %>% 
+  pivot_longer(cols = incidences_age_under5:incidences_age85and_over, 
+               names_to = "age_group", values_to = "count") %>% 
+  ggplot(aes(x = age_group, y = count)) +
+  geom_col(fill = "steel blue", alpha = 0.8) +
+  coord_flip() +
+  facet_wrap(~cancer_site) +
+  theme_bw() +
+  labs(x = "Age Group",
+       y = "Number of Incidences")
+
+  
+```
 
