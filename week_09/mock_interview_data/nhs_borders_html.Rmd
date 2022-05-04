@@ -9,20 +9,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ![NHSBorders](nhs_borders_logo.png)
 
-```{r}
+```{r message = FALSE}
 library(tidyverse)
 library(janitor)
 ```
 
-# Technical Question
+# NHS Borders Question
 
 In order to help inform the planning for provision of cancer treatment services 
 in NHS Borders, we would like to gain better understanding of the incidence of 
 cancer in NHS Borders.
 
-# Read in 5 year incidence summary data set
 
-```{r}
+```{r message = FALSE}
 cancer_5yr_data <- read_csv(here::here("5yr_incidence_health_board.csv")) %>% 
   clean_names()
 
@@ -30,9 +29,8 @@ total_incidences_data <- read_csv(here::here("Total_incidences_health_board.csv"
   clean_names()
 ```
 
-# Filter for NHS Borders data only
 
-```{r}
+```{r message = FALSE}
 borders_cancer_5yr <- cancer_5yr_data %>% 
   filter(hb == "S08000016")
 
@@ -40,7 +38,9 @@ total_incidences_borders <- total_incidences_data %>%
   filter(hb == "S08000016")
 ```
 
-# Plot of Total Cancer Incidences
+## Question 1 - Is there an overall trend in cancer rates in NHS borders?
+
+### Plot of Total Cancer Incidences
 
 ```{r}
 total_cancer_incidences_all <- total_incidences_borders %>% 
@@ -58,7 +58,16 @@ total_cancer_incidences_all <- total_incidences_borders %>%
 total_cancer_incidences_all
 ```
 
-# Top 5 most prevelant cancers in NHS Borders
+<details>
+
+There is a upward trend in the number of total cancer incidences up to 2017,
+where soon after it begins to fall each year until 2020. 
+
+</details>
+
+## Question 2 - What are the 5 most prevalent cancers in NHS Borders?
+
+### Plot of 5 most prevalent cancers in NHS Borders
 
 ```{r}
 top_five_prevalent_cancers <- borders_cancer_5yr %>%
@@ -76,6 +85,23 @@ top_five_prevalent_cancers <- borders_cancer_5yr %>%
 
 top_five_prevalent_cancers
 ```
+
+<details>
+
+To assist NHS Borders in deciding where their funding could be best aimed, in
+terms of cancer screening/treatments, I found the 5 most prevalent cancer sites
+in patients from NHS Borders. Often the best solution to lowering cancer rates 
+is in early detection and screening. The top 5 cancer sites across the Borders
+were:
+
+* Non-Melanoma Skin Cancer
+* Basil Cell Carcinoma of the Skin
+* Trachea, Bronchus and Lung
+* Colorectal Cancer
+* Breast
+
+</details>
+# Age Group Spread of Top 5 Cancers NHS Borders
 
 ```{r}
 age_top5_cancers <- borders_cancer_5yr %>%
