@@ -74,7 +74,8 @@ top_five_prevalent_cancers
 
 ```{r}
 age_top5_cancers <- borders_cancer_5yr %>%
-  select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>% 
+  select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>%
+  rename(incidences_age05to09 = incidences_age5to9) %>% 
   filter(cancer_site %in% c("Non-melanoma skin cancer", "Basal cell carcinoma of the skin",
                             "Trachea, bronchus and lung", "Colorectal cancer",
                             "Breast") & sex == "All") %>% 

@@ -61,7 +61,10 @@ total_cancer_incidences_all
 <details>
 
 There is a upward trend in the number of total cancer incidences up to 2017,
-where soon after it begins to fall each year until 2020. 
+where soon after it begins to fall each year until 2020. The fall in 2019 and
+2020 could be explained as a result of COVID-19 and the adverse effect on
+healthcare & cancer screenings. However, this gives an overview of the
+situation of cancer incidences in NHS Borders.
 
 </details>
 
@@ -105,7 +108,8 @@ were:
 
 ```{r}
 age_top5_cancers <- borders_cancer_5yr %>%
-  select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>% 
+  select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>%
+  rename(incidences_age05to09 = incidences_age5to9) %>% 
   filter(cancer_site %in% c("Non-melanoma skin cancer", "Basal cell carcinoma of the skin",
                             "Trachea, bronchus and lung", "Colorectal cancer",
                             "Breast") & sex == "All") %>% 
@@ -121,3 +125,11 @@ age_top5_cancers <- borders_cancer_5yr %>%
   
 age_top5_cancers
 ```
+
+<details>
+
+Here we can observe the spread of age groups in the 5 most prevalent cancer
+sites across the Borders to see if there are any apparent trends or areas
+the NHS Borders could focus on. 
+
+</details>
