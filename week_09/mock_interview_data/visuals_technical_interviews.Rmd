@@ -49,6 +49,8 @@ total_cancer_incidences_all <- total_incidences_borders %>%
   scale_x_continuous(n.breaks = 24) +
   theme_bw() +
   theme(axis.text.x=element_text(angle = 90, vjust = 0.5))
+
+total_cancer_incidences_all
 ```
 
 # Top 5 most prevelant cancers in NHS Borders
@@ -66,10 +68,12 @@ top_five_prevalent_cancers <- borders_cancer_5yr %>%
        x = "Cancer Site",
        y = "Total Incidences (All ages)") +
   theme_bw()
+
+top_five_prevalent_cancers
 ```
 
 ```{r}
-borders_cancer_5yr %>%
+age_top5_cancers <- borders_cancer_5yr %>%
   select(cancer_site, sex, incidences_age_under5:incidences_age85and_over) %>% 
   filter(cancer_site %in% c("Non-melanoma skin cancer", "Basal cell carcinoma of the skin",
                             "Trachea, bronchus and lung", "Colorectal cancer",
@@ -83,7 +87,7 @@ borders_cancer_5yr %>%
   theme_bw() +
   labs(x = "Age Group",
        y = "Number of Incidences")
-
   
+age_top5_cancers
 ```
 
