@@ -92,3 +92,74 @@ age_top5_cancers <- borders_cancer_5yr %>%
 age_top5_cancers
 ```
 
+```{r}
+mean_scotland_cancer <- total_incidences_data %>% 
+  filter(cancer_site == "All cancer types" & hb != "S08000016") %>% 
+  filter(sex == "All") %>% 
+  group_by(year) %>% 
+  summarise(avg_cancer_incidences = mean(incidences_all_ages)) %>% 
+  ggplot(aes(x = year, y = avg_cancer_incidences)) +
+  geom_col(fill = "tomato") +
+  scale_x_continuous(n.breaks = 24) +
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5))
+
+mean_scotland_cancer
+```
+
+```{r}
+# trial for dodged plot 
+x <- total_incidences_data %>% 
+  filter(cancer_site == "All cancer types" & hb != "S08000016") %>% 
+  filter(sex == "All") %>% 
+  group_by(year) %>% 
+  summarise(incidences_all_ages = mean(incidences_all_ages))
+
+y <- total_incidences_borders %>% 
+  filter(cancer_site == "All cancer types") %>% 
+  filter(sex == "All")
+
+bind_data <- bind_rows(x, y)
+```
+
+```{r}
+health_board <- bind_data %>% 
+  mutate(health_board = if_else(incidences_all_ages < 1000, "Borders", "Scotland"), .after = 1)
+
+health_board
+```
+
+```{r}
+health_board %>% 
+  ggplot(aes(x = year, y = incidences_all_ages, fill = health_board)) +
+  geom_col(position = "dodge") +
+  scale_x_continuous(n.breaks = 24) +
+  scale_y_continuous(n.breaks = 10) +
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5)) +
+  labs(title = "Total Incidences of Cancer in Borders v Scotland",
+       x = "",
+       y = "",
+       fill = "Health Board")
+```
+
+
+
+
+
+```{r}
+total_incidences_borders %>% 
+  filter(cancer_site == "All cancer types") %>% 
+  filter(sex == "All") %>% 
+  ggplot(aes(x = year, y = incidences_all_ages, stat = identity)) +
+  geom_col(position = "dodge", alpha = 0.7) +
+  labs(title = "Incidences of all Cancer Types: 1996 - 2020",
+       x = "Year",
+       y = "Number of Incidences (All ages)") +
+  scale_x_continuous(n.breaks = 24) +
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5))
+
+total_cancer_incidences_all
+```
+

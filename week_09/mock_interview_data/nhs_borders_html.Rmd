@@ -1,5 +1,5 @@
 ---
-title: "NHS Borders"
+title: 
 output:
   html_document:
     code_folding: hide
@@ -14,12 +14,26 @@ library(tidyverse)
 library(janitor)
 ```
 
-# NHS Borders Question
+# The Brief from NHS Borders
 
 In order to help inform the planning for provision of cancer treatment services 
 in NHS Borders, we would like to gain better understanding of the incidence of 
 cancer in NHS Borders.
 
+## My Methodology
+
+To best assist NHS Borders in their planning for provision of cancer treatment
+services I decided to focus on three main areas for analysis:
+
+* How does the total cancer incidence rate in Borders compare with the Scottish
+average?
+* What are the most prevalent cancer sites in NHS Borders?
+* Of those most prevalent, is there any trends in age groups that could give
+further insight into the provision of cancer treatments?
+
+Through these three questions my aim is to provide insight into the occurence
+of cancer in their geographical area and how they may wish plan their treatment
+accordingly.
 
 ```{r message = FALSE}
 cancer_5yr_data <- read_csv(here::here("5yr_incidence_health_board.csv")) %>% 
@@ -29,6 +43,7 @@ total_incidences_data <- read_csv(here::here("Total_incidences_health_board.csv"
   clean_names()
 ```
 
+## Data Wrangling
 
 ```{r message = FALSE}
 borders_cancer_5yr <- cancer_5yr_data %>% 
@@ -38,39 +53,63 @@ total_incidences_borders <- total_incidences_data %>%
   filter(hb == "S08000016")
 ```
 
-## Question 1 - Is there an overall trend in cancer rates in NHS borders?
+```{r}
+# bind two data sets for dodged bar plot
+rest_scotland_cancer <- total_incidences_data %>% 
+  filter(cancer_site == "All cancer types" & hb != "S08000016") %>% 
+  filter(sex == "All") %>% 
+  group_by(year) %>% 
+  summarise(incidences_all_ages = mean(incidences_all_ages))
 
-### Plot of Total Cancer Incidences
+borders_cancer_all <- total_incidences_borders %>% 
+  filter(cancer_site == "All cancer types") %>% 
+  filter(sex == "All")
+
+cancer_bind_data <- bind_rows(rest_scotland_cancer, borders_cancer_all)
+
+# if_else to assign a borders/scotland tag to each cancer incidence
+health_board <- cancer_bind_data %>% 
+  mutate(health_board = if_else(incidences_all_ages < 1000, "Borders", "Scotland"), .after = 1)
+```
+
+## How does the total cancer incidence rate in Borders compare with the Scottish average?
+
 
 ```{r}
-total_cancer_incidences_all <- total_incidences_borders %>% 
-  filter(cancer_site == "All cancer types") %>% 
-  filter(sex == "All") %>% 
-  ggplot(aes(x = year, y = incidences_all_ages)) +
-  geom_col(fill = "steel blue", alpha = 0.7) +
-  labs(title = "Incidences of all Cancer Types: 1996 - 2020",
-       x = "Year",
-       y = "Number of Incidences (All ages)") +
+dodged_cancer_plot <- health_board %>% 
+  ggplot(aes(x = year, y = incidences_all_ages, fill = health_board)) +
+  geom_col(position = "dodge") +
   scale_x_continuous(n.breaks = 24) +
+  scale_y_continuous(n.breaks = 10) +
   theme_bw() +
-  theme(axis.text.x=element_text(angle = 90, vjust = 0.5))
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5)) +
+  labs(title = "Total Incidences of Cancer in Borders v Scotland",
+       x = "",
+       y = "",
+       fill = "Health Board")
 
-total_cancer_incidences_all
+dodged_cancer_plot
 ```
 
 <details>
 
-There is a upward trend in the number of total cancer incidences up to 2017,
-where soon after it begins to fall each year until 2020. The fall in 2019 and
-2020 could be explained as a result of COVID-19 and the adverse effect on
-healthcare & cancer screenings. However, this gives an overview of the
-situation of cancer incidences in NHS Borders.
+At first viewing we can see that cancer incidences in NHS Borders appear to 
+follow the greater trend across the rest of the health boards in Scotland. This
+could be seen as an indicator that NHS Borders are at least screening an 
+appropriate amount versus the country as a whole. We can see the dip from 2019
+onwards, most likely due to the decrease in cancer provisions during the 
+COVID-19 pandemic. 
+
+What NHS Borders can take from this is that cancer incidences have decreased
+steadily over the last two years and we would expect to see a sharp rise over 
+the next 1-3 years as a result of the backlog and yet-to-be-detected cancer
+cases. They should not be alarmed at the trend moving in this direction as it
+could be considered as simply returning to a usual rate of incidence (regressing
+to the mean)
 
 </details>
 
-## Question 2 - What are the 5 most prevalent cancers in NHS Borders?
-
-### Plot of 5 most prevalent cancers in NHS Borders
+## What are he Most Prevalent Cancer Sites in the NHS Borders?
 
 ```{r}
 top_five_prevalent_cancers <- borders_cancer_5yr %>%
@@ -103,7 +142,12 @@ were:
 * Colorectal Cancer
 * Breast
 
+These give an immediate actionable insight for the NHS Borders, as we can
+clearly see what cancer sites are driving their incidence numbers and what they
+could decide to plan extra provisions for in the treatment of these cancers. 
+
 </details>
+
 # Age Group Spread of Top 5 Cancers NHS Borders
 
 ```{r}
@@ -130,6 +174,18 @@ age_top5_cancers
 
 Here we can observe the spread of age groups in the 5 most prevalent cancer
 sites across the Borders to see if there are any apparent trends or areas
-the NHS Borders could focus on. 
+the NHS Borders could focus their provision planning on.
+
+We can see that for Non-melanoma Skin Cancer, Basal Cell Carcinoma of the Skin
+and Colorectal Cancer there are peaks in the 70-74 category, plus all
+subsequent age groups are as much or greater. This could lead us to thinking
+that for certain cancer sites there may be an idea to pull resources in
+care homes or hospices where they can focus on these age groups. 
+
+For Breast Cancer the incidences take a leap up in the 50-54 age group and
+stays roughly uniform until 80-84. This could be linked to breast screening
+occurring towards the age of 50 (something NHS Borders could confirm) However, 
+an actionable insight could be to introduce earlier breast screening to 
+improve early detection. 
 
 </details>
