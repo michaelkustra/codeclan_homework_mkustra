@@ -1,0 +1,96 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+# Load the data into a dataframe project
+
+```{r}
+proj_manage <- read_csv(here::here("data/project_management.csv")) %>% 
+  clean_names()
+```
+
+# Plot the data, taking estimated_length as the independent variable and actual_length as the dependent variable.
+
+```{r}
+proj_manage %>% 
+  ggplot(aes(x = estimated_length, y = actual_length)) +
+  geom_point()
+```
+
+# Calculate the correlation coefficient of estimated_length and actual_length and interpret the value you obtain.
+
+```{r}
+cor(proj_manage$estimated_length, proj_manage$actual_length)
+```
+
+_Interpretation_
+
+A correlation coefficient of 0.80 indicates that there appears to be a
+strongly positive correlation between estimated_length and actual_length. That 
+an increase in estimated_length results in an increase in actual_length.
+
+# Perform a simple linear regression using actual_length as the dependent variable, and estimated_length as the independent variable. Save the model object to a variable.
+
+```{r}
+library(modelr)
+```
+
+```{r}
+model <- lm(actual_length ~ estimated_length, data = proj_manage)
+
+model
+```
+
+# Interpret the regression coefficient of estimated_length (i.e. slope, gradient) you obtain from the model. How do you interpret the r2 value reported by the model?
+
+```{r}
+summary(model)
+```
+
+_Interpretation_
+
+The regression coefficient for estimated_length slope is 1.223. This means for
+a 1 unit increase in estimated_length will change the actual_length by 1.223
+units.
+
+The regression coefficient for the intercept is 1.416, which is the mean value
+of response when x = 0.
+
+The adjusted R-squared value comes out to 0.6401. This 64% is the proportion of 
+the variation in the outcome/dependent variable that can be explained by 
+variation in the explanatory/independent variable.
+
+# Is the relationship statistically significant? Remember, to assess this you need to check the p-value of the regression coefficient (or slope/gradient). But you should first check the regression diagnostic plots to see if the p-value will be reliable (don’t worry about any outlier points you see in the diagnostic plots, we’ll return to them in the extension).
+
+```{r}
+# check diagnostic plots
+library(ggfortify)
+
+autoplot(model)
+```
+
+__Interpretation__
+
+_Residuals vs Fitted_
+
+Here we want to see our blue line hover as close to zero as possible, which it
+does reasonably well. I'm satisfied here that the residuals are independent.
+
+_Normal Q-Q_
+
+Here we want to see our points follow the hashed line as close as possible, 
+since they represent what the values should be if normal. The points land close
+enough to this line to justify that the test of normality for residuals is
+passed.
+
+_Scale-Location_
+
+Here we want to see our blue line stick as close as possible to a constant 
+positive or negative value, which it does reasonable well (approx 0.8). I am
+satisfied the residuals have passed the test for the constancy of variation.

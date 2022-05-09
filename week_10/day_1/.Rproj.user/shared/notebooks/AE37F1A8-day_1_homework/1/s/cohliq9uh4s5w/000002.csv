@@ -1,0 +1,23 @@
+"0","model
+"
+"1","
+Call:
+"
+"1",""
+"1","lm(formula = actual_length ~ estimated_length, data = proj_manage)"
+"1",""
+"1","
+
+"
+"1","Coefficients:
+"
+"1","     (Intercept)  "
+"1","estimated_length  "
+"1","
+"
+"1","           1.416  "
+"1","           1.223  "
+"1","
+"
+"1","
+"
