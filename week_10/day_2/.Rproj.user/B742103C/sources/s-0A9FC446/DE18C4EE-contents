@@ -1,0 +1,148 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Load Libraries
+
+```{r}
+library(tidyverse)
+library(GGally)
+library(modelr)
+library(ggfortify)
+```
+
+# Load / Explore Data
+
+```{r}
+housing_prices <- read_csv(here::here("data/housing_prices.csv"))
+
+dim(housing_prices)
+
+glimpse(housing_prices)
+```
+
+# We expect the total_rooms of houses to be strongly correlated with total_bedrooms. Use ggpairs() to investigate correlations between these two variables.
+
+```{r}
+housing_prices %>% 
+  select(total_rooms, total_bedrooms) %>% 
+  ggpairs()
+```
+__Interpretation__
+
+The correlation coefficient comes out to 0.934, which corresponds to a very 
+strong positive correlation. As you increase total rooms, total bedrooms also
+increases.
+
+# So, we do find significant correlations. Let’s drop total_bedrooms from the dataset, and use only total_rooms going forward.
+
+```{r}
+# remove total_bedrooms
+housing_prices <- housing_prices %>% 
+  select(-total_bedrooms)
+```
+
+
+# We are interested in developing a regression model for the median_house_value of a house in terms of the possible predictor variables in the dataset.
+
+Use ggpairs() to investigate correlations between median_house_value and the predictors (this may take a while to run, don’t worry, make coffee or something).
+
+```{r}
+housing_prices %>% 
+  ggpairs()
+```
+
+Perform further ggplot visualisations of any significant correlations you find.
+
+```{r}
+# plot of median_house_value ~ median_income
+housing_prices %>%
+  ggplot(aes(x = median_income, y = median_house_value)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F)
+  
+```
+
+# Shortly we may try a regression model to fit the categorical predictor ocean_proximity. Investigate the level of ocean_proximity predictors. How many dummy variables do you expect to get from it?
+
+```{r}
+housing_prices %>% 
+  distinct(ocean_proximity)
+```
+
+__Interpretation__
+
+Since there are 5 total levels of ocean_proximity, I would expect to have 4 
+dummy variables after one has been used as a reference.
+
+# Start with simple linear regression. Regress median_house_value on median_income and check the regression diagnostics.
+
+```{r}
+model <- lm(median_house_value ~ median_income, data = housing_prices)
+
+autoplot(model)
+
+summary(model)
+```
+__Interpretation__
+
+_Residuals v Fitted_
+The residuals form a steady horizontal line around 0, which suggests the
+variances of errors are roughly equal. However, the residuals don't quite bounce
+randomly around the zero line which suggests the linear relationship may not
+fit this data well. 
+
+_Normal QQ Plot_
+The points appears to wrap around the normal line loosely, I'd have concerns
+here and suggest that the test of normality isn't passed. The data is potentially
+skewed.
+
+_Scale-Location_
+There is a funnel effect that has formed, with the data going from wider to
+narrower for greater fitted values. This indicates that there isn't a constancy
+of variance in our residuals.
+
+_Adjusted R-Squared_
+Our value comes to 0.4129. This tells us that 41.3% of the variance in our
+dependent variable (median_house_value) is explained by our independent 
+variable (median_income). This gives a reasonable fit, however, with the earlier
+diagnostics shows that we can most likely do better.
+
+_Residual Standard Error_
+this is a large value of 74870, again, this speaks to the variance of errors
+we witnessed in our diagnostic plots.
+
+# Add another predictor of your choice. Check your assumptions, diagnostics, and interpret the model.
+
+```{r}
+model2 <- lm(median_house_value ~ median_income + ocean_proximity, data = housing_prices)
+
+autoplot(model2)
+
+summary(model2)
+```
+__Interpretation__
+
+_Residuals vs Fitted_
+Again, the line is fairly horizontal around zero, however the residuals don't
+randomly bounce around the zero line which leads me to believe that it doesn't
+quite fit this linear relationship well.
+
+_Normal QQ Plot_
+It is quite similar to before, it loosely falls on the normal line the middle
+part of our data, however, it is not close to that thereafter. There may be
+some concerns with the normality of our residuals.
+
+_Scale-Location_
+There is a similar funnel effect for lower fitted values, but the line does
+keep fairly horizontal. There may still be some concern for the constancy of
+variance in our residuals.
+
+_Adjusted R Squared_
+Our value has increased to 0.5528, a slightly better fit, however, we would 
+expect an increase with the addition of any predictor. This now means that 55.3% 
+of the variation in our response variable is explained by the predictor variables.
+
+_Residuals Standard Error_
+This has decreased to 65340, an improvement on the previous model and a slightly
+better fit, however, it is still large. 
