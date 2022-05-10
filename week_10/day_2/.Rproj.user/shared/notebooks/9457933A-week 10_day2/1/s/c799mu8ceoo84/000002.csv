@@ -1,0 +1,4 @@
+"0","# add interaction between log(median_income) and ocean_proximity"
+"0","model3 <- lm(median_house_value ~ median_income + log(median_income):ocean_proximity, "
+"0","             data = housing_prices)"
+"0",""

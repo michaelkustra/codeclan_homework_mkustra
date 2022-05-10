@@ -1,0 +1,14 @@
+"0","housing_prices %>% "
+"0","  select(total_rooms, total_bedrooms) %>% "
+"0","  ggpairs()"
+"2","Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm,  :"
+"2","
+ "
+"2"," Removed 200 rows containing missing values
+"
+"2","Warning:"
+"2"," Removed 200 rows containing missing values (geom_point).
+"
+"2","Warning:"
+"2"," Removed 200 rows containing non-finite values (stat_density).
+"
