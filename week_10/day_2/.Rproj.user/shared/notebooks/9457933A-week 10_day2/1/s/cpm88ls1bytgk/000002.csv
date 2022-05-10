@@ -1,0 +1,3 @@
+"0","model2 <- lm(median_house_value ~ median_income + ocean_proximity, data = housing_prices)"
+"0",""
+"0","autoplot(model2)"

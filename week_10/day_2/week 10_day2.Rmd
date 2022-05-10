@@ -146,3 +146,37 @@ of the variation in our response variable is explained by the predictor variable
 _Residuals Standard Error_
 This has decreased to 65340, an improvement on the previous model and a slightly
 better fit, however, it is still large. 
+
+# Extension
+
+Try adding an interaction between log(medium_income) and your chosen categorical predictor. Do you think this interaction term is statistically justified?
+
+```{r}
+# add interaction between log(median_income) and ocean_proximity
+model3 <- lm(median_house_value ~ median_income + log(median_income):ocean_proximity, 
+             data = housing_prices)
+
+```
+
+```{r}
+# diagnostic plots for model3
+autoplot(model3)
+
+#summary of model3
+summary(model3)
+```
+
+__Interpretation__
+
+I don't believe this interaction term is statistically justified, based on the
+diagnostic plots and adjusted R Squared value.
+
+In the Scale-Location plot the residuals appear to have a greater 'funnel' 
+effect. The residuals for lower fitted values appear much more spread than
+greater fitted values. The model appears to be a poor fit in terms of constancy
+of variation among residuals. It has not improved the model fit in terms of the
+other plots either.
+
+The adjusted R-squared value has (slightly) increased to 54.4%. This is to be
+expected when adding further predictor variables, however, it does not add
+substantial fit in our model compared to what we had previously.
