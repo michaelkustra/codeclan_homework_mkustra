@@ -1,0 +1,62 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# add relevant packages
+library(tidyverse)
+```
+
+```{r}
+# add in housing prices data
+kc_housing <- read_csv(here::here("data/kc_house_data.csv"))
+
+dim(kc_housing)
+```
+
+# Question 1
+
+## Tidy up the data
+
+```{r}
+# remove unnecessary columns
+kc_housing_trim <- kc_housing %>% 
+  select(-c(date, id, sqft_living15, sqft_lot15, zipcode))
+```
+
+## Change waterfront & yr_renovated to logical variables
+
+```{r}
+kc_housing_trim <- kc_housing_trim %>% 
+  mutate(waterfront = as.logical(waterfront),
+         renovated = as.logical(yr_renovated)) %>% 
+  select(-yr_renovated)
+```
+
+Have a think about how to treat `condition` and `grade`? Are they interval or categorical ordinal data types?
+
+```{r}
+# change condition to dummy vars & remove original condition column
+kc_housing_dummy <- kc_housing_trim %>%
+  mutate(excellent_cond = ifelse(condition == "1", 1, 0)) %>% 
+  mutate(good_cond = ifelse(condition == "2", 1, 0)) %>%
+  mutate(avg_cond = ifelse(condition == "3", 1, 0)) %>%
+  mutate(poor_cond = ifelse(condition == "4", 1, 0)) %>%
+  mutate(v_poor_cond = ifelse(condition == "5", 1, 0)) %>% 
+  select(-condition)
+
+```
+
+```{r}
+# change grade into dummy vars and remove orginal grade column
+kc_housing_dummy <- kc_housing_dummy %>% 
+  mutate(grade = case_when(
+    grade <= 3 ~ "short",
+    grade > 3 & grade < 11 ~ "average",
+    grade >= 11 ~ "high"
+  ))
+```
+
+# Question 2
+

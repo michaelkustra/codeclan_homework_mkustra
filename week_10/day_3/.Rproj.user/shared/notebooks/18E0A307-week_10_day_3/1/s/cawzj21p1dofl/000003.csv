@@ -1,0 +1,4 @@
+"0","kc_housing_trim <- kc_housing_trim %>% "
+"0","  mutate(waterfront = as.logical(waterfront),"
+"0","         renovated = as.logical(yr_renovated)) %>% "
+"0","  select(-yr_renovated)"

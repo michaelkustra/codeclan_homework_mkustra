@@ -1,0 +1,7 @@
+"0","# change grade into dummy vars and remove orginal grade column"
+"0","kc_housing_dummy <- kc_housing_dummy %>% "
+"0","  mutate(grade = case_when("
+"0","    grade <= 3 ~ ""short"","
+"0","    grade > 3 & grade < 11 ~ ""average"","
+"0","    grade >= 11 ~ ""high"""
+"0","  ))"
