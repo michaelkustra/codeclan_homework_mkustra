@@ -1,0 +1,5 @@
+"0","# change condition & grade to factor type"
+"0","kc_housing_trim <- kc_housing_trim %>% "
+"0","  mutate(condition = as.factor(condition)) %>% "
+"0","  mutate(grade = as.factor(grade))"
+"0",""

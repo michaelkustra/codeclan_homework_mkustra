@@ -37,26 +37,13 @@ kc_housing_trim <- kc_housing_trim %>%
 Have a think about how to treat `condition` and `grade`? Are they interval or categorical ordinal data types?
 
 ```{r}
-# change condition to dummy vars & remove original condition column
-kc_housing_dummy <- kc_housing_trim %>%
-  mutate(excellent_cond = ifelse(condition == "1", 1, 0)) %>% 
-  mutate(good_cond = ifelse(condition == "2", 1, 0)) %>%
-  mutate(avg_cond = ifelse(condition == "3", 1, 0)) %>%
-  mutate(poor_cond = ifelse(condition == "4", 1, 0)) %>%
-  mutate(v_poor_cond = ifelse(condition == "5", 1, 0)) %>% 
-  select(-condition)
+# change condition & grade to factor type
+kc_housing_trim <- kc_housing_trim %>% 
+  mutate(condition = as.factor(condition)) %>% 
+  mutate(grade = as.factor(grade))
 
-```
-
-```{r}
-# change grade into dummy vars and remove orginal grade column
-kc_housing_dummy <- kc_housing_dummy %>% 
-  mutate(grade = case_when(
-    grade <= 3 ~ "short",
-    grade > 3 & grade < 11 ~ "average",
-    grade >= 11 ~ "high"
-  ))
 ```
 
 # Question 2
 
+Check for aliased variables using the alias() function (this takes in a formula object and a data set). [Hint - formula price ~ . says ‘price varying with all predictors’, this is a suitable input to alias()]. Remove variables that lead to an alias. Check the ‘Elements of multiple regression’ lesson for a dropdown containing further information on finding aliased variables in a dataset.

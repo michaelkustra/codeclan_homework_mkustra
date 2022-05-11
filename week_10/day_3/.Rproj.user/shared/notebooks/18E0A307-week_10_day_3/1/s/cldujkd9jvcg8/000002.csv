@@ -1,5 +1,18 @@
-"0","dim(kc_housing)
+"0","# add in housing prices data"
+"0","kc_housing <- read_csv(here::here(""data/kc_house_data.csv""))"
+"1","[1mRows: [22m[34m21613[39m [1mColumns: [22m[34m21[39m
 "
+"1","[36m──[39m [1mColumn specification[22m [36m────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m   (1): id
+[32mdbl[39m  (19): price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront, view, condition, grade...
+[34mdttm[39m  (1): date
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","dim(kc_housing)"
 "1","[1]"
 "1"," 21613"
 "1","    21"

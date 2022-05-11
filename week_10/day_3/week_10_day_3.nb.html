@@ -225,9 +225,23 @@ library(tidyverse)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGtjX2hvdXNpbmcpXG5cbmBgYCJ9 -->
-<pre class="r"><code>dim(kc_housing)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZGQgaW4gaG91c2luZyBwcmljZXMgZGF0YVxua2NfaG91c2luZyA8LSByZWFkX2NzdihoZXJlOjpoZXJlKFwiZGF0YS9rY19ob3VzZV9kYXRhLmNzdlwiKSlcbmBgYCJ9 -->
+<pre class="r"><code># add in housing prices data
+kc_housing &lt;- read_csv(here::here(&quot;data/kc_house_data.csv&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMjE2MTMgQ29sdW1uczogMjFcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgICgxKTogaWRcbmRibCAgKDE5KTogcHJpY2UsIGJlZHJvb21zLCBiYXRocm9vbXMsIHNxZnRfbGl2aW5nLCBzcWZ0X2xvdCwgZmxvb3JzLCB3YXRlcmZyb250LCB2aWV3LCBjb25kaXRpb24sIGdyYWRlLi4uXG5kdHRtICAoMSk6IGRhdGVcblxu4oS5IFVzZSBgc3BlYygpYCB0byByZXRyaWV2ZSB0aGUgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbiBmb3IgdGhpcyBkYXRhLlxu4oS5IFNwZWNpZnkgdGhlIGNvbHVtbiB0eXBlcyBvciBzZXQgYHNob3dfY29sX3R5cGVzID0gRkFMU0VgIHRvIHF1aWV0IHRoaXMgbWVzc2FnZS5cbiJ9 -->
+<pre><code>Rows: 21613 Columns: 21
+── Column specification ────────────────────────────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr   (1): id
+dbl  (19): price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront, view, condition, grade...
+dttm  (1): date
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGtjX2hvdXNpbmcpXG5gYGAifQ== -->
+<pre class="r"><code>dim(kc_housing)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIxNjEzICAgIDIxXG4ifQ== -->
 <pre><code>[1] 21613    21</code></pre>
@@ -240,8 +254,9 @@ library(tidyverse)</code></pre>
 <h2>Tidy up the data</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxua2NfaG91c2luZ190cmltIDwtIGtjX2hvdXNpbmcgJT4lIFxuICBzZWxlY3QoLWMoZGF0ZSwgaWQsIHNxZnRfbGl2aW5nMTUsIHNxZnRfbG90MTUsIHppcGNvZGUpKVxuYGBgIn0= -->
-<pre class="r"><code>kc_housing_trim &lt;- kc_housing %&gt;% 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZW1vdmUgdW5uZWNlc3NhcnkgY29sdW1uc1xua2NfaG91c2luZ190cmltIDwtIGtjX2hvdXNpbmcgJT4lIFxuICBzZWxlY3QoLWMoZGF0ZSwgaWQsIHNxZnRfbGl2aW5nMTUsIHNxZnRfbG90MTUsIHppcGNvZGUpKVxuYGBgIn0= -->
+<pre class="r"><code># remove unnecessary columns
+kc_housing_trim &lt;- kc_housing %&gt;% 
   select(-c(date, id, sqft_living15, sqft_lot15, zipcode))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -262,29 +277,12 @@ library(tidyverse)</code></pre>
 <p>Have a think about how to treat <code>condition</code> and <code>grade</code>? Are they interval or categorical ordinal data types?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjaGFuZ2UgY29uZGl0aW9uIHRvIGR1bW15IHZhcnNcbmtjX2hvdXNpbmdfZHVtbXkgPC0ga2NfaG91c2luZ190cmltICU+JVxuICBtdXRhdGUoZXhjZWxsZW50X2NvbmQgPSBpZmVsc2UoY29uZGl0aW9uID09IFwiMVwiLCAxLCAwKSkgJT4lIFxuICBtdXRhdGUoZ29vZF9jb25kID0gaWZlbHNlKGNvbmRpdGlvbiA9PSBcIjJcIiwgMSwgMCkpICU+JVxuICBtdXRhdGUoYXZnX2NvbmQgPSBpZmVsc2UoY29uZGl0aW9uID09IFwiM1wiLCAxLCAwKSkgJT4lXG4gIG11dGF0ZShwb29yX2NvbmQgPSBpZmVsc2UoY29uZGl0aW9uID09IFwiNFwiLCAxLCAwKSkgJT4lXG4gIG11dGF0ZSh2X3Bvb3JfY29uZCA9IGlmZWxzZShjb25kaXRpb24gPT0gXCI1XCIsIDEsIDApKSAlPiUgXG4gIHNlbGVjdCgtY29uZGl0aW9uKVxuXG5gYGAifQ== -->
-<pre class="r"><code># change condition to dummy vars
-kc_housing_dummy &lt;- kc_housing_trim %&gt;%
-  mutate(excellent_cond = ifelse(condition == &quot;1&quot;, 1, 0)) %&gt;% 
-  mutate(good_cond = ifelse(condition == &quot;2&quot;, 1, 0)) %&gt;%
-  mutate(avg_cond = ifelse(condition == &quot;3&quot;, 1, 0)) %&gt;%
-  mutate(poor_cond = ifelse(condition == &quot;4&quot;, 1, 0)) %&gt;%
-  mutate(v_poor_cond = ifelse(condition == &quot;5&quot;, 1, 0)) %&gt;% 
-  select(-condition)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjaGFuZ2UgY29uZGl0aW9uICYgZ3JhZGUgdG8gZmFjdG9yIHR5cGVcbmtjX2hvdXNpbmdfdHJpbSA8LSBrY19ob3VzaW5nX3RyaW0gJT4lIFxuICBtdXRhdGUoY29uZGl0aW9uID0gYXMuZmFjdG9yKGNvbmRpdGlvbikpICU+JSBcbiAgbXV0YXRlKGdyYWRlID0gYXMuZmFjdG9yKGdyYWRlKSlcblxuYGBgIn0= -->
+<pre class="r"><code># change condition &amp; grade to factor type
+kc_housing_trim &lt;- kc_housing_trim %&gt;% 
+  mutate(condition = as.factor(condition)) %&gt;% 
+  mutate(grade = as.factor(grade))
 </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjaGFuZ2UgZ3JhZGUgaW50byBkdW1teSB2YXJzIGFuZCByZW1vdmUgb3JnaW5hbCBncmFkZSBjb2x1bW5cbmtjX2hvdXNpbmdfZHVtbXkgPC0ga2NfaG91c2luZ19kdW1teSAlPiUgXG4gIG11dGF0ZShncmFkZSA9IGNhc2Vfd2hlbihcbiAgICBncmFkZSA8PSAzIH4gXCJzaG9ydFwiLFxuICAgIGdyYWRlID4gMyAmIGdyYWRlIDwgMTEgfiBcImF2ZXJhZ2VcIixcbiAgICBncmFkZSA+PSAxMSB+IFwiaGlnaFwiXG4gICkpXG5gYGAifQ== -->
-<pre class="r"><code># change grade into dummy vars and remove orginal grade column
-kc_housing_dummy &lt;- kc_housing_dummy %&gt;% 
-  mutate(grade = case_when(
-    grade &lt;= 3 ~ &quot;short&quot;,
-    grade &gt; 3 &amp; grade &lt; 11 ~ &quot;average&quot;,
-    grade &gt;= 11 ~ &quot;high&quot;
-  ))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -292,10 +290,11 @@ kc_housing_dummy &lt;- kc_housing_dummy %&gt;%
 </div>
 <div id="question-2" class="section level1">
 <h1>Question 2</h1>
+<p>Check for aliased variables using the alias() function (this takes in a formula object and a data set). [Hint - formula price ~ . says ‘price varying with all predictors’, this is a suitable input to alias()]. Remove variables that lead to an alias. Check the ‘Elements of multiple regression’ lesson for a dropdown containing further information on finding aliased variables in a dataset.</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgYWRkIHJlbGV2YW50IHBhY2thZ2VzCmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCmBgYHtyfQojIGFkZCBpbiBob3VzaW5nIHByaWNlcyBkYXRhCmtjX2hvdXNpbmcgPC0gcmVhZF9jc3YoaGVyZTo6aGVyZSgiZGF0YS9rY19ob3VzZV9kYXRhLmNzdiIpKQoKZGltKGtjX2hvdXNpbmcpCmBgYAoKIyBRdWVzdGlvbiAxCgojIyBUaWR5IHVwIHRoZSBkYXRhCgpgYGB7cn0KIyByZW1vdmUgdW5uZWNlc3NhcnkgY29sdW1ucwprY19ob3VzaW5nX3RyaW0gPC0ga2NfaG91c2luZyAlPiUgCiAgc2VsZWN0KC1jKGRhdGUsIGlkLCBzcWZ0X2xpdmluZzE1LCBzcWZ0X2xvdDE1LCB6aXBjb2RlKSkKYGBgCgojIyBDaGFuZ2Ugd2F0ZXJmcm9udCAmIHlyX3Jlbm92YXRlZCB0byBsb2dpY2FsIHZhcmlhYmxlcwoKYGBge3J9CmtjX2hvdXNpbmdfdHJpbSA8LSBrY19ob3VzaW5nX3RyaW0gJT4lIAogIG11dGF0ZSh3YXRlcmZyb250ID0gYXMubG9naWNhbCh3YXRlcmZyb250KSwKICAgICAgICAgcmVub3ZhdGVkID0gYXMubG9naWNhbCh5cl9yZW5vdmF0ZWQpKSAlPiUgCiAgc2VsZWN0KC15cl9yZW5vdmF0ZWQpCmBgYAoKSGF2ZSBhIHRoaW5rIGFib3V0IGhvdyB0byB0cmVhdCBgY29uZGl0aW9uYCBhbmQgYGdyYWRlYD8gQXJlIHRoZXkgaW50ZXJ2YWwgb3IgY2F0ZWdvcmljYWwgb3JkaW5hbCBkYXRhIHR5cGVzPwoKYGBge3J9CiMgY2hhbmdlIGNvbmRpdGlvbiB0byBkdW1teSB2YXJzICYgcmVtb3ZlIG9yaWdpbmFsIGNvbmRpdGlvbiBjb2x1bW4Ka2NfaG91c2luZ19kdW1teSA8LSBrY19ob3VzaW5nX3RyaW0gJT4lCiAgbXV0YXRlKGV4Y2VsbGVudF9jb25kID0gaWZlbHNlKGNvbmRpdGlvbiA9PSAiMSIsIDEsIDApKSAlPiUgCiAgbXV0YXRlKGdvb2RfY29uZCA9IGlmZWxzZShjb25kaXRpb24gPT0gIjIiLCAxLCAwKSkgJT4lCiAgbXV0YXRlKGF2Z19jb25kID0gaWZlbHNlKGNvbmRpdGlvbiA9PSAiMyIsIDEsIDApKSAlPiUKICBtdXRhdGUocG9vcl9jb25kID0gaWZlbHNlKGNvbmRpdGlvbiA9PSAiNCIsIDEsIDApKSAlPiUKICBtdXRhdGUodl9wb29yX2NvbmQgPSBpZmVsc2UoY29uZGl0aW9uID09ICI1IiwgMSwgMCkpICU+JSAKICBzZWxlY3QoLWNvbmRpdGlvbikKCmBgYAoKYGBge3J9CiMgY2hhbmdlIGdyYWRlIGludG8gZHVtbXkgdmFycyBhbmQgcmVtb3ZlIG9yZ2luYWwgZ3JhZGUgY29sdW1uCmtjX2hvdXNpbmdfZHVtbXkgPC0ga2NfaG91c2luZ19kdW1teSAlPiUgCiAgbXV0YXRlKGdyYWRlID0gY2FzZV93aGVuKAogICAgZ3JhZGUgPD0gMyB+ICJzaG9ydCIsCiAgICBncmFkZSA+IDMgJiBncmFkZSA8IDExIH4gImF2ZXJhZ2UiLAogICAgZ3JhZGUgPj0gMTEgfiAiaGlnaCIKICApKQpgYGAKCiMgUXVlc3Rpb24gMgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgYWRkIHJlbGV2YW50IHBhY2thZ2VzCmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCmBgYHtyfQojIGFkZCBpbiBob3VzaW5nIHByaWNlcyBkYXRhCmtjX2hvdXNpbmcgPC0gcmVhZF9jc3YoaGVyZTo6aGVyZSgiZGF0YS9rY19ob3VzZV9kYXRhLmNzdiIpKQoKZGltKGtjX2hvdXNpbmcpCmBgYAoKIyBRdWVzdGlvbiAxCgojIyBUaWR5IHVwIHRoZSBkYXRhCgpgYGB7cn0KIyByZW1vdmUgdW5uZWNlc3NhcnkgY29sdW1ucwprY19ob3VzaW5nX3RyaW0gPC0ga2NfaG91c2luZyAlPiUgCiAgc2VsZWN0KC1jKGRhdGUsIGlkLCBzcWZ0X2xpdmluZzE1LCBzcWZ0X2xvdDE1LCB6aXBjb2RlKSkKYGBgCgojIyBDaGFuZ2Ugd2F0ZXJmcm9udCAmIHlyX3Jlbm92YXRlZCB0byBsb2dpY2FsIHZhcmlhYmxlcwoKYGBge3J9CmtjX2hvdXNpbmdfdHJpbSA8LSBrY19ob3VzaW5nX3RyaW0gJT4lIAogIG11dGF0ZSh3YXRlcmZyb250ID0gYXMubG9naWNhbCh3YXRlcmZyb250KSwKICAgICAgICAgcmVub3ZhdGVkID0gYXMubG9naWNhbCh5cl9yZW5vdmF0ZWQpKSAlPiUgCiAgc2VsZWN0KC15cl9yZW5vdmF0ZWQpCmBgYAoKSGF2ZSBhIHRoaW5rIGFib3V0IGhvdyB0byB0cmVhdCBgY29uZGl0aW9uYCBhbmQgYGdyYWRlYD8gQXJlIHRoZXkgaW50ZXJ2YWwgb3IgY2F0ZWdvcmljYWwgb3JkaW5hbCBkYXRhIHR5cGVzPwoKYGBge3J9CiMgY2hhbmdlIGNvbmRpdGlvbiAmIGdyYWRlIHRvIGZhY3RvciB0eXBlCmtjX2hvdXNpbmdfdHJpbSA8LSBrY19ob3VzaW5nX3RyaW0gJT4lIAogIG11dGF0ZShjb25kaXRpb24gPSBhcy5mYWN0b3IoY29uZGl0aW9uKSkgJT4lIAogIG11dGF0ZShncmFkZSA9IGFzLmZhY3RvcihncmFkZSkpCgpgYGAKCiMgUXVlc3Rpb24gMgoKQ2hlY2sgZm9yIGFsaWFzZWQgdmFyaWFibGVzIHVzaW5nIHRoZSBhbGlhcygpIGZ1bmN0aW9uICh0aGlzIHRha2VzIGluIGEgZm9ybXVsYSBvYmplY3QgYW5kIGEgZGF0YSBzZXQpLiBbSGludCAtIGZvcm11bGEgcHJpY2UgfiAuIHNheXMg4oCYcHJpY2UgdmFyeWluZyB3aXRoIGFsbCBwcmVkaWN0b3Jz4oCZLCB0aGlzIGlzIGEgc3VpdGFibGUgaW5wdXQgdG8gYWxpYXMoKV0uIFJlbW92ZSB2YXJpYWJsZXMgdGhhdCBsZWFkIHRvIGFuIGFsaWFzLiBDaGVjayB0aGUg4oCYRWxlbWVudHMgb2YgbXVsdGlwbGUgcmVncmVzc2lvbuKAmSBsZXNzb24gZm9yIGEgZHJvcGRvd24gY29udGFpbmluZyBmdXJ0aGVyIGluZm9ybWF0aW9uIG9uIGZpbmRpbmcgYWxpYXNlZCB2YXJpYWJsZXMgaW4gYSBkYXRhc2V0Lg==</div>
 
 
 
