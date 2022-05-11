@@ -1,0 +1,5 @@
+"0","# add sqft_living as first predictor for price"
+"0","mod1a <- lm(price ~ sqft_living, data = kc_housing_trim)"
+"0",""
+"0","#take log of each variable to scale better"
+"0","mod1b <- lm(log(price) ~ log(sqft_living), data = kc_housing_trim)"

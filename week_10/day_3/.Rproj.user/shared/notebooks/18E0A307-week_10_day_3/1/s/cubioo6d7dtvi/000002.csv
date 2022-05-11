@@ -1,0 +1,3 @@
+"0",""
+"0","mod2a <- lm(log(price) ~ log(sqft_living) + lat + view, data = kc_housing_trim)"
+"0",""

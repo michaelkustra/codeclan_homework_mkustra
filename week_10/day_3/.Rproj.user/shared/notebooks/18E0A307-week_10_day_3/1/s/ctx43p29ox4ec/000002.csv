@@ -1,0 +1,2 @@
+"0","kc_housing_trim <- kc_housing_trim %>% "
+"0","  select(-sqft_basement)"

@@ -1,2 +1,6 @@
-"0","# add relevant packages"
-"0","library(tidyverse)"
+"0","library(GGally)
+"
+"2","Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2
+"
