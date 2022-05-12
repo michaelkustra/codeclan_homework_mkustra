@@ -1,0 +1,5 @@
+"0","housing_nonnumeric_resid <- kc_housing_nonnumeric %>% 
+  add_residuals(mod1b)
+"
+"2","Error in eval(predvars, data, env) : object 'sqft_living' not found
+"

@@ -3,7 +3,7 @@
     "path": "~/Documents/CodeClan/codeclan_homework_mkustra/week_10/day_3/week_10_day_3.Rmd",
     "project_path": "week_10_day_3.Rmd",
     "type": "r_markdown",
-    "hash": "3632211035",
+    "hash": "1954135812",
     "contents": "",
     "dirty": false,
     "created": 1652282457210.0,
@@ -14,15 +14,15 @@
         "chunk_output_type": "inline",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "13,6",
-        "scrollLine": "10"
+        "cursorPosition": "146,0",
+        "scrollLine": "140"
     },
     "folds": "",
-    "lastKnownWriteTime": 1652342073,
+    "lastKnownWriteTime": 1652342525,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1652342073452,
+    "last_content_update": 1652342525767,
     "read_only": false,
     "read_only_alternatives": []
 }

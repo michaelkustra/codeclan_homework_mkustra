@@ -142,6 +142,11 @@ housing_numeric_resid <- kc_housing_numeric %>%
 housing_numeric_resid %>%
   ggpairs()
 
+housing_nonnumeric_resid <- kc_housing_nonnumeric %>% 
+  add_residuals(mod1b)
+
+housing_nonnumeric_resid %>% 
+  ggpairs()
 ```
 __Interpretation__
 
