@@ -1,4 +1,0 @@
-"0","# extract month from date"
-"0","avocados %>% "
-"0","  mutate(month = month(date, label = TRUE, abbr = TRUE), .after = 1) %>% "
-"0","  select(-date)"

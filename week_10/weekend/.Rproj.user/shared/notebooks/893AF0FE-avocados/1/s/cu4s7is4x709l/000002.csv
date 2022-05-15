@@ -1,0 +1,1 @@
+"0","mod1a <- lm(average_price ~ small_med_avo, data = avocados_clean)"

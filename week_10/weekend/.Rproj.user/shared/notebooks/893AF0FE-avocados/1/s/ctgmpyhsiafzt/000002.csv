@@ -1,0 +1,2 @@
+"0","# add month into our predictors"
+"0","mod2a <- lm(average_price ~ type + month, data = avocados_clean)"

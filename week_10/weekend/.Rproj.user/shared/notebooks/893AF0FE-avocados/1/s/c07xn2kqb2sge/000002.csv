@@ -1,0 +1,3 @@
+"0","# diagnostic plots of model 1b to check assumptions"
+"0","par(mfrow = c(2, 2)) "
+"0","plot(mod1b)"

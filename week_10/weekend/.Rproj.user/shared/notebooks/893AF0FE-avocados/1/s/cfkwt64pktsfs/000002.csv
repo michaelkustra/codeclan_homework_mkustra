@@ -1,0 +1,1 @@
+"0","plot(sum_regsubsets_forward$rsq, type = ""b"")"

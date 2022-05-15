@@ -1,0 +1,3 @@
+"0","# develop models for average price against each predictor in data, forwards"
+"0","regsubsets_forward <- regsubsets(average_price ~ ., data = avocados_clean,"
+"0","                                 nvmax = 11, method = ""forward"")"

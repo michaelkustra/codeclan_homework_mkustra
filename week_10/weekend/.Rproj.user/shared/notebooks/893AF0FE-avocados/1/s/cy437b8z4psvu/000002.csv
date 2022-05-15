@@ -1,0 +1,14 @@
+"0","# check for aliases"
+"0","alias(lm(average_price ~ ., data = avocados_clean))"
+"1","Model"
+"1"," "
+"1",":
+"
+"1","average_price ~ month + total_volume + small_med_avo + large_avo + 
+"
+"1","    x_large_avo + total_bags + small_bags + large_bags + x_large_bags + 
+"
+"1","    type + year
+"
+"1","
+"

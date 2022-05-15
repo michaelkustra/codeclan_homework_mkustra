@@ -1,0 +1,2 @@
+"0","# plot BIC score as predictors are added"
+"0","plot(regsubsets_forward, scale = ""bic"")"

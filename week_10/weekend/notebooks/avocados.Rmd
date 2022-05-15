@@ -7,6 +7,9 @@ output: html_notebook
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(GGally)
+library(modelr)
+library(leaps)
 ```
 
 ```{r}
@@ -16,8 +19,257 @@ avocados <- read_csv(here::here("data/avocado.csv")) %>%
 
 ```{r}
 # extract month from date column, then remove date column
-avocados %>% 
-  mutate(month = month(date, label = TRUE, abbr = TRUE), .after = 1) %>% 
-  select(-date)
+avocados_clean <- avocados %>% 
+  mutate(month = month(date, label = TRUE, abbr = TRUE), .after = 3) %>%
+  mutate(type = as.factor(type)) %>% 
+  mutate(region = as.factor(region)) %>%
+  rename(small_med_avo = x4046, large_avo = x4225, x_large_avo = x4770) %>% 
+  select(-date, -x1, -region)
+
+glimpse(avocados_clean)
+  
 ```
 
+```{r}
+# check for aliases
+alias(lm(average_price ~ ., data = avocados_clean))
+```
+
+__Interpretation__
+
+No apparent aliases left in the data. Means there are no potential predictor
+variables that are related, to avoid any issues of multicollinearity.
+
+```{r}
+# pairs plot
+ggpairs(avocados_clean, columns = c(1, 2, 3, 4, 5, 6, 7, 8))
+ggpairs(avocados_clean, columns = c(1, 9, 10, 11, 12))
+
+```
+
+__Interpretation__
+
+Among the continuous predictors, `total_volume` and `small_medium_avo` both
+look promising due to their higher correlation with `average_price` compared to
+other predictors.
+
+In the categorical variables, `type` appears to be the most appropriate to be
+chosen due to the separation in the boxplot. There may be some significance 
+there which should be investigated further. `month` also shows some difference
+among the boxplots and should be investigated. 
+
+# Model 1a
+
+```{r}
+# model of average price against small/medium avocados
+mod1a <- lm(average_price ~ small_med_avo, data = avocados_clean)
+```
+
+```{r}
+# diagnostic plots to check assumptions
+par(mfrow = c(2, 2)) 
+plot(mod1a)
+```
+
+__Interpretation__
+
+_Residuals vs Fitted_
+
+This plot appears to show that 
+
+_Normal QQ_
+
+Shows a little deviation from normality for low and high fitted values, however,
+nothing that concerns me greatly. 
+
+_Scale-Location_
+
+Shows some evidence of heteroscadtiscity and our line is on a downwards slope,
+we'd like it to be more horizontal. 
+
+```{r}
+# summary of mod1a
+summary(mod1a)
+```
+
+__Interpretation__
+
+The r-squared value is really low, 0.04, and so we can explain 4% of the 
+variance in average price based on small and medium avocados. The predictor 
+value is statistically significant. The residual standard error is 0.39, which 
+tells us that our average error in predicting the prestige is less than one.
+Based on the r-squared value I don't believe this is a good predictor. Let's
+try something else.
+
+# Model 1b
+
+```{r}
+# model of average price against type of avocado
+mod1b <- lm(average_price ~ type, data = avocados_clean)
+```
+
+```{r}
+# diagnostic plots of model 1b to check assumptions
+par(mfrow = c(2, 2)) 
+plot(mod1b)
+```
+
+__Interpretation__
+
+The systematic variance seems to be better captured in this model, as seen in 
+the Residuals vs Fitted plot. Again, only a little deviance from the normal line
+in the Normal-QQ plot. Scale-Location plot shows that we appear to have
+homoscadiscity in our fitted values, which is good. All assumptions seem to be
+meet here. 
+
+```{r}
+summary(mod1b)
+```
+
+__Interpretation__
+
+The r-squared value is improved here, 0.38, and so we can explain 38% of the 
+variance in average price based on type of avocado, organic or not. The predictor 
+value is statistically significant. The residual standard error is 0.33, which 
+tells us that our average error in predicting the prestige is less than one.
+This has decreased from `mod1a`, a positive. This appears to be a better
+predictor and should be kept.
+
+# Model 2a
+
+```{r}
+# add month into our predictors
+mod2a <- lm(average_price ~ type + month, data = avocados_clean)
+```
+
+```{r}
+# diagnostic plots
+par(mfrow = c(2, 2))
+plot(mod2a)
+```
+
+__Interpretation__
+
+All good
+
+```{r}
+summary(mod2a)
+```
+
+__Interpretation__
+
+Firstly, some months are statistically significant, while others aren't. An
+ANOVA test should help us decide whether to keep `month` or not. It has 
+increased r-squared to 0.44, so 44% of the variation in `average_price` is
+explained by the two predictors `type` and `month`. The error has also decreased
+to 0.3, another improvement in this model. 
+
+## ANOVA for month
+
+```{r}
+anova(mod2a, mod1b)
+```
+
+__Interpretation__
+
+Based on the ANOVA I would keep month in my model since it is statisically
+significant with a p-value < 0.05.
+
+# Model 3a
+
+```{r}
+# add small/medium avocados into mod2a
+mod3a <<- lm(average_price ~ type + year + small_med_avo, data = avocados_clean)
+```
+
+```{r}
+par(mfrow = c (2, 2))
+plot(mod3a)
+```
+__Interpretation__
+
+The plots show some mild heteroscadascity in the Scale-Location. It still
+seems to mostly follow a normal distribution with only a little deviation at 
+greater fitted values. This does give me some afterthought on whether or not
+to include `small_med_avo`, however, I will keep for now.
+
+
+```{r}
+summary(mod3a)
+```
+
+__Interpretation__
+
+`small_med_avo` is statistically significant and does increase our model
+r-squared to 0.393, meaning that these predictors now explain 39% of variance
+in `average_price`. The error seems to have stalled somewhat, now sitting at
+0.31, slightly greater than mod2a. 
+
+# Automated Model Selection
+
+Since it appears our predictors are beginning to add little explaining power
+in our models I will switch to automated model selection to see what (if any)
+improvements could be made on mod3a.
+
+```{r}
+# develop models for average price against each predictor in data, forwards
+regsubsets_forward <- regsubsets(average_price ~ ., data = avocados_clean,
+                                 nvmax = 11, method = "forward")
+```
+
+```{r}
+# plot each unique model from high to low adjusted r-squared value
+plot(regsubsets_forward, scale = "adjr2")
+```
+
+__Interpretation__
+
+We can see what we have already discovered, that `month`, `small_med_avo`, 
+`type` all appear in our models with the highest adjusted r-squared, that is
+reassuring. There are other predictors included in the 'best' models, however,
+it would be prudent to check BIC scores to see if including the extra predictors
+is worth it.
+
+```{r}
+# plot BIC score as predictors are added
+plot(regsubsets_forward, scale = "bic")
+```
+
+__Interpretation__
+
+There does not appear to be a huge difference in terms of BIC score with the
+top 7 models here. Meaning perhaps the extra variables are not worth it, if
+keeping our model simple is of importance. 
+
+```{r}
+# summary of our forward selection models
+sum_regsubsets_forward <- summary(regsubsets_forward)
+sum_regsubsets_forward
+```
+
+```{r}
+# plots of adj r-squared and BIC against the number of predictors in the model
+plot(sum_regsubsets_forward$rsq, type = "b")
+plot(sum_regsubsets_forward$bic, type = "b")
+```
+
+__Interpretation__
+
+From the plot with adjusted r-squared it appears to plateau by around 6 
+predictors but even the growth before that is not huge. 0.04 extra r-squared
+from 3 predictors to 6. For me, that is not worth it. 
+
+The BIC plot appears to show that after 5 predictors BIC does not decrease to
+a great extent, leveling off approaching -11500. This plot indicates to me
+that keeping three predictors is a good trade off with BIC score and the 
+number of predictors in the model. I would prefer to have a simple model that
+can adapt to new data well, still with solid explaining power.
+
+# Final Model
+
+$$average\_price ~ type + month + small\_med\_avo$$
+
+I am happy with my final model as it appears the best of both, in terms of its
+explaining power, final r-squared of 0.393 and its BIC score compared to other
+models found in the automated forward selection. I think adding other variables
+for the sake of 0.04 to the r-squared is not worth it.

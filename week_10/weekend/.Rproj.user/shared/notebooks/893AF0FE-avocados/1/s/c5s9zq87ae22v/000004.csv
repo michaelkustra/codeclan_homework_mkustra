@@ -1,0 +1,1 @@
+"0","mod3a <<- lm(average_price ~ type + year + small_med_avo, data = avocados_clean)"
