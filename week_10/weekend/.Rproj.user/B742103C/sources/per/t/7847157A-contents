@@ -150,10 +150,7 @@ plot(mod2a)
 
 __Interpretation__
 
-Normality does not seem to be an issue, looks good on the Normal QQ plot. 
-Same with Scale-Location, line is near horizontal and residuals area spread
-well around. Residuals appear homoscedastic from the Residuals vs Fitted plot
-and Scale-Location.
+All good
 
 ```{r}
 summary(mod2a)
