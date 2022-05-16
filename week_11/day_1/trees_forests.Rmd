@@ -1,0 +1,58 @@
+---
+title: "Decision Trees and Random Forests"
+author: "MK"
+date: "16/05/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Decision Trees 🌳
+
+## How they work?
+
+Simply a series of sequential decisions (Yes/No) made to reach a specific 
+result.
+
+![image](/Users/user/Desktop/decision_tree.webp)
+
+## Strengths
+
+* Simple to use and understand
+* No normalisation of data needed
+* Require little preparation
+* Easily modified
+* Handles both numerical and categorical variables
+
+## Weaknessess
+
+* Small changes in the data can have changes in the tree that make it unstable,
+disprportionate to the change.
+* Inadequate for regression
+* Relies on feature importance, meaning it underperforms compared to random
+forests.
+
+# Random Forest 🌴🌴🌴
+
+This is a forest of randomly created decision trees. Eg, several trees put
+together. Each node in the decision tree works on a random subset of features 
+to calculate the output.
+
+![image](/Users/user/Desktop/random_forest.webp)
+
+## Strengths
+
+* Run fast
+* Can improve the overfit that occurs in a decision tree
+* Can deal with unbalanced and missing data
+* Reduces the variance, therefore, accuracy
+
+## Weaknessess
+
+* Cannot predict beyond the training data
+* Can overfit to the noise in a data set
+
+All images courtesy of 
+https://www.analyticsvidhya.com/blog/2020/05/decision-tree-vs-random-forest-algorithm/
