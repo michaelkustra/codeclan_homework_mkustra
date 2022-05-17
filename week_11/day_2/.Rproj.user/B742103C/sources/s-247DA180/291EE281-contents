@@ -1,0 +1,161 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
+library(GGally)
+
+
+library(tidyverse)
+titanic_set <- read_csv('data/titanic_decision_tree_data.csv')
+
+shuffle_index <- sample(1:nrow(titanic_set))
+
+# shuffle the data so class order isn't in order - need this for training/testing split later on 
+titanic_set <- titanic_set[shuffle_index, ]
+```
+
+# Question 1
+
+
+
+```{r}
+# sum NAs in survived column
+sum(is.na(titanic_set$survived))
+
+# filter out NAs in that column
+titanic_set <- titanic_set %>% 
+  filter(!is.na(survived))
+```
+
+
+
+```{r}
+# clean rest of the data set to spec
+titanic_clean <- titanic_set %>% 
+  mutate(sex = as.factor(sex),
+         age_cat = as.factor(if_else(age <= 16, "child", "adult")),
+         class = factor(pclass, levels = c(3,2,1), labels = c("lower", "middle", "upper")), 
+           survived = factor(survived, levels = c(0,1), labels = c("no", "yes")), 
+           port_embark = as.factor(embarked)) %>%
+  select(sex, age_cat, class, port_embark, sib_sp, parch, survived) %>%
+  na.omit()
+```
+
+# Question 2
+
+```{r}
+ggpairs(titanic_clean)
+```
+__Interpretation__
+
+From this pairs plot it appears that possible variables to predict whether or
+not people are going to die could be:
+
+* class
+* sex
+* age_cat
+
+# Question 3
+
+```{r}
+# create train & test data sets in 80/20 split
+n_data <- nrow(titanic_clean)
+test_index <- sample(1:n_data, size = n_data * 0.2)
+titanic_test <- slice(titanic_clean, test_index)
+titanic_train <- slice(titanic_clean, -test_index)
+```
+
+I chose an 80/20 split for my train/test as there would still be a valid number
+of observations in the test split, 142. That seems sufficient to test on.
+
+```{r}
+# check the test/train is balanced
+titanic_train %>% 
+  janitor::tabyl(survived)
+
+titanic_test %>% 
+  janitor::tabyl(survived)
+```
+
+# Question 4
+
+```{r}
+# decision tree for titanic train data
+titanic_tree <- rpart(
+  formula = survived ~ ., 
+  data = titanic_train, 
+  method = "class"
+)
+
+rpart.plot(titanic_tree, 
+           yesno = 2, 
+           fallen.leaves = TRUE, 
+           faclen = 6, 
+           digits = 3)
+```
+
+# Question 5
+
+This decision tree tells us the important features (variables) are:
+
+* sex (root)
+* class (intermediate)
+* sib_sp
+
+as these were the chosen features for my decision tree.
+
+The root node tells us that 40.4% survived from the whole train data set. From 
+there, given sex is male then 20.4% survived, given female, 73.7% survived.
+
+If they were female, given they were not in lower class, survival was at 94.3%.
+Compared to a survival of 45.6% if they were female and in lower class.
+
+Finally, if female and in lower class, survival was 29.7% if they had siblings
+or spouses on board. If they had no siblings or spouses on board, survival was
+56.6%.
+
+Overall, it appears that being a female in middle or upper class lead to the 
+best chance of survival!
+
+# Question 6
+
+```{r}
+library(modelr)
+
+titanic_test_pred <- titanic_test %>% 
+  add_predictions(titanic_tree, type = "class")
+
+```
+
+```{r}
+library(yardstick)
+
+conf_matrix <- titanic_test_pred %>% 
+  conf_mat(truth = survived, estimate = pred)
+
+conf_matrix
+
+titanic_test_pred %>% 
+  accuracy(truth = survived, estimate = pred)
+```
+
+__Interpretation__
+
+Main diagonal shows us our correctly predicted values (FF and TT). The greater
+these values, the better for our model. In my model they are substantial 
+enough for me to conclude this model does a 'decent' job at predicting
+survival. 
+
+In this data set it tells me that I correctly predicted 80 people would not
+survive and 33 people would survive.
+
+In fact, the accuracy comes out to 80% accuracy. 80% correctly predicted
+results.
+
+With further time I could refine this model to boost the main diagonal further,
+bring down the false positives and negatives in the other diagonal.

@@ -1,0 +1,8 @@
+"0","titanic_clean <- titanic_set %>% "
+"0","  mutate(sex = as.factor(sex),"
+"0","         age_cat = as.factor(if_else(age <= 16, ""child"", ""adult"")),"
+"0","         class = factor(pclass, levels = c(3,2,1), labels = c(""lower"", ""middle"", ""upper"")), "
+"0","           survived = factor(survived, levels = c(0,1), labels = c(""no"", ""yes"")), "
+"0","           port_embark = as.factor(embarked)) %>%"
+"0","  select(sex, age_cat, class, port_embark, sib_sp, parch, survived) %>%"
+"0","  na.omit()"

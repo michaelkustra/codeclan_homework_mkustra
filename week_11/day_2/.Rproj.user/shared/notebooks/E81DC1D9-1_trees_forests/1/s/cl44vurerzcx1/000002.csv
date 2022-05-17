@@ -1,0 +1,21 @@
+"0","```r
+thrones_fit
+
+```"
+"1","n= 276 
+
+node), split, n, loss, yval, (yprob)
+      * denotes terminal node
+
+ 1) root 276 115 Died (0.4166667 0.5833333)  
+   2) prominence< 0.4812 92  17 Survived (0.8152174 0.1847826)  
+     4) religion=Lord of Light,Drowned God,Many Faced God,Other,Unknown 80  10 Survived (0.8750000 0.1250000) *
+     5) religion=Faith of the Seven,Old Gods 12   5 Died (0.4166667 0.5833333) *
+   3) prominence>=0.4812 184  40 Died (0.2173913 0.7826087)  
+     6) allegiance_last=Stark,Targaryen 46  22 Survived (0.5217391 0.4782609)  
+      12) prominence>=1.75995 18   6 Survived (0.6666667 0.3333333) *
+      13) prominence< 1.75995 28  12 Died (0.4285714 0.5714286)  
+        26) featured_episode_count< 1.5 10   3 Survived (0.7000000 0.3000000) *
+        27) featured_episode_count>=1.5 18   5 Died (0.2777778 0.7222222) *
+     7) allegiance_last=Night's Watch,Lannister,Greyjoy,Bolton,Frey,Other,Unknown 138  16 Died (0.1159420 0.8840580) *
+"

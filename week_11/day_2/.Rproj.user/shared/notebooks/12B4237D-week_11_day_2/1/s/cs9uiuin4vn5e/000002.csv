@@ -1,0 +1,4 @@
+"0","n_data <- nrow(titanic_clean)"
+"0","test_index <- sample(1:n_data, size = n_data * 0.2)"
+"0","titanic_test <- slice(titanic_clean, test_index)"
+"0","titanic_train <- slice(titanic_clean, -test_index)"
