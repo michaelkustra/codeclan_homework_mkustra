@@ -1,0 +1,4 @@
+"0","```r
+ggplot(edu_data, aes(x = home_school, y = state_school))+
+  geom_point()
+```"

@@ -1,0 +1,6 @@
+"0","```r
+library(broom)
+
+tidy(clustered_edu,
+     col.names = colnames(edu_scale))
+```"

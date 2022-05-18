@@ -1,0 +1,5 @@
+"0","```r
+# plot of scale
+ggplot(edu_scale, aes(x = home_school, y = state_school)) +
+  geom_point()
+```"

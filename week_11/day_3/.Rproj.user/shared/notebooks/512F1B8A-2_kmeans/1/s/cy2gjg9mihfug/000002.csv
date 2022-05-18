@@ -1,0 +1,4 @@
+"0","```r
+edu_scale <- edu_data %>% 
+  mutate(across(c(home_school, state_school), scale))
+```"

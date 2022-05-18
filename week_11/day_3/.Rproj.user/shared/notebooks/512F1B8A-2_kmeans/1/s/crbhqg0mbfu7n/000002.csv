@@ -1,0 +1,5 @@
+"0","```r
+edu_data <- read_csv(here::here(\"data/school_data.csv\")) %>% 
+  column_to_rownames(\"X1\") %>% 
+  clean_names()
+```"

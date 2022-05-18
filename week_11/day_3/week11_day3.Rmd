@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(corrplot)
+library(factoextra)
+library(broom)
+```
+
+```{r}
+customers <- read_csv(here::here("data/mall_customers.csv")) %>% 
+  clean_names()
+
+customers_numeric <- customers %>% 
+  select(annual_income_k, spending_score_1_100)
+```
+
+# Exploratory Data Analysis
+
+```{r}
+# plot of annual income and spending score
+customers_numeric %>% 
+  ggplot(aes(x = annual_income_k, y = spending_score_1_100)) +
+  geom_point()
+```
+
+__Interpretation__
+
+Scatter plot appears to show data would be appropriate to cluster, potentially
+5 distinct clusters?
+
+# K-means clustering
+
+```{r}
+clustered_customers <- kmeans(customers_numeric,
+                        centers = 8,
+                        nstart = 25)
+
+clustered_customers
+
+glance(clustered_customers)
+
+```
+
+```{r}
+fviz_nbclust(customers_numeric,
+             kmeans,
+             method = "wss",
+             nstart = 25)
+```
+__Interpretation__
+
+Shows the decrease of within sum of squares as we increase the number of
+clusters. We can see there is diminishing returns as we hit 5-7 clusters.
+
+```{r}
+# plot clusters
+fviz_cluster(clustered_customers, customers_numeric,
+             palette = c("#2E9FDF", "#00AFBB", "#E7B800", "red", "blue",
+                         "grey10", "orange", "grey40"), 
+             geom = "point",
+             ellipse.type = "convex", 
+             ggtheme = theme_bw()
+             )
+```
+__Interpretation__
+
+This plot shows the points and how they have been clustered. It actually
+gives me reason to believe clustering is not the best idea for this data due to
+the following observations:
+
+* We have uneven sized clusters, some > 40, some < 15.
+* Appears to give more weight to larger clusters, smaller clusters have a 
+greater within ss.
+
+We can also start to label the clusters based on their location. The top right 
+light grey star cluster is those grouped with high annual income and high 
+spending score, the elites. Where as in the bottom left in orange there are
+those with the lowest income and amongst the lowest spending score, the have
+nots. I will name the green triangle cluster as the thrifty  bunch, ie, high
+annual income and low spending score.
+
+```{r}
+# plot silhouette coefficient
+fviz_nbclust(customers_numeric,
+             kmeans,
+             method = "silhouette",
+             nstart = 25)
+```
+__Interpretation__
+
+This silhouette coefficient shows us the optimal number of clusters appears to
+be 5.

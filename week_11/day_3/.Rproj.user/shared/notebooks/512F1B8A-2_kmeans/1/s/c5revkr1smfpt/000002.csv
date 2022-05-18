@@ -1,0 +1,9 @@
+"0","```r
+set.seed(1234)
+
+clustered_edu <- kmeans(edu_scale,
+                        centers = 6,
+                        nstart = 25)
+
+clustered_edu
+```"

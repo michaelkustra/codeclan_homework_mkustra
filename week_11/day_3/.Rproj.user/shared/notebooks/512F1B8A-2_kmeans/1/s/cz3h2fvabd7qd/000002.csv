@@ -1,0 +1,4 @@
+"0","```r
+# apply a cluster number to each observation
+augment(clustered_edu, edu_data)
+```"

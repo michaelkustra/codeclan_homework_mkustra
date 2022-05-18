@@ -1,0 +1,10 @@
+"0","```r
+edu_data %>% 
+  as_tibble() %>% 
+  pivot_longer(cols = c(home_school, state_school),
+               names_to = \"type\",
+               values_to = \"value\") %>% 
+  group_by(type) %>% 
+  summarise(mean = round(mean(value)),
+            sd = sd(value))
+```"

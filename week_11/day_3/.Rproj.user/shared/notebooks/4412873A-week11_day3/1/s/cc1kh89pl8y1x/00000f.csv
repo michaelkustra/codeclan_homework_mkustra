@@ -1,0 +1,7 @@
+"0","fviz_cluster(clustered_customers, customers_numeric,"
+"0","             palette = c(""#2E9FDF"", ""#00AFBB"", ""#E7B800"", ""red"", ""blue"","
+"0","                         ""grey10"", ""orange"", ""grey40""), "
+"0","             geom = ""point"","
+"0","             ellipse.type = ""convex"", "
+"0","             ggtheme = theme_bw()"
+"0","             )"
