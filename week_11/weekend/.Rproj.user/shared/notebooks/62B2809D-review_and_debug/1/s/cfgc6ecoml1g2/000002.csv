@@ -1,0 +1,11 @@
+"0","```r
+max(energy_scotland$energy_prod)
+```"
+"1","[1] 25165.9
+"
+"0","```r
+# this returns value 25165.9 
+
+energy_scotland %>%
+  filter(energy_prod == 25165.9)
+```"

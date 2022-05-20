@@ -1,0 +1,228 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Data
+
+```{r, include=FALSE}
+library(tidyverse)
+
+# read in energy data
+energy_scotland <- read_csv(here::here("data/energy_scotland.csv"))
+
+energy_scotland
+```
+
+```{r, include=FALSE}
+# read in salaries data
+all_salaries <- read_csv(here::here("data/all_salaries.csv"))
+all_salaries
+```
+
+# Task 1
+
+Goal: return the row in the data which has the maximum energy production, making 
+sure the code would work if new data was added to the dataset.
+
+_old code_
+
+```{r}
+max(energy_scotland$energy_prod)
+# this returns value 25165.9 
+
+energy_scotland %>%
+  filter(energy_prod == 25165.9)
+```
+
+_new code_
+
+```{r}
+energy_scotland %>% 
+  slice_max(energy_prod)
+```
+__Explanation__
+
+In my code we pass the data set (energy_scotland) into a slice_max function with
+energy_prod selected as the column to be examined. This will take the max value
+for energy_prod, whatever the data is we pass into it, old or new.
+
+# Task 2
+
+Goal: create a new column called ‘rating’ to the energy table which will take 
+the following values in the table. The bins should be inclusive of the upper 
+value e.g. is the energy production is 20,000 exactly then will be ‘high’, if 
+it’s 10,000 exactly then will be ‘medium’, etc.
+
+_old code_
+
+```{r}
+rating <- if_else(energy_scotland$energy_prod > 20000, "very high", 
+                  if_else(energy_scotland$energy_prod > 10000 & energy_scotland$energy_prod <= 20000, "high", if_else(energy_scotland$energy_prod > 5000 & energy_scotland$energy_prod <= 10000, "medium", if_else(energy_scotland$energy_prod > 2000 & energy_scotland$energy_prod <= 5000, "low", "very low"))))
+
+energy_scotland_rating <- bind_cols(energy_scotland, rating = rating)
+```
+
+_new code_
+
+```{r}
+# use case_when instead of nested if_else
+energy_scotland_rating <- energy_scotland %>% 
+  mutate(rating = case_when(
+    energy_prod > 20000 ~ "very high",
+    energy_prod > 10000 & energy_prod <= 20000 ~ "high",
+    energy_prod > 5000 & energy_prod <= 10000 ~ "medium",
+    energy_prod > 2000 & energy_prod <= 5000 ~ "low",
+    energy_prod > 0 & energy_prod <= 2000 ~ "very low"))
+
+energy_scotland_rating
+```
+
+__Explanation__
+
+I have mutated to create a new column, 'rating', simultaneously with the 
+ifelse statement. I also corrected the logical operators so that the maximum
+interval value was included in the correct band. i.e 20000 is now included in
+the rating 'high'.
+
+# Task 3
+
+Goal: create a plot which shows how the energy production for the sectors renewables, gas and pumped hydro compare over time.
+
+_old code_
+
+```{r}
+renewable <- energy_scotland %>%
+  filter(sector == "Renewables")
+
+gas <- energy_scotland %>%
+  filter(sector == "Gas")
+
+hydro <- energy_scotland %>%
+  filter(sector == "Pumped hydro")
+
+years <- unique(energy_scotland$year)
+
+ggplot() +
+  geom_line(aes(x = year, y = energy_prod,  color = sector), data = renewable) +
+  geom_line(aes(x = year, y = energy_prod, color = sector), data = gas) +
+  geom_line(aes(x = year, y = energy_prod, color = sector), data = hydro) +
+  scale_x_continuous(breaks = years) +
+  labs(title = "Energy production in Scotland over time split by sector", x ="Year", y = "Energy production")
+```
+
+_new code_
+
+```{r}
+energy_scotland %>% 
+  filter(sector %in% c("Gas", "Renewables", "Pumped hydro")) %>% 
+  group_by(sector) %>% 
+  ggplot(aes(x = year, y = energy_prod, color = sector)) +
+  geom_line() +
+  scale_x_continuous(breaks = unique(energy_scotland$year)) +
+  labs(title = "Energy production in Scotland over time split by sector", x ="Year", y = "Energy production")
+```
+
+__Explanation__
+First, I have used the pipe more often in order to plot in one group of code.
+Using the `%in%` I can filter for all three sectors in one line, rather than the
+previous three. I have also removed the years line and instead placing it
+inside the argument for breaks within the scale_x_continuous. Lastly, by
+writing the aesthetic argument withing ggplot() as global aesthetics, I can
+plot the three lines using one line of code.
+
+# Task 4
+
+Goal: calculate the average energy production for the Coal, Gas, and Oil sectors across the time period in the data.
+
+_old code_
+
+```{r}
+energy_scotland %>%
+  filter(sector == c("Coal", "Gas", "Oil")) %>%
+  group_by(sector) %>%
+  summarise(avg_energy_prod = mean(energy_prod))
+```
+
+_new code_
+
+```{r}
+energy_scotland %>%
+  filter(sector %in% c("Coal", "Gas", "Oil")) %>%
+  group_by(sector) %>%
+  summarise(avg_energy_prod = mean(energy_prod))
+```
+
+__Explanation__
+I have corrected the line for filter by replacing `==` with `%in%`, this way
+the filter will correctly filter the data set for all incidences of the three 
+sectors.
+
+# Task 5
+
+Goal: clean up this tibble by only returning the name, location and email address information, putting the location information into lowercase and also creating a new column called valid_email to have values TRUE or FALSE whether the email address is valid. Here our definition is valid is that it contains an @ symbol followed by a combination of lowercase characters or a . symbol.
+
+```{r}
+student <- tibble(
+  Name = c("Brian", "David", "Karen"),
+  age = c(25, 56, 40),
+  location = c("Scotland", "England", "scotland"),
+  `email address` = c("briang@yahoo.co.uk", "dsmith@gmail.co.uk", "karen")
+)
+
+student
+```
+
+```{r}
+student %>%
+  janitor::clean_names() %>% 
+  select(name, location, email_address) %>%
+  mutate(location = tolower(location)) %>% 
+  mutate(valid_email = str_detect(email_address, "@[a-z]."))
+```
+
+__Explanation__
+
+* Moved janitor::clean_anmes() to occur first in order to clean names to be
+selected next.
+* Incorporated mutate in line 178 for location and used tolower() function
+instead.
+* Added square brackets around a-z in regex in order for the letters to be
+included in the patter search.
+
+# Task 6
+
+Goal: create a function to work on the all_salaries dataframe (or a similar 
+dataframe that has a column salary and job_area). The function should take in 
+the dataframe (dataframe_input) and a job area (job_area_input) and a salary 
+value (salary_input). 
+
+The function should only return the employees in the dataframe that have a salary 
+above this value salary_input and who work in job area job_area_input. 
+
+For example if job_area_input was ‘Legal’ and salary_input was 30000 then the 
+function would return the following output:
+
+_new code_
+
+```{r}
+subsetting_salaries <- function(dataframe_input,job_area_input,salary_input){
+  
+  data <- dataframe_input %>% filter(job_area == job_area_input &
+                                       salary > salary_input)
+  return(data)
+}
+
+subsetting_salaries(all_salaries, "Training", 25000)
+```
+
+__Explanation__
+
+* Removed select from line 209 as it was unnecessary
+* Changed data\$savings to data\$salary in order to select correct column salary
+* Removed CodeClanData as it was not needed in line 214
+* Incorporated salary filter from data1 into data by use of `&`
+* Removed data_1 line
+* Changed job area input to be read as character with double quotes.

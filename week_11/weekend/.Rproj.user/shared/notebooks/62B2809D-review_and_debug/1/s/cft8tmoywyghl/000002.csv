@@ -1,0 +1,10 @@
+"0","```r
+student <- tibble(
+  Name = c(\"Brian\", \"David\", \"Karen\"),
+  age = c(25, 56, 40),
+  location = c(\"Scotland\", \"England\", \"scotland\"),
+  `email address` = c(\"briang@yahoo.co.uk\", \"dsmith@gmail.co.uk\", \"karen\")
+)
+
+student
+```"

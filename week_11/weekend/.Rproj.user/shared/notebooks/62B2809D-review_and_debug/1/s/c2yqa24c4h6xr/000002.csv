@@ -1,0 +1,7 @@
+"0","```r
+student %>%
+  janitor::clean_names() %>% 
+  select(name, location, email_address) %>%
+  mutate(location = tolower(location)) %>% 
+  mutate(valid_email = str_detect(email_address, \"@[a-z].\"))
+```"

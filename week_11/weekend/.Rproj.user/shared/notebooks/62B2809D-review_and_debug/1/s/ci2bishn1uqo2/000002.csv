@@ -1,0 +1,16 @@
+"0","```r
+# read in salaries data
+all_salaries <- read_csv(here::here(\"data/all_salaries.csv\"))
+```"
+"1","Rows: 1000 Columns: 9
+── Column specification ───────────────────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr (6): gender, name, surname, job_area, retired, location
+dbl (3): salary, age, savings
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
+"0","```r
+all_salaries
+```"

@@ -1,0 +1,10 @@
+"0","```r
+energy_scotland_rating <- energy_scotland %>% 
+  mutate(rating = ifelse(energy_prod > 20000, \"very high\",
+         ifelse(energy_prod > 10000 & energy_prod <= 20000, \"high\",
+         ifelse(energy_prod > 5000 & energy_prod <= 10000, \"medium\",
+         ifelse(energy_prod > 2000 & energy_prod <= 5000, \"low\",
+         \"very low\")))))
+
+energy_scotland_rating
+```"

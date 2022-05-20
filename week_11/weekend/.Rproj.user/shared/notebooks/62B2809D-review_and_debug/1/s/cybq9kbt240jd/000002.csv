@@ -1,0 +1,6 @@
+"0","```r
+rating <- if_else(energy_scotland$energy_prod > 20000, \"very high\", 
+                  if_else(energy_scotland$energy_prod > 10000 & energy_scotland$energy_prod <= 20000, \"high\", if_else(energy_scotland$energy_prod > 5000 & energy_scotland$energy_prod <= 10000, \"medium\", if_else(energy_scotland$energy_prod > 2000 & energy_scotland$energy_prod <= 5000, \"low\", \"very low\"))))
+
+energy_scotland_rating <- bind_cols(energy_scotland, rating = rating)
+```"

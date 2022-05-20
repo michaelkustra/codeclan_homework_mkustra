@@ -1,0 +1,6 @@
+"0","```r
+energy_scotland %>%
+  filter(sector %in% c(\"Coal\", \"Gas\", \"Oil\")) %>%
+  group_by(sector) %>%
+  summarise(avg_energy_prod = mean(energy_prod))
+```"

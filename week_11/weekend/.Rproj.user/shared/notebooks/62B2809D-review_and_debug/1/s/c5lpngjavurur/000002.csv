@@ -1,0 +1,4 @@
+"0","```r
+energy_scotland %>% 
+  slice_max(energy_prod)
+```"

@@ -1,0 +1,3 @@
+"0","# remove aliased variables "
+"0","juice_data_clean <- juice_data_clean %>% "
+"0","  select(-c(price_ch, price_mm, disc_ch, disc_mm, store7, store))"
