@@ -1,0 +1,5 @@
+"0","# choose optimal number of predictors for logistic model through subsets plots"
+"0","par(mfrow = c(2,2))"
+"0",""
+"0","plot(reg_summary$rss, xlab = ""Number of variables"", ylab = ""RSS"","
+"0","     type = ""l"")"

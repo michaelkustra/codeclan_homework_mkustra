@@ -1,0 +1,6 @@
+"0","print(paste(""Accuracy is"", 1 - classify_error))
+"
+"1","[1]"
+"1"," ""Accuracy is 0.524532710280374"""
+"1","
+"

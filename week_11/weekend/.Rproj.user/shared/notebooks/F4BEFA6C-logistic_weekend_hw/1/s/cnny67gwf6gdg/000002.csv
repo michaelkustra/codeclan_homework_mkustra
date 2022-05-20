@@ -3,10 +3,10 @@
 "0","  clean_names()"
 "1","[1mRows: [22m[34m1070[39m [1mColumns: [22m[34m18[39m
 "
-"1","[36m──[39m [1mColumn specification[22m [36m─────────────────────────────────────────────────────────────────────────────────────────────[39m
+"1","[36m──[39m [1mColumn specification[22m [36m───────────────────────────────────────────────────────────────────────────[39m
 [1mDelimiter:[22m "",""
 [31mchr[39m  (2): Purchase, Store7
-[32mdbl[39m (16): WeekofPurchase, StoreID, PriceCH, PriceMM, DiscCH, DiscMM, SpecialCH, SpecialMM, LoyalCH, SalePriceMM, ...
+[32mdbl[39m (16): WeekofPurchase, StoreID, PriceCH, PriceMM, DiscCH, DiscMM, SpecialCH, SpecialMM, Loya...
 "
 "1","
 [36mℹ[39m Use `spec()` to retrieve the full column specification for this data.

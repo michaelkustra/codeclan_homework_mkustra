@@ -1,8 +1,0 @@
-"0","# split data into test/train sets"
-"0","n_data <- nrow(juice_data_clean)"
-"0",""
-"0","test_index <- sample(1:n_data, size = n_data * 0.2)"
-"0",""
-"0","juice_test <- slice(juice_data_clean, test_index)"
-"0",""
-"0","juice_train <- slice(juice_data_clean, -test_index)"

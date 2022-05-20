@@ -1,0 +1,28 @@
+{
+    "id": "1DC38826",
+    "path": "~/Documents/CodeClan/codeclan_homework_mkustra/week_11/weekend/notebooks/logistic_weekend_hw.Rmd",
+    "project_path": "notebooks/logistic_weekend_hw.Rmd",
+    "type": "r_markdown",
+    "hash": "3434513584",
+    "contents": "",
+    "dirty": false,
+    "created": 1653040768678.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "290,27",
+        "scrollLine": "280"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1653074926,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1653074926501,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,4 @@
+"0","# first logistic model"
+"0","juice_log_model_1a <- glm(mm_purchase ~ loyal_ch + list_price_diff + store_id,"
+"0","                          data = juice_train, "
+"0","                          family = binomial(link = 'logit'))"
